@@ -4,7 +4,17 @@ const {google} = require("googleapis");
 
 const app = express();
 
-app.get("/", async (req, res) => {
+app.set("view engine", "ejs");
+
+app.use(express.urlencoded({ extended: true }));
+
+app.get("/", (req, res) => {
+    res.render("index");
+});
+
+app.post("/", async (req, res) => {
+
+    const {name, breakfast, lunch} = req.body;
 
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
@@ -39,13 +49,11 @@ app.get("/", async (req, res) => {
         range: "Response!A2",
         valueInputOption: "USER_ENTERED",
         resource: {
-            values: [
-                ["John Doe", "BK", "Lunchy"]
-            ]
-        }
+            values: [[name, breakfast, lunch]],
+        },
     });
 
-    res.send(getRows.data);
+    res.send("Successfully submitted");
 });
 
 app.listen(1337, (req, res) => console.log("Running on 1337!"));
