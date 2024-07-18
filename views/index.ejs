@@ -26,6 +26,12 @@
         <button type="submit">Submit</button>
     </form>
 
+    <h2>Sheet Names</h2>
+    <ul>
+        <% sheetNames.forEach(sheetName => { %>
+            <li><%= sheetName %></li>
+        <% }) %>
+    </ul>
 
     <script src="assets/js/app.js"></script>
     <script
