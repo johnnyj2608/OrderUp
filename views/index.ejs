@@ -29,7 +29,9 @@
     <h2>Sheet Names</h2>
     <ul>
         <% sheetNames.forEach(sheetName => { %>
-            <li><%= sheetName %></li>
+            <li>
+                <button onclick="handleButtonClick('<%= sheetName %>')"><%= sheetName %></button>
+            </li>
         <% }) %>
     </ul>
 
