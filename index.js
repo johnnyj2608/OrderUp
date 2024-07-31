@@ -6,10 +6,6 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
-// app.get("/", (req, res) => {
-//     res.render("index");
-// });
-
 app.get("/", async (req, res) => {
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
@@ -25,7 +21,10 @@ app.get("/", async (req, res) => {
         spreadsheetId,
     });
 
-    const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title);
+    const excludedSheets = ["Response", "Menu", "QR"];
+    const sheetNames = spreadsheet.data.sheets
+    .map(sheet => sheet.properties.title)
+    .filter(title => !excludedSheets.includes(title));
 
     res.render("index", { sheetNames });
 });
