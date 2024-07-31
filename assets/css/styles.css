@@ -48,3 +48,66 @@ button.selected {
       white-space: nowrap;
 }
   
+#numberPad {
+      width: 300px;
+      height: 269px;
+      position: relative;
+      box-shadow: -5px 7px 14px 0px;
+}
+
+#numberPad div:hover {
+      cursor: pointer;
+}
+
+#display {
+      height: 70px;
+      width: 100%;
+      color: rgb(0, 186, 253);
+      background-color: rgb(29, 33,46);
+      font-size: 3em;
+      line-height: 1.5;
+      overflow: hidden;
+      text-align: center;
+      font-family: "Clocl Alarm";
+}
+
+#numberSpace {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      position: absolute;
+      width: 100%;
+      background-color: #333;
+
+}
+
+.btn {
+      height: 50px;
+      width: 33.33333%;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+.btn:hover {
+      text-shadow: 0 0 5px rgb(238, 238, 238);
+}
+
+#clearBtn {
+      background-color: rgb(253, 53, 53);
+      width: 33.33333%;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+#backBtn {
+      background-color: rgb(0, 211, 123);
+      width: 33.33333%;
+      color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
