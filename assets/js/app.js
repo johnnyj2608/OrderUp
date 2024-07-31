@@ -1,3 +1,7 @@
 function handleButtonClick(sheetName) {
-    console.log(sheetName);
+    document.querySelectorAll('button').forEach(button => {
+        button.classList.remove('selected');
+    });
+
+    document.getElementById(`btn-${sheetName}`).classList.add('selected');
 }

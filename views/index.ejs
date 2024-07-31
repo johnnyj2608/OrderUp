@@ -26,14 +26,27 @@
         <button type="submit">Submit</button>
     </form>
 
-    <h2>Sheet Names</h2>
-    <ul>
-        <% sheetNames.forEach(sheetName => { %>
-            <li>
-                <button onclick="handleButtonClick('<%= sheetName %>')"><%= sheetName %></button>
-            </li>
-        <% }) %>
-    </ul>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h2>Select Insurance</h2>
+                <ul>
+                    <% sheetNames.forEach(sheetName => { %>
+                        <li>
+                            <button id="btn-<%= sheetName %>" 
+                                onclick="handleButtonClick('<%= sheetName %>')" 
+                                class="panel">
+                                <img src="path/to/your/image.png" class="panel-image" />
+                                <span class="panel-text"><%= sheetName %></span>
+                            </button>
+                    <% }) %>
+                </ul>
+            </div>
+            <div class="col">
+               
+            </div>
+        </div>
+    </div>
 
     <script src="assets/js/app.js"></script>
     <script
