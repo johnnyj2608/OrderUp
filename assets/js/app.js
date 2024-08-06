@@ -13,8 +13,9 @@ let back = document.querySelector("#backBtn");
 
 for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', () => {
-        display.innerHTML += buttons[i].innerHTML;
-
+        if (display.innerHTML.length < 3) {
+            display.innerHTML += buttons[i].innerHTML;
+        }
     });
 }
 
