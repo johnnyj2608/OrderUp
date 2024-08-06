@@ -25,7 +25,7 @@ button.selected {
       padding: 10px;
       cursor: pointer;
       width: 100%;
-      height: 50px;
+      height: 100px;
       overflow: hidden;
       transition: background-color 0.3s;
       white-space: nowrap;
@@ -49,8 +49,8 @@ button.selected {
 }
   
 #numberPad {
-      width: 300px;
-      height: 269px;
+      width: 100%;
+      height: 300px;
       position: relative;
       box-shadow: -5px 7px 14px 0px;
 }
@@ -60,15 +60,14 @@ button.selected {
 }
 
 #display {
-      height: 70px;
+      height: 100%;
       width: 100%;
       color: rgb(0, 186, 253);
       background-color: rgb(29, 33,46);
-      font-size: 3em;
-      line-height: 1.5;
+      font-size: 10vw;
       overflow: hidden;
       text-align: center;
-      font-family: "Clocl Alarm";
+      font-family: "Clock Alarm";
 }
 
 #numberSpace {
@@ -77,39 +76,27 @@ button.selected {
       justify-content: space-evenly;
       position: absolute;
       width: 100%;
+      height: 100%;
       background-color: #333;
 
 }
 
-.btn {
-      height: 50px;
+.btn, #clearBtn, #backBtn {
+      height: 25%;
       width: 33.33333%;
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: 3vw;
 }
 
 .btn:hover {
       text-shadow: 0 0 5px rgb(238, 238, 238);
 }
 
-#clearBtn {
+#clearBtn, #backBtn {
       background-color: rgb(253, 53, 53);
-      width: 33.33333%;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-}
-
-#backBtn {
-      background-color: rgb(0, 211, 123);
-      width: 33.33333%;
-      color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
 }
 
 .footer-bar {
