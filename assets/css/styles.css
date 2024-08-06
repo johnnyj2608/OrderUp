@@ -124,3 +124,13 @@ button.selected {
 #nextButton:hover {
       background-color: #0056b3; 
 }
+
+.footer-bar #nextButton.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+  }
+  
+.footer-bar #nextButton {
+      opacity: 1;
+      pointer-events: auto;
+}
