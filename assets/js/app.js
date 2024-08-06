@@ -42,4 +42,30 @@ function updateNextButtonState() {
     }
 }
 
-updateNextButtonState();
+document.getElementById('nextButton').addEventListener('click', async function() {
+    if (!this.classList.contains('disabled')) {
+
+        const panelName = document.querySelector('button.selected')?.innerText || 'none';
+        const displayNumber = document.getElementById('display').innerHTML;
+        
+        try {
+            const response = await fetch('/confirmMember', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ panelName, displayNumber }),
+            });
+
+            const result = await response.json();
+            if (result.exists) {
+                window.location.href = '/menu';
+                
+            } else {
+                alert('The selected panel and display number do not exist.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+});

@@ -4,6 +4,7 @@ const {google} = require("googleapis");
 const app = express();
 
 app.set("view engine", "ejs");
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./"));
 
@@ -28,6 +29,60 @@ app.get("/", async (req, res) => {
     .filter(title => !excludedSheets.includes(title));
 
     res.render("index", { sheetNames });
+});
+
+app.get("/menu", (req, res) => {
+    res.render("menu");
+});
+
+app.post("/confirmMember", async (req, res) => {
+    const { panelName, displayNumber } = req.body;
+
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({version: "v4", auth: client });
+    const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
+
+    try {
+        const spreadsheet = await googleSheets.spreadsheets.get({
+            spreadsheetId,
+        });
+
+        const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title);
+        if (!sheetNames.includes(panelName)) {
+            return res.json({ exists: false });
+        }
+
+        const range = `${panelName}!A:E`;
+        const getRows = await googleSheets.spreadsheets.values.get({
+            spreadsheetId,
+            range,
+        });
+
+        const rows = getRows.data.values || [];
+        let result = { exists: false, cValue: null, eValue: null };
+        
+        // Change to binary search
+        for (const row of rows) {
+            if (row[0] === displayNumber) {
+                result = {
+                    exists: true,
+                    cValue: row[2] || null,
+                    eValue: row[4] || null
+                };
+                break;
+            }
+        }
+        
+        res.json(result);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 app.post("/", async (req, res) => {
