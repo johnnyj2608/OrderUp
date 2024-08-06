@@ -16,13 +16,12 @@ for (let i = 0; i < buttons.length; i++) {
         display.innerHTML += buttons[i].innerHTML;
 
     });
-
-    clear.addEventListener('click', () => {
-        display.innerHTML = "";
-    })
-
-    back.addEventListener('click', () => {
-        display.innerHTML = display.innerHTML.slice(0, -1);
-    })
-    
 }
+
+clear.addEventListener('click', () => {
+    display.innerHTML = "";
+})
+
+back.addEventListener('click', () => {
+    display.innerHTML = display.innerHTML.slice(0, -1);
+})
