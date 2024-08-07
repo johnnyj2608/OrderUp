@@ -59,6 +59,9 @@ document.getElementById('nextButton').addEventListener('click', async function()
 
             const result = await response.json();
             if (result.exists) {
+                sessionStorage.setItem('cValue', result.cValue);
+                sessionStorage.setItem('eValue', result.eValue);
+                
                 window.location.href = '/menu';
                 
             } else {

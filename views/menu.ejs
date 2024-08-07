@@ -22,5 +22,20 @@
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"
     ></script>
+    <script>
+        // This script will run when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const cValue = sessionStorage.getItem('cValue');
+            const eValue = sessionStorage.getItem('eValue');
+
+            if (cValue) {
+                document.getElementById('cValue').innerText = cValue; // Set C Value
+            }
+
+            if (eValue) {
+                document.getElementById('eValue').innerText = eValue; // Set E Value
+            }
+        });
+    </script>
 </body>
 </html>
