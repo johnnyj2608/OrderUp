@@ -16,9 +16,25 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col text-center">
+                <h2>Select Breakfast</h2>
+                <ul>
+                    <% menuData.breakfast.forEach(menuItem => { %>
+                        <li>
+                            <button id="btn-<%= menuItem %>" 
+                                
+                                class="panel">
+                                <img src="path/to/your/image.png" class="panel-image" />
+                                <span class="panel-text"><%= menuItem %></span>
+                            </button>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
                 <h2>Select Lunch</h2>
                 <ul>
-                    <% menuData.forEach(menuItem => { %>
+                    <% menuData.lunch.forEach(menuItem => { %>
                         <li>
                             <button id="btn-<%= menuItem %>" 
                                 
