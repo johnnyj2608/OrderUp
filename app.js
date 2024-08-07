@@ -144,9 +144,8 @@ app.post("/confirmMember", async (req, res) => {
     }
 });
 
-app.post("/", async (req, res) => {
-
-    const {name, breakfast, lunch} = req.body;
+app.post("/submitOrder", async (req, res) => {
+    const { name, selectedBreakfast, selectedLunch } = req.body;
 
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
@@ -157,23 +156,22 @@ app.post("/", async (req, res) => {
     const googleSheets = google.sheets({version: "v4", auth: client });
     const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
 
-    const getRows = await googleSheets.spreadsheets.values.get({
-        auth,
-        spreadsheetId,
-        range: "Menu!A7:E12",
-    });
+    try {
+        await googleSheets.spreadsheets.values.append({
+            auth,
+            spreadsheetId,
+            range: "Response!A2",
+            valueInputOption: "USER_ENTERED",
+            resource: {
+                values: [[name, selectedBreakfast, selectedLunch]],
+            },
+        });
 
-    await googleSheets.spreadsheets.values.append({
-        auth,
-        spreadsheetId,
-        range: "Response!A2",
-        valueInputOption: "USER_ENTERED",
-        resource: {
-            values: [[name, breakfast, lunch]],
-        },
-    });
-
-    res.send("Successfully submitted");
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error:', error);
+        res.json({ success: false });
+    }
 });
 
 app.listen(1337, (req, res) => console.log("Running on 1337!"));

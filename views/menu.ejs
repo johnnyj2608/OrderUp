@@ -24,7 +24,7 @@
                     <% menuData.breakfast.forEach(menuItem => { %>
                         <li>
                             <button id="btn-<%= menuItem %>" 
-                                
+                                onclick="handleBreakfastClick('<%= menuItem %>')" 
                                 class="panel">
                                 <img src="path/to/your/image.png" class="panel-image" />
                                 <span class="panel-text"><%= menuItem %></span>
@@ -40,7 +40,7 @@
                     <% menuData.lunch.forEach(menuItem => { %>
                         <li>
                             <button id="btn-<%= menuItem %>" 
-                                
+                                onclick="handleLunchClick('<%= menuItem %>')" 
                                 class="panel">
                                 <img src="path/to/your/image.png" class="panel-image" />
                                 <span class="panel-text"><%= menuItem %></span>
@@ -52,7 +52,7 @@
     </div>
     
     <div class="footer-bar">
-        <button id="submitButton">Submit</button>
+        <button id="submitButton" class="disabled">Submit</button>
     </div>
 
     <script src="assets/js/menu.js"></script>

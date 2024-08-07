@@ -12,7 +12,7 @@ li {
       margin-bottom: 10px;
 }
 
-button.selected {
+button.selected, button.selectedLunch, button.selectedBreakfast {
       border: 3px solid blue;
 }
 
@@ -112,7 +112,7 @@ button.selected {
       z-index: 1000;
 }
   
-#nextButton {
+#nextButton, #selectButton {
       background-color: #007bff;
       border: none;
       color: white;
@@ -121,16 +121,26 @@ button.selected {
       cursor: pointer;
 }
   
-#nextButton:hover {
+#nextButton:hover, #selectButton:hover {
       background-color: #0056b3; 
 }
 
 .footer-bar #nextButton.disabled {
       opacity: 0.5;
       pointer-events: none;
-  }
+}
   
 .footer-bar #nextButton {
+      opacity: 1;
+      pointer-events: auto;
+}
+
+.footer-bar #submitButton.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+}
+  
+.footer-bar #submitButton {
       opacity: 1;
       pointer-events: auto;
 }
