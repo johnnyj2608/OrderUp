@@ -31,8 +31,43 @@ app.get("/", async (req, res) => {
     res.render("index", { sheetNames });
 });
 
-app.get("/menu", (req, res) => {
-    res.render("menu");
+app.get("/menu", async (req, res) => {
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({ version: "v4", auth: client });
+    const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
+    
+    try {
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const today = daysOfWeek[new Date().getDay()];
+
+        const range = "Menu!A6:E12";
+        const getRows = await googleSheets.spreadsheets.values.get({
+            spreadsheetId,
+            range,
+        });
+
+        const rows = getRows.data.values || [];
+        let menuData = null;
+
+        for (const row of rows) {
+            if (row[0] === today) {
+                menuData = row.slice(1); 
+                break;
+            }
+        }
+        console.log(menuData)
+
+        res.render("menu", { menuData });
+
+    } catch (error) {
+        console.error('Error fetching data from Google Sheets:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 app.post("/confirmMember", async (req, res) => {

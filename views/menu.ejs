@@ -12,6 +12,25 @@
     <h1>Menu Page</h1>
     <p>C Value: <span id="cValue"></span></p>
     <p>E Value: <span id="eValue"></span></p>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col text-center">
+                <h2>Select Lunch</h2>
+                <ul>
+                    <% menuData.forEach(menuItem => { %>
+                        <li>
+                            <button id="btn-<%= menuItem %>" 
+                                
+                                class="panel">
+                                <img src="path/to/your/image.png" class="panel-image" />
+                                <span class="panel-text"><%= menuItem %></span>
+                            </button>
+                    <% }) %>
+                </ul>
+            </div>
+        </div>
+    </div>
     
     <div class="footer-bar">
         <button id="submitButton">Submit</button>
@@ -23,17 +42,16 @@
         crossorigin="anonymous"
     ></script>
     <script>
-        // This script will run when the DOM is fully loaded
         document.addEventListener('DOMContentLoaded', function() {
             const cValue = sessionStorage.getItem('cValue');
             const eValue = sessionStorage.getItem('eValue');
 
             if (cValue) {
-                document.getElementById('cValue').innerText = cValue; // Set C Value
+                document.getElementById('cValue').innerText = cValue;
             }
 
             if (eValue) {
-                document.getElementById('eValue').innerText = eValue; // Set E Value
+                document.getElementById('eValue').innerText = eValue; 
             }
         });
     </script>
