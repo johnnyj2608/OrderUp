@@ -8,6 +8,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./"));
 
+// Select insurance and input member ID
 app.get("/", async (req, res) => {
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
@@ -31,6 +32,7 @@ app.get("/", async (req, res) => {
     res.render("index", { sheetNames });
 });
 
+// Fetch daily menu
 app.get("/menu", async (req, res) => {
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
@@ -66,7 +68,7 @@ app.get("/menu", async (req, res) => {
                 lunchData.push(row);
             }
         }
-        console.log(breakfastAll)
+
         if (breakfastAll === 'TRUE') { 
             breakfastData = breakfastData.flat().filter(item => item.trim() !== '');
         } else {
@@ -83,7 +85,7 @@ app.get("/menu", async (req, res) => {
             breakfast: breakfastData.slice(1),
             lunch: lunchData.slice(1),
         };
-        
+
         res.render("menu", { menuData });
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
@@ -91,7 +93,7 @@ app.get("/menu", async (req, res) => {
     }
 });
 
-
+// Confirm member exists
 app.post("/confirmMember", async (req, res) => {
     const { panelName, displayNumber } = req.body;
 
@@ -121,15 +123,15 @@ app.post("/confirmMember", async (req, res) => {
         });
 
         const rows = getRows.data.values || [];
-        let result = { exists: false, cValue: null, eValue: null };
+        let result = { exists: false, name: null, units: null };
         
         // Change to binary search
         for (const row of rows) {
             if (row[0] === displayNumber) {
                 result = {
                     exists: true,
-                    cValue: row[2] || null,
-                    eValue: row[4] || null
+                    name: row[2] || row[1] || null,
+                    units: row[4] || null
                 };
                 break;
             }
