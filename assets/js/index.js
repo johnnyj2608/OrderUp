@@ -59,11 +59,14 @@ document.getElementById('nextButton').addEventListener('click', async function()
 
             const result = await response.json();
             if (result.exists) {
-                sessionStorage.setItem('name', result.name);
-                sessionStorage.setItem('units', result.units);
+                if (result.units != '0') {
+                    sessionStorage.setItem('name', result.name);
+                    sessionStorage.setItem('units', result.units);
 
-                window.location.href = '/menu';
-                
+                    window.location.href = '/menu';
+                } else {
+                    alert('You have met your weekly quota.');
+                }
             } else {
                 alert('The selected panel and display number do not exist.');
             }
