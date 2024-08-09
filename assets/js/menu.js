@@ -44,9 +44,10 @@ document.getElementById('submitButton').addEventListener('click', async function
     if (!this.classList.contains('disabled')) {
 
         const name = sessionStorage.getItem('name');
-        const selectedBreakfast = document.querySelector('button.selectedBreakfast')?.innerText || 'none';
-        const selectedLunch = document.querySelector('button.selectedLunch')?.innerText || 'none';
         
+        const selectedBreakfast = (document.querySelector('button.selectedBreakfast')?.getAttribute('data-order')) || 'none';
+        const selectedLunch = (document.querySelector('button.selectedLunch')?.getAttribute('data-order')) || 'none';
+
         try {
             const response = await fetch('/submitOrder', {
                 method: 'POST',

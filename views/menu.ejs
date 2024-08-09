@@ -21,11 +21,12 @@
             <div class="col text-center">
                 <h2>Select Breakfast</h2>
                 <ul>
-                    <% menuData.breakfast.forEach(menuItem => { %>
+                    <% menuData.breakfast.forEach((menuItem, index) => { %>
                         <li>
                             <button id="btn-<%= menuItem %>" 
                                 onclick="handleBreakfastClick('<%= menuItem %>')" 
-                                class="panel">
+                                class="panel"
+                                data-order="<%= index %>">
                                 <img src="path/to/your/image.png" class="panel-image" />
                                 <span class="panel-text"><%= menuItem %></span>
                             </button>
@@ -37,11 +38,12 @@
             <div class="col text-center">
                 <h2>Select Lunch</h2>
                 <ul>
-                    <% menuData.lunch.forEach(menuItem => { %>
+                    <% menuData.lunch.forEach((menuItem, index) => { %>
                         <li>
                             <button id="btn-<%= menuItem %>" 
                                 onclick="handleLunchClick('<%= menuItem %>')" 
-                                class="panel">
+                                class="panel"
+                                data-order="<%= index %>">
                                 <img src="path/to/your/image.png" class="panel-image" />
                                 <span class="panel-text"><%= menuItem %></span>
                             </button>

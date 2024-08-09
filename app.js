@@ -24,7 +24,7 @@ app.get("/", async (req, res) => {
         spreadsheetId,
     });
 
-    const excludedSheets = ["Response", "Menu", "QR"];
+    const excludedSheets = ["Breakfast", "Lunch", "Menu", "QR"];
     const sheetNames = spreadsheet.data.sheets
     .map(sheet => sheet.properties.title)
     .filter(title => !excludedSheets.includes(title));
@@ -157,15 +157,8 @@ app.post("/submitOrder", async (req, res) => {
     const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
 
     try {
-        await googleSheets.spreadsheets.values.append({
-            auth,
-            spreadsheetId,
-            range: "Response!A2",
-            valueInputOption: "USER_ENTERED",
-            resource: {
-                values: [[name, selectedBreakfast, selectedLunch]],
-            },
-        });
+        await writeorder(googleSheets, spreadsheetId, "Breakfast", selectedBreakfast, name);
+        await writeorder(googleSheets, spreadsheetId, "Lunch", selectedLunch, name);
 
         res.json({ success: true });
     } catch (error) {
@@ -173,5 +166,18 @@ app.post("/submitOrder", async (req, res) => {
         res.json({ success: false });
     }
 });
+
+async function writeorder(sheets, spreadsheetId, sheetName, columnID, name) {
+    const range = `${sheetName}!${columnID+1}:${columnID+1}`;
+
+    await sheets.spreadsheets.values.append({
+        spreadsheetId,
+        range,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            values: [[name]],
+        },
+    })
+}
 
 app.listen(1337, (req, res) => console.log("Running on 1337!"));
