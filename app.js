@@ -168,16 +168,26 @@ app.post("/submitOrder", async (req, res) => {
 });
 
 async function writeorder(sheets, spreadsheetId, sheetName, columnID, name) {
-    const range = `${sheetName}!${columnID+1}:${columnID+1}`;
+    const columnLetter = String.fromCharCode(65 + parseInt(columnID));
+    const range = `${sheetName}!${columnLetter}:${columnLetter}`;
+
+    const response = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range,
+    });
+
+    const values = response.data.values || [];
+    const nextRow = values.length + 1;
+    const rangeToAppend = `${sheetName}!${columnLetter}${nextRow}`; 
 
     await sheets.spreadsheets.values.append({
         spreadsheetId,
-        range,
+        range: rangeToAppend,
         valueInputOption: "USER_ENTERED",
         resource: {
             values: [[name]],
         },
-    })
+    });
 }
 
 app.listen(1337, (req, res) => console.log("Running on 1337!"));
