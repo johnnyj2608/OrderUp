@@ -45,8 +45,8 @@ function updateNextButtonState() {
 document.getElementById('nextButton').addEventListener('click', async function() {
     if (!this.classList.contains('disabled')) {
 
-        const panelName = document.querySelector('button.selected')?.innerText || 'none';
-        const displayNumber = document.getElementById('display').innerHTML;
+        const insuranceName = document.querySelector('button.selected')?.innerText || 'none';
+        const numberID = document.getElementById('display').innerHTML;
         
         try {
             const response = await fetch('/confirmMember', {
@@ -54,7 +54,7 @@ document.getElementById('nextButton').addEventListener('click', async function()
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ panelName, displayNumber }),
+                body: JSON.stringify({ insuranceName, numberID }),
             });
 
             const result = await response.json();

@@ -95,7 +95,7 @@ app.get("/menu", async (req, res) => {
 
 // Confirm member exists
 app.post("/confirmMember", async (req, res) => {
-    const { panelName, displayNumber } = req.body;
+    const { insuranceName, numberID } = req.body;
 
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
@@ -112,11 +112,11 @@ app.post("/confirmMember", async (req, res) => {
         });
 
         const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title);
-        if (!sheetNames.includes(panelName)) {
+        if (!sheetNames.includes(insuranceName)) {
             return res.json({ exists: false });
         }
 
-        const range = `${panelName}!A:E`;
+        const range = `${insuranceName}!A:E`;
         const getRows = await googleSheets.spreadsheets.values.get({
             spreadsheetId,
             range,
@@ -125,17 +125,26 @@ app.post("/confirmMember", async (req, res) => {
         const rows = getRows.data.values || [];
         let result = { exists: false, name: null, units: null };
         
-        // Change to binary search
-        for (const [index, row] of rows.entries()) {
-            if (row[0] === displayNumber) {
+        let left = 1;
+        let right = rows.length - 1;
+
+        while (left <= right) {
+            const mid = Math.floor((left + right) / 2);
+            const midValue = rows[mid][0]
+
+            if (midValue === numberID) {
                 result = {
                     exists: true,
-                    name: row[2] || row[1] || null,
-                    units: row[4] || null,
-                    insurance: panelName,
-                    rowNumber: index + 1
+                    name: rows[mid][2] || rows[mid][1] || null,
+                    units: rows[mid][4] || null,
+                    insurance: insuranceName,
+                    rowNumber: mid + 1
                 };
-                break;
+                break
+            } else if (midValue < numberID) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
         }
         
