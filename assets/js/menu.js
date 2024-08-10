@@ -63,7 +63,7 @@ document.getElementById('submitButton').addEventListener('click', async function
             if (result.success) {
                 window.location.href = '/';
             } else {
-                alert('Failed to submit order.');
+                alert(result.message);
             }
         } catch (error) {
             console.error('Error:', error);

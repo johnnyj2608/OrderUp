@@ -67,10 +67,10 @@ document.getElementById('nextButton').addEventListener('click', async function()
 
                     window.location.href = '/menu';
                 } else {
-                    alert('You have met your weekly quota.');
+                    alert(result.message);
                 }
             } else {
-                alert('The selected panel and display number do not exist.');
+                alert(result.message);
             }
         } catch (error) {
             console.error('Error:', error);

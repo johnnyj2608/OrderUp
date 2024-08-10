@@ -14,6 +14,7 @@ function replenishUnits() {
         const scheduleParsed = schedule.replace(/\./g, '');
         const units = scheduleParsed.length;
         sheet.getRange(i, 5).setValue(units)
+        sheet.getRange(i, 6).setValue(false)
       }
     }
   })

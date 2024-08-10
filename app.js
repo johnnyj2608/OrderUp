@@ -123,7 +123,7 @@ app.post("/confirmMember", async (req, res) => {
         });
 
         const rows = getRows.data.values || [];
-        let result = { exists: false, name: null, units: null };
+        let result = { exists: false, name: null, units: null, message: "Member ID not found." };
         
         let left = 1;
         let right = rows.length - 1;
@@ -132,13 +132,16 @@ app.post("/confirmMember", async (req, res) => {
             const mid = Math.floor((left + right) / 2);
             const midValue = rows[mid][0]
 
+            const units = rows[mid][4];
+
             if (midValue === numberID) {
                 result = {
                     exists: true,
                     name: rows[mid][2] || rows[mid][1] || null,
-                    units: rows[mid][4] || null,
+                    units: units,
                     insurance: insuranceName,
-                    rowNumber: mid + 1
+                    rowNumber: mid + 1,
+                    message: units > 0 ? "Member ID found." : "Member has 0 weekly units remaining."
                 };
                 break
             } else if (midValue < numberID) {
@@ -168,14 +171,18 @@ app.post("/submitOrder", async (req, res) => {
     const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
 
     try {
-        const memberUnitsRange = `${insurance}!E${rowNumber}`;
+        const memberUnitsRange = `${insurance}!E${rowNumber}:F${rowNumber}`;
         const insuranceResponse = await googleSheets.spreadsheets.values.get({
             spreadsheetId,
             range: memberUnitsRange,
         });
-        const insuranceValue = insuranceResponse.data.values ? parseFloat(insuranceResponse.data.values[0][0]) : 0;
-        if (insuranceValue > 0) {
-
+        const values = insuranceResponse.data.values ? insuranceResponse.data.values[0] : [0, 'FALSE'];
+        const units = parseFloat(values[0]) || 0;
+        const orderedToday = values[1] === 'TRUE';
+        if (units > 0) {
+            if (orderedToday) {
+                return res.json({ success: false, message: "Member has already ordered today." });
+            }
             await writeorder(googleSheets, spreadsheetId, "Breakfast", selectedBreakfast, name);
             await writeorder(googleSheets, spreadsheetId, "Lunch", selectedLunch, name);
 
@@ -184,7 +191,7 @@ app.post("/submitOrder", async (req, res) => {
                 range: memberUnitsRange,
                 valueInputOption: "USER_ENTERED",
                 resource: {
-                    values: [[insuranceValue - 1]],
+                    values: [[units - 1, 'TRUE']],
                 },
             });
 
