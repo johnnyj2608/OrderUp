@@ -62,6 +62,8 @@ document.getElementById('nextButton').addEventListener('click', async function()
                 if (result.units != '0') {
                     sessionStorage.setItem('name', result.name);
                     sessionStorage.setItem('units', result.units);
+                    sessionStorage.setItem('insurance', result.insurance);
+                    sessionStorage.setItem('rowNumber', result.rowNumber);
 
                     window.location.href = '/menu';
                 } else {

@@ -126,12 +126,14 @@ app.post("/confirmMember", async (req, res) => {
         let result = { exists: false, name: null, units: null };
         
         // Change to binary search
-        for (const row of rows) {
+        for (const [index, row] of rows.entries()) {
             if (row[0] === displayNumber) {
                 result = {
                     exists: true,
                     name: row[2] || row[1] || null,
-                    units: row[4] || null
+                    units: row[4] || null,
+                    insurance: panelName,
+                    rowNumber: index + 1
                 };
                 break;
             }
@@ -145,7 +147,7 @@ app.post("/confirmMember", async (req, res) => {
 });
 
 app.post("/submitOrder", async (req, res) => {
-    const { name, selectedBreakfast, selectedLunch } = req.body;
+    const { name, selectedBreakfast, selectedLunch, insurance, rowNumber } = req.body;
 
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
@@ -157,10 +159,31 @@ app.post("/submitOrder", async (req, res) => {
     const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
 
     try {
-        await writeorder(googleSheets, spreadsheetId, "Breakfast", selectedBreakfast, name);
-        await writeorder(googleSheets, spreadsheetId, "Lunch", selectedLunch, name);
+        const memberUnitsRange = `${insurance}!E${rowNumber}`;
+        const insuranceResponse = await googleSheets.spreadsheets.values.get({
+            spreadsheetId,
+            range: memberUnitsRange,
+        });
+        const insuranceValue = insuranceResponse.data.values ? parseFloat(insuranceResponse.data.values[0][0]) : 0;
+        if (insuranceValue > 0) {
 
-        res.json({ success: true });
+            await writeorder(googleSheets, spreadsheetId, "Breakfast", selectedBreakfast, name);
+            await writeorder(googleSheets, spreadsheetId, "Lunch", selectedLunch, name);
+
+            await googleSheets.spreadsheets.values.update({
+                spreadsheetId,
+                range: memberUnitsRange,
+                valueInputOption: "USER_ENTERED",
+                resource: {
+                    values: [[insuranceValue - 1]],
+                },
+            });
+
+            res.json({ success: true });
+        } else {
+            res.json({ success: false, message: "Insufficient insurance units to place order." });
+        }
+
     } catch (error) {
         console.error('Error:', error);
         res.json({ success: false });
