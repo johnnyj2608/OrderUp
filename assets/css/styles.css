@@ -4,36 +4,22 @@ body {
 }
 
 /* Main */
-#main-page {
-      cursor: pointer;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0, 0, 0, 0.5);
-  }
-
-.welcome-bar, .continue-bar {
-      height: 10vh;
+.header, .footer {
+      height: 7.5vh;
       background-color: rgb(105, 45, 55);
       color: white;
-  }
+}
 
 .wallpaper {
-      height: 80vh; 
+      height: 85vh; 
       background: url('../img/ASCC.jpg') no-repeat center center;
       background-size: cover;
 }
 
 /* Index */
-#index-page {
-      display: none;
-  }
+.member {
+    height: 85vh;
+}
 
 ul {
       list-style-type: none;
@@ -130,19 +116,6 @@ button.selected, button.selectedLunch, button.selectedBreakfast {
 #clearBtn, #backBtn {
       background-color: rgb(253, 53, 53);
 }
-
-.footer-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
-      z-index: 999;
-}
   
 #nextButton, #selectButton {
       background-color: #007bff;
@@ -157,22 +130,12 @@ button.selected, button.selectedLunch, button.selectedBreakfast {
       background-color: #0056b3; 
 }
 
-.footer-bar #nextButton.disabled {
+#nextButton.disabled, #submitButton.disabled {
       opacity: 0.5;
       pointer-events: none;
 }
   
-.footer-bar #nextButton {
-      opacity: 1;
-      pointer-events: auto;
-}
-
-.footer-bar #submitButton.disabled {
-      opacity: 0.5;
-      pointer-events: none;
-}
-  
-.footer-bar #submitButton {
+#nextButton, #submitButton {
       opacity: 1;
       pointer-events: auto;
 }

@@ -1,6 +1,6 @@
 function showIndexPage() {
-    document.getElementById('main-page').style.display = 'none';
-    document.getElementById('index-page').style.display = 'block';
+    document.getElementById('wallpaper-page').style.display = 'none';
+    document.getElementById('main-page').style.display = 'block';
 }
 
 function handleButtonClick(sheetName) {
@@ -70,7 +70,21 @@ document.getElementById('nextButton').addEventListener('click', async function()
                     sessionStorage.setItem('insurance', result.insurance);
                     sessionStorage.setItem('rowNumber', result.rowNumber);
 
-                    window.location.href = '/menu';
+                    const contentResponse = await fetch('/menu', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ name: result.name, units: result.units }),
+                    });
+                    
+                    const contentResult = await contentResponse.text();
+
+                    document.getElementById('dynamic-content').innerHTML = contentResult;
+
+                    const script = document.createElement('script');
+                    script.src = 'assets/js/menu.js';
+                    document.body.appendChild(script);
                 } else {
                     alert(result.message);
                 }

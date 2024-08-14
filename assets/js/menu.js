@@ -16,19 +16,6 @@ function handleLunchClick(menuItem) {
     updateSubmitButtonState();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const name = sessionStorage.getItem('name');
-    const units = sessionStorage.getItem('units');
-
-    if (name) {
-        document.getElementById('name').innerText = name;
-    }
-
-    if (units) {
-        document.getElementById('units').innerText = units; 
-    }
-});
-
 function updateSubmitButtonState() {
     const isBreakfastSelected = document.querySelector('button.panel.selectedBreakfast') !== null;
     const isLunchSelected = document.querySelector('button.panel.selectedLunch') !== null;

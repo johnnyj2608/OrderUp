@@ -7,75 +7,21 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
 </head>
-<body onclick="showIndexPage()">
-    <!-- Main Page -->
-    <div id="main-page">
+<body>
+    <header>
         <div class="container-fluid">
-            <div class="row welcome-bar align-items-center">
+            <div class="row header align-items-center">
                 <div class="col text-center">
                     <h1>American Senior Care Corporation</h1>
                 </div>
             </div>
-            <div class="row wallpaper">
-                <div class="col">
-                    <!-- Image Wallpaper -->
-                </div>
-            </div>
-            <div class="row continue-bar align-items-center">
-                <div class="col text-center">
-                    <h1>Click To Continue</h1>
-                </div>
+            <div id="dynamic-content">
+                <%- include('main') %>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- Index Page -->
-    <div id="index-page">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col text-center">
-                    <h2>Select Insurance</h2>
-                    <ul>
-                        <% sheetNames.forEach(sheetName => { %>
-                            <li>
-                                <button id="btn-<%= sheetName %>" 
-                                    onclick="handleButtonClick('<%= sheetName %>')" 
-                                    class="panel">
-                                    <img src="path/to/your/image.png" class="panel-image" />
-                                    <span class="panel-text"><%= sheetName %></span>
-                                </button>
-                        <% }) %>
-                    </ul>
-                </div>
-                <div class="col text-center align-items-center">
-                    <h2>Select ID</h2>
-                    <div id="numberPad">
-                        <div id="display"></div>
-                        <div id="numberSpace">
-                            <div class="btn">1</div>
-                            <div class="btn">2</div>
-                            <div class="btn">3</div>
-                            <div class="btn">4</div>
-                            <div class="btn">5</div>
-                            <div class="btn">6</div>
-                            <div class="btn">7</div>
-                            <div class="btn">8</div>
-                            <div class="btn">9</div>
-                            <div id="clearBtn">Clear</div>
-                            <div class="btn">0</div>
-                            <div id="backBtn">Back</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bar">
-        <button id="nextButton" class="disabled">Next</button>
-    </div>
-
-    <script src="assets/js/index.js"></script>
+    <script src="assets/js/main.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

@@ -33,7 +33,9 @@ app.get("/", async (req, res) => {
 });
 
 // Fetch daily menu
-app.get("/menu", async (req, res) => {
+app.post("/menu", async (req, res) => {
+    const { name, units } = req.body;
+
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
         scopes: "https://www.googleapis.com/auth/spreadsheets",
@@ -113,7 +115,8 @@ app.get("/menu", async (req, res) => {
             }
         };
 
-        res.render("menu", { menuData });
+        res.render("menu", { name, units, menuData });
+
     } catch (error) {
         console.error('Error fetching data from Google Sheets:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -176,8 +179,8 @@ app.post("/confirmMember", async (req, res) => {
             } else {
                 right = mid - 1;
             }
-        }
-        
+        };
+
         res.json(result);
     } catch (error) {
         console.error('Error:', error);

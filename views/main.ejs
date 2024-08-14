@@ -1,0 +1,60 @@
+<div onclick="showIndexPage()">
+    <!-- Wallpaper Page -->
+    <div id="wallpaper-page">
+        <div class="row wallpaper">
+            <div class="col">
+                <!-- Image Wallpaper -->
+            </div>
+        </div>
+        <div class="row footer align-items-center">
+            <div class="col text-center">
+                <h1>Click To Continue</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Page -->
+    <div id="main-page" style="display:none;">
+        <div class="row member">
+            <div class="col text-center">
+                <h2>Select Insurance</h2>
+                <ul>
+                    <% sheetNames.forEach(sheetName => { %>
+                        <li>
+                            <button id="btn-<%= sheetName %>" 
+                                onclick="handleButtonClick('<%= sheetName %>')" 
+                                class="panel">
+                                <!-- <img src="path/to/your/image.png" class="panel-image" /> -->
+                                <span class="panel-text"><%= sheetName %></span>
+                            </button>
+                    <% }) %>
+                </ul>
+            </div>
+            <div class="col text-center align-items-center">
+                <h2>Select ID</h2>
+                <div id="numberPad">
+                    <div id="display"></div>
+                    <div id="numberSpace">
+                        <div class="btn">1</div>
+                        <div class="btn">2</div>
+                        <div class="btn">3</div>
+                        <div class="btn">4</div>
+                        <div class="btn">5</div>
+                        <div class="btn">6</div>
+                        <div class="btn">7</div>
+                        <div class="btn">8</div>
+                        <div class="btn">9</div>
+                        <div id="clearBtn">Clear</div>
+                        <div class="btn">0</div>
+                        <div id="backBtn">Back</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row footer align-items-center">
+            <div class="col text-center">
+                <button id="nextButton" class="disabled">Next Page</button>
+            </div>
+        </div>
+    </div>
+</div>
