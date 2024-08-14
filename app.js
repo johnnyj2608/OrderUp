@@ -8,12 +8,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./"));
 
-app.get("/", (req, res) => {
-    res.render("main");
-});
-
 // Select insurance and input member ID
-app.get("/index", async (req, res) => {
+app.get("/", async (req, res) => {
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
         scopes: "https://www.googleapis.com/auth/spreadsheets",

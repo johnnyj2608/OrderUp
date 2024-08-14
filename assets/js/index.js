@@ -1,3 +1,8 @@
+function showIndexPage() {
+    document.getElementById('main-page').style.display = 'none';
+    document.getElementById('index-page').style.display = 'block';
+}
+
 function handleButtonClick(sheetName) {
     document.querySelectorAll('button.panel').forEach(button => {
         button.classList.remove('selected');
