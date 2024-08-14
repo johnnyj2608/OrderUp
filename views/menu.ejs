@@ -21,14 +21,14 @@
             <div class="col text-center">
                 <h2>Select Breakfast</h2>
                 <ul>
-                    <% menuData.breakfast.forEach((menuItem, index) => { %>
+                    <% menuData.breakfast.titles.forEach((title, index) => { %>
                         <li>
-                            <button id="btn-<%= menuItem %>" 
-                                onclick="handleBreakfastClick('<%= menuItem %>')" 
+                            <button id="btn-<%= title %>" 
+                                onclick="handleBreakfastClick('<%= title %>')" 
                                 class="panel"
                                 data-order="<%= index %>">
-                                <img src="path/to/your/image.png" class="panel-image" />
-                                <span class="panel-text"><%= menuItem %></span>
+                                <img src= "<%= menuData.breakfast.images[index] %>" class="panel-image" />
+                                <span class="panel-text"><%= title %></span>
                             </button>
                     <% }) %>
                 </ul>
@@ -38,14 +38,14 @@
             <div class="col text-center">
                 <h2>Select Lunch</h2>
                 <ul>
-                    <% menuData.lunch.forEach((menuItem, index) => { %>
+                    <% menuData.lunch.titles.forEach((title, index) => { %>
                         <li>
-                            <button id="btn-<%= menuItem %>" 
-                                onclick="handleLunchClick('<%= menuItem %>')" 
+                            <button id="btn-<%= title %>" 
+                                onclick="handleLunchClick('<%= title %>')" 
                                 class="panel"
                                 data-order="<%= index %>">
-                                <img src="path/to/your/image.png" class="panel-image" />
-                                <span class="panel-text"><%= menuItem %></span>
+                                <img src= "<%= menuData.lunch.images[index] %>" class="panel-image" />
+                                <span class="panel-text"><%= title %></span>
                             </button>
                     <% }) %>
                 </ul>

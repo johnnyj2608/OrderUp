@@ -103,8 +103,14 @@ app.get("/menu", async (req, res) => {
           }
 
         const menuData = {
-            breakfast: breakfastTitle,
-            lunch: lunchTitle,
+            breakfast: {
+                images: breakfastImg,
+                titles: breakfastTitle,
+            },
+            lunch: {
+                images: lunchImg,
+                titles: lunchTitle,
+            }
         };
 
         res.render("menu", { menuData });
