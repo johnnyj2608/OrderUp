@@ -8,35 +8,53 @@
     <div class="row">
         <div class="col text-center">
             <h2>Select Breakfast</h2>
-            <ul>
+            <div class="container">
                 <% menuData.breakfast.titles.forEach((title, index) => { %>
-                    <li>
+                    <% if (index % 4 === 0) { %>
+                        <div class="row">
+                    <% } %>
+                    
+                    <div class="col-md-3 mb-3">
                         <button id="btn-<%= title %>" 
                             onclick="handleBreakfastClick('<%= title %>')" 
-                            class="panel"
+                            class="panel w-100" 
                             data-order="<%= index %>">
-                            <img src= "<%= menuData.breakfast.images[index] %>" class="panel-image" />
+                            <img src="<%= menuData.breakfast.images[index] %>" class="panel-image w-100" />
                             <span class="panel-text"><%= title %></span>
                         </button>
+                    </div>
+    
+                    <% if ((index + 1) % 4 === 0 || index === menuData.breakfast.titles.length - 1) { %>
+                        </div>
+                    <% } %>
                 <% }) %>
-            </ul>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col text-center">
             <h2>Select Lunch</h2>
-            <ul>
+            <div class="container">
                 <% menuData.lunch.titles.forEach((title, index) => { %>
-                    <li>
+                    <% if (index % 4 === 0) { %>
+                        <div class="row">
+                    <% } %>
+                    
+                    <div class="col-md-3 mb-3">
                         <button id="btn-<%= title %>" 
                             onclick="handleLunchClick('<%= title %>')" 
-                            class="panel"
+                            class="panel w-100" 
                             data-order="<%= index %>">
-                            <img src= "<%= menuData.lunch.images[index] %>" class="panel-image" />
+                            <img src="<%= menuData.lunch.images[index] %>" class="panel-image w-100" />
                             <span class="panel-text"><%= title %></span>
                         </button>
+                    </div>
+    
+                    <% if ((index + 1) % 4 === 0 || index === menuData.breakfast.titles.length - 1) { %>
+                        </div>
+                    <% } %>
                 <% }) %>
-            </ul>
+            </div>
         </div>
     </div>
 </div>
