@@ -1,4 +1,4 @@
-body {
+* {
       margin: 0;
       padding: 0;
       overscroll-behavior: none;
@@ -10,6 +10,12 @@ body {
       color: white;
 }
 
+.footer {
+      position: fixed;
+      width: 100%;
+      z-index: 1001;
+}
+
 /* Wallpaper */
 .wallpaper {
       height: 85vh; 
@@ -18,7 +24,7 @@ body {
 }
 
 /* Main */
-.member {
+.content {
     height: 85vh;
 }
 
@@ -118,7 +124,7 @@ button.selected, button.selectedLunch, button.selectedBreakfast {
       background-color: rgb(253, 53, 53);
 }
   
-#nextButton, #selectButton {
+#nextButton, #submitButton {
       background-color: #007bff;
       border: none;
       color: white;
@@ -127,7 +133,7 @@ button.selected, button.selectedLunch, button.selectedBreakfast {
       cursor: pointer;
 }
   
-#nextButton:hover, #selectButton:hover {
+#nextButton:hover, #submitButton:hover {
       background-color: #0056b3; 
 }
 

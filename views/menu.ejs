@@ -1,51 +1,47 @@
-<div>
-    <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <p>Hello <%= name %>,</p>
-                <p>You may order <strong><%= units %></strong> more times this week</p>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col text-center">
-                <h2>Select Breakfast</h2>
-                <ul>
-                    <% menuData.breakfast.titles.forEach((title, index) => { %>
-                        <li>
-                            <button id="btn-<%= title %>" 
-                                onclick="handleBreakfastClick('<%= title %>')" 
-                                class="panel"
-                                data-order="<%= index %>">
-                                <img src= "<%= menuData.breakfast.images[index] %>" class="panel-image" />
-                                <span class="panel-text"><%= title %></span>
-                            </button>
-                    <% }) %>
-                </ul>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col text-center">
-                <h2>Select Lunch</h2>
-                <ul>
-                    <% menuData.lunch.titles.forEach((title, index) => { %>
-                        <li>
-                            <button id="btn-<%= title %>" 
-                                onclick="handleLunchClick('<%= title %>')" 
-                                class="panel"
-                                data-order="<%= index %>">
-                                <img src= "<%= menuData.lunch.images[index] %>" class="panel-image" />
-                                <span class="panel-text"><%= title %></span>
-                            </button>
-                    <% }) %>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row footer align-items-center">
+<div class="content">
+    <div class="row">
         <div class="col text-center">
-            <button id="submitButton" class="disabled">Submit Order</button>
+            <h1>Hello <%= name %>,</h1>
+            <h3>You may order <strong><%= units %></strong> more times this week</h3>
         </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <h2>Select Breakfast</h2>
+            <ul>
+                <% menuData.breakfast.titles.forEach((title, index) => { %>
+                    <li>
+                        <button id="btn-<%= title %>" 
+                            onclick="handleBreakfastClick('<%= title %>')" 
+                            class="panel"
+                            data-order="<%= index %>">
+                            <img src= "<%= menuData.breakfast.images[index] %>" class="panel-image" />
+                            <span class="panel-text"><%= title %></span>
+                        </button>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <h2>Select Lunch</h2>
+            <ul>
+                <% menuData.lunch.titles.forEach((title, index) => { %>
+                    <li>
+                        <button id="btn-<%= title %>" 
+                            onclick="handleLunchClick('<%= title %>')" 
+                            class="panel"
+                            data-order="<%= index %>">
+                            <img src= "<%= menuData.lunch.images[index] %>" class="panel-image" />
+                            <span class="panel-text"><%= title %></span>
+                        </button>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row footer align-items-center">
+    <div class="col text-center">
+        <button id="submitButton" class="disabled">Submit Order</button>
     </div>
 </div>
