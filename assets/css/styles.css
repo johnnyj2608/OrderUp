@@ -1,22 +1,23 @@
 body {
       margin: 0;
       padding: 0;
+      overscroll-behavior: none;
 }
 
-/* Main */
 .header, .footer {
       height: 7.5vh;
       background-color: rgb(105, 45, 55);
       color: white;
 }
 
+/* Wallpaper */
 .wallpaper {
       height: 85vh; 
       background: url('../img/ASCC.jpg') no-repeat center center;
       background-size: cover;
 }
 
-/* Index */
+/* Main */
 .member {
     height: 85vh;
 }
