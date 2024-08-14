@@ -3,6 +3,24 @@ body {
       padding: 0;
 }
 
+/* Main */
+#main-page {
+      cursor: pointer;
+}  
+
+.welcome-bar, .continue-bar {
+      height: 10vh;
+      background-color: rgb(105, 45, 55);
+      color: white;
+  }
+
+.wallpaper {
+      height: 80vh; 
+      background: url('../img/ASCC.jpg') no-repeat center center;
+      background-size: cover;
+}
+
+/* Index */
 ul {
       list-style-type: none;
       padding: 0;
