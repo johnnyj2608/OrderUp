@@ -1,14 +1,13 @@
 <div class="content">
     <div class="row">
         <div class="col text-center">
-            <h1>Hello <%= name %>,</h1>
-            <h3>You may order <strong><%= units %></strong> more times this week</h3>
+            <h3>Hello <%= name %>, you may order <strong><%= units %></strong> more times this week</h3>
         </div>
     </div>
     <div class="row">
-        <div class="col text-center">
-            <h2>Select Breakfast</h2>
+        <div class="col">
             <div class="container">
+                <h2>Breakfast</h2>
                 <% menuData.breakfast.titles.forEach((title, index) => { %>
                     <% if (index % 4 === 0) { %>
                         <div class="row">
@@ -19,8 +18,8 @@
                             onclick="handleBreakfastClick('<%= title %>')" 
                             class="panel w-100" 
                             data-order="<%= index %>">
-                            <img src="<%= menuData.breakfast.images[index] %>" class="panel-image w-100" />
-                            <span class="panel-text"><%= title %></span>
+                            <img src="<%= menuData.breakfast.images[index] || '/assets/img/crown.png' %>" class="panel-img w-100" />
+                            <h5 class="panel-title"><%= title %></h5>
                         </button>
                     </div>
     
@@ -32,9 +31,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col text-center">
-            <h2>Select Lunch</h2>
+        <div class="col">
             <div class="container">
+                <h2>Lunch</h2>
                 <% menuData.lunch.titles.forEach((title, index) => { %>
                     <% if (index % 4 === 0) { %>
                         <div class="row">
@@ -45,12 +44,12 @@
                             onclick="handleLunchClick('<%= title %>')" 
                             class="panel w-100" 
                             data-order="<%= index %>">
-                            <img src="<%= menuData.lunch.images[index] %>" class="panel-image w-100" />
-                            <span class="panel-text"><%= title %></span>
+                            <img src="<%= menuData.lunch.images[index] || '/assets/img/crown.png' %>"  class="panel-img w-100" />
+                            <h5 class="panel-title"><%= title %></h5>
                         </button>
                     </div>
     
-                    <% if ((index + 1) % 4 === 0 || index === menuData.breakfast.titles.length - 1) { %>
+                    <% if ((index + 1) % 4 === 0 || index === menuData.lunch.titles.length - 1) { %>
                         </div>
                     <% } %>
                 <% }) %>
