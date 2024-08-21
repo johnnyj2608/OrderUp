@@ -5,7 +5,7 @@
 }
 
 .header, .footer {
-      height: 7.5vh;
+      height: 7vh;
       background-color: rgb(105, 20, 35, 0.9);
       color: white;
       width: 100%;
@@ -14,10 +14,12 @@
       text-align: center;
       left: 0px;
       margin-left: 0px !important;
+      overflow: hidden;
 }
 
 .header {
       top: 0px;
+      font-size: 2vw;
 }
 
 .footer {
@@ -26,16 +28,16 @@
 
 /* Wallpaper */
 .wallpaper {
-      margin-top: 7.5vh;
-      height: 85vh; 
+      margin-top: 7vh;
+      height: 86vh; 
       background: url('../img/ASCC.jpg') no-repeat center center;
       background-size: cover;
 }
 
 /* Main */
 .content {
-      margin-top: 7.5vh;
-      margin-bottom: 7.5vh;
+      margin-top: 7vh;
+      margin-bottom: 7vh;
 }
 
 button.selected, button.selectedLunch, button.selectedBreakfast {
