@@ -13,7 +13,7 @@ function handleButtonClick(sheetName) {
 }
 
 let display = document.querySelector("#display");
-let buttons = document.querySelectorAll('.btn');
+let buttons = document.querySelectorAll('.numBtn');
 let clear = document.querySelector("#clearBtn");
 let back = document.querySelector("#backBtn");
 

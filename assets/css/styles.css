@@ -8,20 +8,25 @@
       height: 7.5vh;
       background-color: rgb(105, 20, 35, 0.9);
       color: white;
+      width: 100%;
+      position: fixed;
+      z-index: 1001;
+      text-align: center;
+      left: 0px;
+      margin-left: 0px !important;
+}
+
+.header {
+      top: 0px;
 }
 
 .footer {
-      text-align: center;
-      position: fixed;
-      width: 100%;
-      z-index: 1001;
-      left: 0px;
       bottom: 0px;
-      margin-left: 0px !important;
 }
 
 /* Wallpaper */
 .wallpaper {
+      margin-top: 7.5vh;
       height: 85vh; 
       background: url('../img/ASCC.jpg') no-repeat center center;
       background-size: cover;
@@ -29,7 +34,8 @@
 
 /* Main */
 .content {
-    margin-bottom: 7vh;
+      margin-top: 7.5vh;
+      margin-bottom: 7.5vh;
 }
 
 button.selected, button.selectedLunch, button.selectedBreakfast {
@@ -72,51 +78,57 @@ button.selected, button.selectedLunch, button.selectedBreakfast {
 button:focus, .panel:focus, .btn:focus {
       outline: none;
 }
-  
-#numberPad {
-      width: 100%;
-      height: 300px;
-      position: relative;
-}
 
-#numberPad div:hover {
-      cursor: pointer;
+#numberPad {
+      width: 45vw; 
+      height: 80vh;
+      position: fixed; 
+      right: 2.5%;
+      top: 50%; 
+      transform: translateY(-50%);
+      background-color: #333; 
+      display: flex;
+      flex-direction: column; 
 }
 
 #display {
-      height: 100%;
+      height: 40%;
       width: 100%;
-      color: rgb(0, 186, 253);
-      background-color: rgb(29, 33,46);
-      font-size: 10vw;
-      overflow: hidden;
+      color: white;
+      background-color: rgb(29, 33, 46);
+      font-size: 20vw;
       text-align: center;
       font-family: "Clock Alarm";
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 0.1px solid white;
 }
 
 #numberSpace {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-evenly;
-      position: absolute;
+      position: relative;
       width: 100%;
-      height: 100%;
+      height: 60%; 
       background-color: #333;
-
 }
 
-.btn, #clearBtn, #backBtn {
+.numBtn, #clearBtn, #backBtn {
       height: 25%;
       width: 33.33333%;
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 3vw;
+      font-size: 5vw;
+      border: 0.1px solid white;
 }
 
-.btn:hover {
+.numBtn:hover {
       text-shadow: 0 0 5px rgb(238, 238, 238);
+      cursor: pointer;
 }
 
 #clearBtn, #backBtn {
