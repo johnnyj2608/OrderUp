@@ -90,7 +90,7 @@ button:focus, .panel:focus, .btn:focus {
       transform: translateY(-50%);
       background-color: #333; 
       display: flex;
-      flex-direction: column; 
+      flex-direction: column;
 }
 
 #display {
@@ -98,7 +98,7 @@ button:focus, .panel:focus, .btn:focus {
       width: 100%;
       color: white;
       background-color: rgb(29, 33, 46);
-      font-size: 20vw;
+      font-size: 15vw;
       text-align: center;
       font-family: "Clock Alarm";
       display: flex;
@@ -126,11 +126,11 @@ button:focus, .panel:focus, .btn:focus {
       align-items: center;
       font-size: 5vw;
       border: 0.1px solid white;
+      cursor: pointer;
 }
 
 .numBtn:hover {
       text-shadow: 0 0 5px rgb(238, 238, 238);
-      cursor: pointer;
 }
 
 #clearBtn, #backBtn {
