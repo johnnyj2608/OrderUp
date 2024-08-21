@@ -28,15 +28,6 @@
     height: 85vh;
 }
 
-ul {
-      list-style-type: none;
-      padding: 0;
-}
-  
-li {
-      margin-bottom: 10px;
-}
-
 button.selected, button.selectedLunch, button.selectedBreakfast {
       border: 4px solid blue;
 }
@@ -55,19 +46,23 @@ button.selected, button.selectedLunch, button.selectedBreakfast {
 .panel-img {
       width: 100%;
       height: 120px;
-      object-fit: cover;
+      object-fit: fill;
       -webkit-user-drag: none;
+      border: 1px solid #333;
+}
+
+.img-padding {
+      padding: 5px;
 }
   
 .panel-title {
       width: 100%;
-      height: 30px;
+      flex-grow: 1;
       margin: 0;
       padding: 0;
       display: flex;
       align-items: center; 
       justify-content: center; 
-      box-sizing: border-box; 
 }
 
 button:focus, .panel:focus, .btn:focus {
