@@ -1,65 +1,92 @@
-<div class="content">
-    <div class="row">
-        <div class="col text-center">
-            <h3>Hello <%= name %>, you may order <strong><%= units %></strong> more times this week</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Up</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row header align-items-center">
+            <div class="col text-center">
+                <h1>American Senior Care Corporation</h1>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="container">
-                <h2>Breakfast</h2>
-                <% menuData.breakfast.titles.forEach((title, index) => { %>
-                    <% if (index % 4 === 0) { %>
-                        <div class="row">
-                    <% } %>
-                    
-                    <div class="col-md-3 mb-3">
-                        <button id="btn-<%= title %>" 
-                            onclick="handleBreakfastClick('<%= title %>')" 
-                            class="panel w-100" 
-                            data-order="<%= index %>">
-                            <img src="<%= menuData.breakfast.images[index] || '/assets/img/crown.png' %>" class="panel-img w-100" />
-                            <h5 class="panel-title"><%= title %></h5>
-                        </button>
+
+        <div class="content">
+            <div class="row">
+                <div class="col text-center">
+                    <h3>Hello <span id="name"></span>, you may order 
+                        <strong><span id="units"></span></strong> more times this week</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="container">
+                        <h2>Breakfast</h2>
+                        <% menuData.breakfast.titles.forEach((title, index) => { %>
+                            <% if (index % 4 === 0) { %>
+                                <div class="row">
+                            <% } %>
+                            
+                            <div class="col-md-3 mb-3">
+                                <button id="btn-<%= title %>" 
+                                    onclick="handleBreakfastClick('<%= title %>')" 
+                                    class="panel w-100" 
+                                    data-order="<%= index %>">
+                                    <img src="<%= menuData.breakfast.images[index] || '/assets/img/crown.png' %>" class="panel-img w-100" />
+                                    <h5 class="panel-title"><%= title %></h5>
+                                </button>
+                            </div>
+            
+                            <% if ((index + 1) % 4 === 0 || index === menuData.breakfast.titles.length - 1) { %>
+                                </div>
+                            <% } %>
+                        <% }) %>
                     </div>
-    
-                    <% if ((index + 1) % 4 === 0 || index === menuData.breakfast.titles.length - 1) { %>
-                        </div>
-                    <% } %>
-                <% }) %>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="container">
+                        <h2>Lunch</h2>
+                        <% menuData.lunch.titles.forEach((title, index) => { %>
+                            <% if (index % 4 === 0) { %>
+                                <div class="row">
+                            <% } %>
+                            
+                            <div class="col-md-3 mb-3">
+                                <button id="btn-<%= title %>" 
+                                    onclick="handleLunchClick('<%= title %>')" 
+                                    class="panel w-100" 
+                                    data-order="<%= index %>">
+                                    <img src="<%= menuData.lunch.images[index] || '/assets/img/crown.png' %>"  class="panel-img w-100" />
+                                    <h5 class="panel-title"><%= title %></h5>
+                                </button>
+                            </div>
+            
+                            <% if ((index + 1) % 4 === 0 || index === menuData.lunch.titles.length - 1) { %>
+                                </div>
+                            <% } %>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row footer align-items-center">
+            <div class="col d-flex justify-content-between">
+                <button id="backButton" class="actionButton">Back</button>
+                <button id="submitButton" class="actionButton disabled">Submit Order</button>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <div class="container">
-                <h2>Lunch</h2>
-                <% menuData.lunch.titles.forEach((title, index) => { %>
-                    <% if (index % 4 === 0) { %>
-                        <div class="row">
-                    <% } %>
-                    
-                    <div class="col-md-3 mb-3">
-                        <button id="btn-<%= title %>" 
-                            onclick="handleLunchClick('<%= title %>')" 
-                            class="panel w-100" 
-                            data-order="<%= index %>">
-                            <img src="<%= menuData.lunch.images[index] || '/assets/img/crown.png' %>"  class="panel-img w-100" />
-                            <h5 class="panel-title"><%= title %></h5>
-                        </button>
-                    </div>
-    
-                    <% if ((index + 1) % 4 === 0 || index === menuData.lunch.titles.length - 1) { %>
-                        </div>
-                    <% } %>
-                <% }) %>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row footer align-items-center">
-    <div class="col d-flex justify-content-between">
-        <button id="backButton" class="actionButton">Back</button>
-        <button id="submitButton" class="actionButton disabled">Submit Order</button>
-    </div>
-</div>
+    <script src="assets/js/menu.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"
+    ></script>
+</body>
+</html>

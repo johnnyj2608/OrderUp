@@ -60,11 +60,13 @@ app.get("/", async (req, res) => {
     }
 
     res.render("index", { sheetNames, insuranceImgMap });
-});
+  });
 
 // Fetch daily menu
-app.post("/menu", async (req, res) => {
-    const { name, units } = req.body;
+app.get("/menu", async (req, res) => {
+    const name = req.query.name;
+    const units = req.query.units;
+
     const cacheKey = "menuItems";
     let menuData = cache.get(cacheKey);
 

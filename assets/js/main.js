@@ -63,33 +63,17 @@ document.getElementById('nextButton').addEventListener('click', async function()
             });
 
             const result = await response.json();
-            if (result.exists) {
-                if (result.units != '0') {
-                    sessionStorage.setItem('name', result.name);
-                    sessionStorage.setItem('units', result.units);
-                    sessionStorage.setItem('insurance', result.insurance);
-                    sessionStorage.setItem('rowNumber', result.rowNumber);
+            if (result.exists && result.units != '0') {
+                sessionStorage.setItem('name', result.name);
+                sessionStorage.setItem('units', result.units);
+                sessionStorage.setItem('insurance', result.insurance);
+                sessionStorage.setItem('rowNumber', result.rowNumber);
 
-                    const contentResponse = await fetch('/menu', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ name: result.name, units: result.units }),
-                    });
-                    
-                    const contentResult = await contentResponse.text();
-
-                    document.getElementById('dynamic-content').innerHTML = contentResult;
-
-                    const script = document.createElement('script');
-                    script.src = 'assets/js/menu.js';
-                    document.body.appendChild(script);
-                } else {
-                    alert(result.message);
-                }
+                window.location.href = '/menu';
             } else {
                 alert(result.message);
+                display.innerHTML = "";
+                updateNextButtonState();
             }
         } catch (error) {
             console.error('Error:', error);

@@ -57,3 +57,16 @@ document.getElementById('submitButton').addEventListener('click', async function
         }
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const name = sessionStorage.getItem('name');
+    const units = sessionStorage.getItem('units');
+
+    document.getElementById('name').textContent = name;
+    document.getElementById('units').textContent = units;
+
+});
+
+document.getElementById('backButton').addEventListener('click', async () => {
+    window.history.back();
+});
