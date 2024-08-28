@@ -48,7 +48,26 @@ document.getElementById('submitButton').addEventListener('click', async function
 
             const result = await response.json();
             if (result.success) {
-                window.location.href = '/';
+                const messageElement = document.getElementById('confirmationMessage');
+                const overlay = document.getElementById('confirmationOverlay');
+                overlay.classList.add('show');
+
+                let countdown = 5;
+                const interval = setInterval(() => {
+                    if (countdown > 0) {
+                        messageElement.innerHTML = `Order submitted successfully! 
+                        Redirecting in ${countdown} seconds...<br><br>Click anywhere to redirect.`;
+                        countdown--;
+                    } else {
+                        clearInterval(interval);
+                        window.location.href = '/';
+                    }
+                }, 1000);
+
+                overlay.addEventListener('click', () => {
+                    clearInterval(interval);
+                    window.location.href = '/';
+                });
             } else {
                 alert(result.message);
             }
