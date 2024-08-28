@@ -165,7 +165,7 @@ button:focus, .panel:focus, .btn:focus {
       pointer-events: auto;
 }
 
-.confirmation-overlay {
+.alert-overlay {
       position: fixed;
       top: 0;
       left: 0;
@@ -181,7 +181,7 @@ button:focus, .panel:focus, .btn:focus {
       transition: visibility 0s, opacity 0.3s ease;
 }
   
-.confirmation-message {
+.alert-message {
       background-color: white;
       padding: 20px;
       border-radius: 10px;
@@ -189,7 +189,7 @@ button:focus, .panel:focus, .btn:focus {
       font-size: 2vw;
 }
   
-.confirmation-overlay.show {
+.alert-overlay.show {
       visibility: visible;
       opacity: 1;
 }
