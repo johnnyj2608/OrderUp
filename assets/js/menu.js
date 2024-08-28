@@ -91,7 +91,15 @@ document.getElementById('submitButton').addEventListener('click', async function
                     window.location.href = '/';
                 });
             } else {
-                alert(result.message);
+                const overlay = document.getElementById('errorOverlay');
+                const messageElement = document.getElementById('errorMessage');
+
+                overlay.classList.add('show');
+                messageElement.innerHTML = result.message+'<br><br>Click anywhere to continue.';
+
+                overlay.addEventListener('click', () => {
+                    overlay.classList.remove('show');
+                });
             }
         } catch (error) {
             console.error('Error:', error);

@@ -66,9 +66,17 @@ document.getElementById('nextButton').addEventListener('click', async function()
 
                 window.location.href = '/menu';
             } else {
-                alert(result.message);
-                display.innerHTML = "";
-                updateNextButtonState();
+                const overlay = document.getElementById('errorOverlay');
+                const messageElement = document.getElementById('errorMessage');
+
+                overlay.classList.add('show');
+                messageElement.innerHTML = result.message+'<br><br>Click anywhere to continue.';
+
+                overlay.addEventListener('click', () => {
+                    overlay.classList.remove('show');
+                    display.innerHTML = "";
+                    updateNextButtonState();
+                });
             }
         } catch (error) {
             console.error('Error:', error);

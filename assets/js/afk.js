@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
     let timeout;
     let interval;
-    const overlay = document.getElementById('afkOverlay');
+    const errorOverlay = document.getElementById('errorOverlay');
+    const afkOverlay = document.getElementById('afkOverlay');
     const messageElement = document.getElementById('afkMessage');
 
     function inactivityOverlay() {
         let countdown = 9;
+        errorOverlay.classList.remove('show');
         interval = setInterval(() => {
             if (countdown > 0) {
                 messageElement.innerHTML = `Prolonged inactivity! 
@@ -20,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startTimeout() {
         timeout = setTimeout(() => {
-            overlay.classList.add('show');
+            afkOverlay.classList.add('show');
             inactivityOverlay();
         }, 15000); 
     }
@@ -30,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInterval(interval);
         messageElement.innerHTML = `Prolonged inactivity! 
                 Redirecting in 10 seconds...`;
-        overlay.classList.remove('show'); 
+        afkOverlay.classList.remove('show');
         startTimeout();
     }
 
