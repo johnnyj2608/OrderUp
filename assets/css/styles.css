@@ -190,3 +190,7 @@ button:focus, .panel:focus, .btn:focus {
       opacity: 1;
 }
   
+#breakfast-section, #lunch-section {
+      scroll-margin-top: 7vh;
+}
+  

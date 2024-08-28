@@ -1,24 +1,46 @@
 function handleBreakfastClick(menuItem) {
-    document.querySelectorAll('button.panel').forEach(button => {
-        button.classList.remove('selectedBreakfast');
-    });
+    const button = document.getElementById(`btn-${menuItem}`);
+    let scroll = true;
 
-    document.getElementById(`btn-${menuItem}`).classList.add('selectedBreakfast');
-    updateSubmitButtonState();
+    if (button.classList.contains('selectedBreakfast')) {
+        button.classList.remove('selectedBreakfast');
+        scroll = false;
+    } else {
+        document.querySelectorAll('button.panel').forEach(btn => {
+            btn.classList.remove('selectedBreakfast');
+        });
+        button.classList.add('selectedBreakfast');
+    }
+    updateSubmitButtonState(scroll);
 }
 
 function handleLunchClick(menuItem) {
-    document.querySelectorAll('button.panel').forEach(button => {
-        button.classList.remove('selectedLunch');
-    });
+    const button = document.getElementById(`btn-${menuItem}`);
+    let scroll = true;
 
-    document.getElementById(`btn-${menuItem}`).classList.add('selectedLunch');
-    updateSubmitButtonState();
+    if (button.classList.contains('selectedLunch')) {
+        button.classList.remove('selectedLunch');
+        scroll = false;
+    } else {
+        document.querySelectorAll('button.panel').forEach(btn => {
+            btn.classList.remove('selectedLunch');
+        });
+        button.classList.add('selectedLunch');
+    }
+    updateSubmitButtonState(scroll);
 }
 
-function updateSubmitButtonState() {
+function updateSubmitButtonState(scroll) {
     const isBreakfastSelected = document.querySelector('button.panel.selectedBreakfast') !== null;
     const isLunchSelected = document.querySelector('button.panel.selectedLunch') !== null;
+
+    if (scroll) {
+        if (!isBreakfastSelected && isLunchSelected) {
+            document.getElementById('breakfast-section').scrollIntoView({ behavior: 'smooth' });
+        } else if (isBreakfastSelected && !isLunchSelected) {
+            document.getElementById('lunch-section').scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 
     if (isBreakfastSelected && isLunchSelected) {
         submitButton.classList.remove('disabled');
