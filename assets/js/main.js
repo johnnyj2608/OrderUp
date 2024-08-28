@@ -1,8 +1,3 @@
-function showIndexPage() {
-    document.getElementById('wallpaper-page').style.display = 'none';
-    document.getElementById('main-page').style.display = 'block';
-}
-
 function handleButtonClick(sheetName) {
     document.querySelectorAll('button.panel').forEach(button => {
         button.classList.remove('selected');

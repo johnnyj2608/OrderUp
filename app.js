@@ -31,8 +31,12 @@ const insuranceImgMap = {
 
 const cache = new NodeCache();
 
-// Select insurance and input member ID
 app.get("/", async (req, res) => {
+    res.render("index");
+  });
+
+// Select insurance and input member ID
+app.get("/main", async (req, res) => {
     const cacheKey = "sheetNames";
     let sheetNames = cache.get(cacheKey);
 
@@ -59,7 +63,7 @@ app.get("/", async (req, res) => {
         cache.set(cacheKey, sheetNames, 900);
     }
 
-    res.render("index", { sheetNames, insuranceImgMap });
+    res.render("main", { sheetNames, insuranceImgMap });
   });
 
 // Fetch daily menu
