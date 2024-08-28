@@ -74,7 +74,7 @@ document.getElementById('submitButton').addEventListener('click', async function
                 const overlay = document.getElementById('confirmationOverlay');
                 overlay.classList.add('show');
 
-                let countdown = 5;
+                let countdown = 4;
                 const interval = setInterval(() => {
                     if (countdown > 0) {
                         messageElement.innerHTML = `Order submitted successfully! 
