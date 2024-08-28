@@ -74,9 +74,9 @@ document.getElementById('nextButton').addEventListener('click', async function()
 
                 overlay.addEventListener('click', () => {
                     overlay.classList.remove('show');
-                    display.innerHTML = "";
-                    updateNextButtonState();
                 });
+                display.innerHTML = "";
+                updateNextButtonState();
             }
         } catch (error) {
             console.error('Error:', error);
