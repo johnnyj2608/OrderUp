@@ -59,11 +59,6 @@ document.getElementById('nextButton').addEventListener('click', async function()
 
             const result = await response.json();
             if (result.exists && result.units != '0') {
-                sessionStorage.setItem('name', result.name);
-                sessionStorage.setItem('units', result.units);
-                sessionStorage.setItem('insurance', result.insurance);
-                sessionStorage.setItem('rowNumber', result.rowNumber);
-
                 window.location.href = '/menu';
             } else {
                 const overlay = document.getElementById('errorOverlay');

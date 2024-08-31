@@ -11,7 +11,7 @@
     <div class="container-fluid">
         <div class="row header align-items-center">
             <div class="col text-center">
-                <h1>American Senior Care Corporation</h1>
+                <h1><%= __("ASCC") %></h1>
             </div>
         </div>
         <div>
@@ -51,16 +51,16 @@
                             <div class="numBtn">7</div>
                             <div class="numBtn">8</div>
                             <div class="numBtn">9</div>
-                            <div id="clearBtn">Clear</div>
+                            <div id="clearBtn"><%= __("clear") %></div>
                             <div class="numBtn">0</div>
-                            <div id="backBtn">Back</div>
+                            <div id="backBtn"><%= __("back") %></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row footer align-items-center">
                 <div class="col text-center">
-                    <button id="nextButton" class="actionButton disabled">Next Page</button>
+                    <button id="nextButton" class="actionButton disabled"><%= __("view_menu") %></button>
                 </div>
             </div>
         </div>
@@ -74,9 +74,9 @@
 
     <div id="afkOverlay" class="alert-overlay">
         <div id="afkMessage" class="alert-message">
-            Prolonged inactivity! Redirecting in 10 seconds...
+            <%= __("inactivity", { seconds: 10 }) %>
         </div>
-    </div>
+    </div>    
 
     <script src="assets/js/main.js"></script>
     <script src="assets/js/afk.js"></script>

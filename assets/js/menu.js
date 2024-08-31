@@ -51,10 +51,6 @@ function updateSubmitButtonState(scroll) {
 
 document.getElementById('submitButton').addEventListener('click', async function() {
     if (!this.classList.contains('disabled')) {
-
-        const name = sessionStorage.getItem('name');
-        const insurance = sessionStorage.getItem('insurance');
-        const rowNumber = sessionStorage.getItem('rowNumber');
         
         const selectedBreakfast = (document.querySelector('button.selectedBreakfast')?.getAttribute('data-order')) || 'none';
         const selectedLunch = (document.querySelector('button.selectedLunch')?.getAttribute('data-order')) || 'none';
@@ -65,7 +61,7 @@ document.getElementById('submitButton').addEventListener('click', async function
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, selectedBreakfast, selectedLunch, insurance, rowNumber }),
+                body: JSON.stringify({ selectedBreakfast, selectedLunch }),
             });
 
             const result = await response.json();
@@ -105,15 +101,6 @@ document.getElementById('submitButton').addEventListener('click', async function
             console.error('Error:', error);
         }
     }
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const name = sessionStorage.getItem('name');
-    const units = sessionStorage.getItem('units');
-
-    document.getElementById('name').textContent = name;
-    document.getElementById('units').textContent = units;
-
 });
 
 document.getElementById('backButton').addEventListener('click', async () => {

@@ -1,0 +1,20 @@
+{
+	"ASCC": "American Senior Care Corporation",
+	"click_to_continue": "Click To Continue",
+	"clear": "Clear",
+	"back": "Back",
+	"view_menu": "View Menu",
+	"submit_order": "Submit Order",
+	"breakfast": "Breakfast",
+	"lunch": "Lunch",
+	"inactivity": "Prolonged inactivity! Redirecting in {{seconds}} seconds...",
+	"order_message": "Hello {{name}}, you may order <strong>{{units}}</strong> more times this week",
+	"submitted": "Order submitted successfully! Redirecting in {{seconds}} seconds...",
+	"click_anywhere": "Click anywhere to continue.",
+
+	"member_not_found": "Member ID not found.",
+	"member_found": "Member ID found.",
+	"zero_units": "Member has 0 weekly units remaining.",
+	"insufficient_units": "Insufficient insurance units to place order.",
+	"already_ordered": "Member has already ordered today."
+}

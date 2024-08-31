@@ -11,21 +11,20 @@
     <div class="container-fluid">
         <div class="row header align-items-center">
             <div class="col text-center">
-                <h1>American Senior Care Corporation</h1>
+                <h1><%= __("ASCC") %></h1>
             </div>
         </div>
 
         <div class="content">
             <div class="row">
                 <div class="col text-center">
-                    <h3>Hello <span id="name"></span>, you may order 
-                        <strong><span id="units"></span></strong> more times this week</h3>
+                    <h3><%- __("order_message", { name: name, units: units }) %></h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <div class="container">
-                        <h2 id="breakfast-section">Breakfast</h2>
+                        <h2 id="breakfast-section"><%= __("breakfast") %></h2>
                         <% menuData.breakfast.titles.forEach((title, index) => { %>
                             <% if (index % 4 === 0) { %>
                                 <div class="row">
@@ -51,7 +50,7 @@
             <div class="row">
                 <div class="col">
                     <div class="container">
-                        <h2 id="lunch-section">Lunch</h2>
+                        <h2 id="lunch-section"><%= __("lunch") %></h2>
                         <% menuData.lunch.titles.forEach((title, index) => { %>
                             <% if (index % 4 === 0) { %>
                                 <div class="row">
@@ -77,8 +76,8 @@
         </div>
         <div class="row footer align-items-center">
             <div class="col d-flex justify-content-between">
-                <button id="backButton" class="actionButton">Back</button>
-                <button id="submitButton" class="actionButton disabled">Submit Order</button>
+                <button id="backButton" class="actionButton"><%= __("back") %></button>
+                <button id="submitButton" class="actionButton disabled"><%= __("submit_order") %></button>
             </div>
         </div>
 
@@ -90,14 +89,14 @@
 
         <div id="afkOverlay" class="alert-overlay">
             <div id="afkMessage" class="alert-message">
-                Prolonged inactivity! Redirecting in 10 seconds...
+                <%= __("inactivity", { seconds: 10 }) %>
             </div>
         </div>
 
         <div id="confirmationOverlay" class="alert-overlay">
             <div id="confirmationMessage" class="alert-message">
-                Order submitted successfully! Redirecting in 5 seconds...
-                <br><br>Click anywhere to redirect.
+                <%= __("submitted") %>
+                <br><br><%= __("click_anywhere") %>
             </div>
         </div>
         

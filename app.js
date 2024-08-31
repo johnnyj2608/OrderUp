@@ -1,8 +1,21 @@
 const express = require("express");
 const {google} = require("googleapis");
 const NodeCache = require("node-cache");
+const i18n = require("i18n");
+const cookieParser = require("cookie-parser");
 
 const app = express();
+
+i18n.configure({
+    locales: ['en', 'zh'],
+    directory: __dirname + '/locales',
+    defaultLocale: 'zh',
+    cookie: 'lang',
+    objectNotation: true,
+});
+
+app.use(cookieParser());
+app.use(i18n.init);
 
 app.set("view engine", "ejs");
 app.use(express.json())
@@ -29,11 +42,22 @@ const insuranceImgMap = {
     "villagecaremax": "/assets/img/insurances/villagecare.png"
 };
 
-const cache = new NodeCache();
+app.get('/switch/:lang', (req, res) => {
+    const lang = req.params.lang;
+    if (i18n.getLocales().includes(lang)) {
+        res.cookie('lang', lang);
+        console.log(`Switching to language: ${lang}`);
+    } else {
+        console.log(`Language ${lang} is not supported.`);
+    }
+    res.redirect('back');
+});
 
 app.get("/", async (req, res) => {
     res.render("index");
-  });
+});
+
+const cache = new NodeCache();
 
 // Select insurance and input member ID
 app.get("/main", async (req, res) => {
@@ -64,12 +88,85 @@ app.get("/main", async (req, res) => {
     }
 
     res.render("main", { sheetNames, insuranceImgMap });
-  });
+});
+
+const sessions = {
+    "member" : "",
+    "units" : 0,
+    "insurance" : "",
+    "row" : 0,
+};
+
+// Confirm member exists
+app.post("/confirmMember", async (req, res) => {
+    const { insuranceName, numberID } = req.body;
+
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({version: "v4", auth: client });
+    const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
+
+    try {
+        const spreadsheet = await googleSheets.spreadsheets.get({
+            spreadsheetId,
+        });
+
+        const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title.toLowerCase());
+        if (!sheetNames.includes(insuranceName)) {
+            return res.json({ exists: false });
+        }
+
+        const range = `${insuranceName}!A:E`;
+        const getRows = await googleSheets.spreadsheets.values.get({
+            spreadsheetId,
+            range,
+        });
+
+        const rows = getRows.data.values || [];
+        let result = { exists: false, name: null, units: null, message: req.__('member_not_found') };
+        
+        let left = 1;
+        let right = rows.length - 1;
+
+        while (left <= right) {
+            const mid = Math.floor((left + right) / 2);
+            const midValue = rows[mid][0]
+
+            const units = rows[mid][4];
+
+            if (midValue === numberID) {
+                result = {
+                    exists: true,
+                    units: units,
+                    message: units > 0 ? req.__('member_found') : req.__('zero_units')
+                };
+                sessions["member"] = rows[mid][2] || rows[mid][1] || null;
+                sessions["units"] = units;
+                sessions["insurance"] = insuranceName;
+                sessions["rowNumber"] = mid + 1;
+                break
+            } else if (midValue < numberID) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        };
+        
+        res.json(result);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 // Fetch daily menu
 app.get("/menu", async (req, res) => {
-    const name = req.query.name;
-    const units = req.query.units;
+    const member = sessions['member'];
+    const units = sessions['units'];
 
     const cacheKey = "menuItems";
     let menuData = cache.get(cacheKey);
@@ -161,76 +258,14 @@ app.get("/menu", async (req, res) => {
             return res.status(500).json({ error: 'Internal Server Error' });
         }
     }
-    res.render("menu", { name, units, menuData });
-});
-
-// Confirm member exists
-app.post("/confirmMember", async (req, res) => {
-    const { insuranceName, numberID } = req.body;
-
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "credentials.json",
-        scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-
-    const client = await auth.getClient();
-    const googleSheets = google.sheets({version: "v4", auth: client });
-    const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
-
-    try {
-        const spreadsheet = await googleSheets.spreadsheets.get({
-            spreadsheetId,
-        });
-
-        const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title.toLowerCase());
-        if (!sheetNames.includes(insuranceName)) {
-            return res.json({ exists: false });
-        }
-
-        const range = `${insuranceName}!A:E`;
-        const getRows = await googleSheets.spreadsheets.values.get({
-            spreadsheetId,
-            range,
-        });
-
-        const rows = getRows.data.values || [];
-        let result = { exists: false, name: null, units: null, message: "Member ID not found." };
-        
-        let left = 1;
-        let right = rows.length - 1;
-
-        while (left <= right) {
-            const mid = Math.floor((left + right) / 2);
-            const midValue = rows[mid][0]
-
-            const units = rows[mid][4];
-
-            if (midValue === numberID) {
-                result = {
-                    exists: true,
-                    name: rows[mid][2] || rows[mid][1] || null,
-                    units: units,
-                    insurance: insuranceName,
-                    rowNumber: mid + 1,
-                    message: units > 0 ? "Member ID found." : "Member has 0 weekly units remaining."
-                };
-                break
-            } else if (midValue < numberID) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        };
-
-        res.json(result);
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    res.render("menu", { name: member, units, menuData });
 });
 
 app.post("/submitOrder", async (req, res) => {
-    const { name, selectedBreakfast, selectedLunch, insurance, rowNumber } = req.body;
+    const { selectedBreakfast, selectedLunch } = req.body;
+    const name = sessions['member'];
+    const insurance = sessions['insurance'];
+    const rowNumber = sessions['rowNumber'];
 
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
@@ -252,7 +287,7 @@ app.post("/submitOrder", async (req, res) => {
         const orderedToday = values[1] === 'TRUE';
         if (units > 0) {
             if (orderedToday) {
-                return res.json({ success: false, message: "Member has already ordered today." });
+                return res.json({ success: false, message: req.__('already_ordered') });
             }
             await writeorder(googleSheets, spreadsheetId, "Breakfast", selectedBreakfast, name);
             await writeorder(googleSheets, spreadsheetId, "Lunch", selectedLunch, name);
@@ -268,7 +303,7 @@ app.post("/submitOrder", async (req, res) => {
 
             res.json({ success: true });
         } else {
-            res.json({ success: false, message: "Insufficient insurance units to place order." });
+            res.json({ success: false, message: req.__('insufficient_units') });
         }
 
     } catch (error) {
@@ -298,6 +333,11 @@ async function writeorder(sheets, spreadsheetId, sheetName, columnID, name) {
             values: [[name]],
         },
     });
+}
+
+function generateSessionId() {
+    // Generate a unique session ID
+    return Math.random().toString(36).substr(2, 9);
 }
 
 app.listen(1337, (req, res) => console.log("Running on 1337!"));
