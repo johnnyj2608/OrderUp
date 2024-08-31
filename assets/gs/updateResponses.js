@@ -6,8 +6,6 @@ function updateResponses() {
 
   const sheet = SpreadsheetApp.getActiveSpreadsheet();
   const menuSheet = sheet.getSheetByName('Menu');
-  const breakfastSheet = sheet.getSheetByName('Breakfast');
-  const lunchSheet = sheet.getSheetByName('Lunch');
 
   const breakfastRange = menuSheet.getRange('B2:I7');
   const lunchRange = menuSheet.getRange('B10:I15');
@@ -16,12 +14,14 @@ function updateResponses() {
   const lunchData = lunchRange.getValues();
 
   const breakfastFlag = menuSheet.getRange('F1').getValue();
-  const lunchFlag = menuSheet.getRange('F8').getValue();
+  const lunchFlag = menuSheet.getRange('F9').getValue();
 
-  let breakfastRow, lunchRow;
-
+  const breakfastSheet = sheet.getSheetByName('Breakfast');
+  const lunchSheet = sheet.getSheetByName('Lunch');
   breakfastSheet.clearContents();
   lunchSheet.clearContents(); 
+
+  let breakfastRow, lunchRow;
 
   if (breakfastFlag) {
     breakfastRow = breakfastData.flat();
@@ -42,7 +42,7 @@ function updateResponses() {
 
   for (let i = 0; i < breakfastRow.length; i += 2) {
     if (breakfastRow[i+1] === "") {
-      break;
+      continue;
     }
     breakfastImg.push(`=IMAGE("${breakfastRow[i]}", 2)`);
     breakfastTitle.push(breakfastRow[i + 1]);
@@ -50,7 +50,7 @@ function updateResponses() {
 
   for (let i = 0; i < lunchRow.length; i += 2) {
     if (lunchRow[i+1] === "") {
-      break;
+      continue;
     }
     lunchImg.push(`=IMAGE("${lunchRow[i]}", 2)`);
     lunchTitle.push(lunchRow[i + 1]);
