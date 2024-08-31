@@ -7,9 +7,9 @@
 	"submit_order": "Submit Order",
 	"breakfast": "Breakfast",
 	"lunch": "Lunch",
-	"inactivity": "Prolonged inactivity! Redirecting in {{seconds}} seconds...",
+	"inactivity": "Prolonged inactivity! <br><br>Redirecting in <strong>{{seconds}}</strong> seconds...",
 	"order_message": "Hello {{name}}, you may order <strong>{{units}}</strong> more times this week",
-	"submitted": "Order submitted successfully! Redirecting in {{seconds}} seconds... <br><br>Click anywhere to continue",
+	"submitted": "Order submitted successfully! <br><br>Redirecting in <strong>{{seconds}}</strong> seconds... <br><br>Click anywhere to continue",
 
 	"member_not_found": "Member ID not found. <br><br>Click anywhere to continue",
 	"member_found": "Member ID found. <br><br>Click anywhere to continue",

@@ -88,14 +88,14 @@
         </div>
 
         <div id="afkOverlay" class="alert-overlay">
-            <div id="afkMessage" class="alert-message">
-                <%= __("inactivity", { seconds: 10 }) %>
+            <div id="afkMessage" class="alert-message"
+                message="<%= __("inactivity", { seconds: '{{seconds}}' }) %>">
             </div>
         </div>
 
         <div id="confirmationOverlay" class="alert-overlay">
-            <div id="confirmationMessage" class="alert-message">
-                <%- __("submitted") %>
+            <div id="confirmationMessage" class="alert-message"
+                message="<%= __("submitted", { seconds: '{{seconds}}' }) %>">
             </div>
         </div>
         

@@ -7,9 +7,9 @@
 	"submit_order": "提交订单",
 	"breakfast": "早餐",
 	"lunch": "午餐",
-	"inactivity": "长时间没有活动！将在 {{seconds}} 秒后重定向...",
+	"inactivity": "长时间没有活动！<br><br>将在 <strong>{{seconds}}</strong> 秒后重定向...",
 	"order_message": "你好 {{name}}，你本周还可以再订购 <strong>{{units}}</strong> 次",
-	"submitted": "订单提交成功！将在 {{seconds}} 秒后重定向... <br><br>点击任意位置以重定向。",
+	"submitted": "订单提交成功！<br><br>将在 <strong>{{seconds}}</strong> 秒后重定向... <br><br>点击任意位置以重定向。",
 	
 	"member_not_found": "会员ID未找到。<br><br>点击任意位置以重定向。",
 	"member_found": "会员ID已找到。<br><br>点击任意位置以重定向。",

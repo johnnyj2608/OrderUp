@@ -187,14 +187,19 @@ button:focus, .panel:focus, .btn:focus {
       border-radius: 10px;
       text-align: center;
       font-size: 2vw;
+      width: 40vw;
 }
   
 .alert-overlay.show {
       visibility: visible;
       opacity: 1;
 }
+
+.alert-message strong {
+      display: inline-block;
+      min-width: 2.5vw;
+}
   
 #breakfast-section, #lunch-section {
       scroll-margin-top: 7vh;
 }
-  

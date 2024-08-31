@@ -1,3 +1,7 @@
+document.getElementById('backButton').addEventListener('click', async () => {
+    window.history.back();
+});
+
 function handleBreakfastClick(menuItem) {
     const button = document.getElementById(`btn-${menuItem}`);
     let scroll = true;
@@ -49,6 +53,12 @@ function updateSubmitButtonState(scroll) {
     }
 }
 
+function updateMessage(countdown) {
+    const messageElement = document.getElementById('confirmationMessage'); 
+    const localizedMessage = messageElement.getAttribute('message'); 
+    messageElement.innerHTML = localizedMessage.replace('{{seconds}}', countdown);
+}
+
 document.getElementById('submitButton').addEventListener('click', async function() {
     if (!this.classList.contains('disabled')) {
         
@@ -66,16 +76,15 @@ document.getElementById('submitButton').addEventListener('click', async function
 
             const result = await response.json();
             if (result.success) {
-                const messageElement = document.getElementById('confirmationMessage');
                 const overlay = document.getElementById('confirmationOverlay');
                 overlay.classList.add('show');
 
-                let countdown = 4;
+                let countdown = 5;
+                updateMessage(countdown);
                 const interval = setInterval(() => {
                     if (countdown > 0) {
-                        messageElement.innerHTML = `Order submitted successfully! 
-                        Redirecting in ${countdown} seconds...<br><br>Click anywhere to redirect.`;
                         countdown--;
+                        updateMessage(countdown);
                     } else {
                         clearInterval(interval);
                         window.location.href = '/';
@@ -101,8 +110,4 @@ document.getElementById('submitButton').addEventListener('click', async function
             console.error('Error:', error);
         }
     }
-});
-
-document.getElementById('backButton').addEventListener('click', async () => {
-    window.history.back();
 });

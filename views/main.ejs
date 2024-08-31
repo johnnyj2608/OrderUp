@@ -73,10 +73,10 @@
     </div>
 
     <div id="afkOverlay" class="alert-overlay">
-        <div id="afkMessage" class="alert-message">
-            <%= __("inactivity", { seconds: 10 }) %>
+        <div id="afkMessage" class="alert-message"
+            message="<%= __("inactivity", { seconds: '{{seconds}}' }) %>">
         </div>
-    </div>    
+    </div>
 
     <script src="assets/js/main.js"></script>
     <script src="assets/js/afk.js"></script>
