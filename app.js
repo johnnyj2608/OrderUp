@@ -3,6 +3,7 @@ const {google} = require("googleapis");
 const NodeCache = require("node-cache");
 const i18n = require("i18n");
 const cookieParser = require("cookie-parser");
+const insuranceImgMap = require("./assets/js/imgMap");
 
 const app = express();
 
@@ -21,26 +22,6 @@ app.set("view engine", "ejs");
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./"));
-
-const insuranceImgMap = {
-    "aetna": "/assets/img/insurances/aetna.png",
-    "ant": "/assets/img/insurances/anthem.png",
-    "abc": "/assets/img/insurances/anthem.png",
-    "anthem": "/assets/img/insurances/anthem.png",
-    "anthembluecross": "/assets/img/insurances/anthem.png",
-    "cl": "/assets/img/insurances/centerlight.png",
-    "centerlight": "/assets/img/insurances/centerlight.png",
-    "hs": "/assets/img/insurances/hamaspik.png",
-    "hamaspik": "/assets/img/insurances/hamaspik.png",
-    "hf": "/assets/img/insurances/homefirst.png",
-    "homefirst": "/assets/img/insurances/homefirst.png",
-    "rs": "/assets/img/insurances/riverspring.png",
-    "riverspring": "/assets/img/insurances/riverspring.png",
-    "swh": "/assets/img/insurances/seniorwhole.png",
-    "seniorwholehealth": "/assets/img/insurances/seniorwhole.png",
-    "vcm": "/assets/img/insurances/villagecare.png",
-    "villagecaremax": "/assets/img/insurances/villagecare.png"
-};
 
 app.get('/switch/:lang', (req, res) => {
     const lang = req.params.lang;
