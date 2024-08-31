@@ -91,7 +91,7 @@ document.getElementById('submitButton').addEventListener('click', async function
                 const messageElement = document.getElementById('errorMessage');
 
                 overlay.classList.add('show');
-                messageElement.innerHTML = result.message+'<br><br>Click anywhere to continue.';
+                messageElement.innerHTML = result.message;
 
                 overlay.addEventListener('click', () => {
                     overlay.classList.remove('show');

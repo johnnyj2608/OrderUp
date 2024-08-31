@@ -127,7 +127,7 @@ app.post("/confirmMember", async (req, res) => {
         });
 
         const rows = getRows.data.values || [];
-        let result = { exists: false, name: null, units: null, message: req.__('member_not_found') };
+        let result = { exists: false, units: null, message: req.__('member_not_found') };
         
         let left = 1;
         let right = rows.length - 1;
@@ -142,7 +142,7 @@ app.post("/confirmMember", async (req, res) => {
                 result = {
                     exists: true,
                     units: units,
-                    message: units > 0 ? req.__('member_found') : req.__('zero_units')
+                    message: units > 0 ? req.__('member_found') : req.__('zero_units'),
                 };
                 sessions["member"] = rows[mid][2] || rows[mid][1] || null;
                 sessions["units"] = units;
@@ -333,11 +333,6 @@ async function writeorder(sheets, spreadsheetId, sheetName, columnID, name) {
             values: [[name]],
         },
     });
-}
-
-function generateSessionId() {
-    // Generate a unique session ID
-    return Math.random().toString(36).substr(2, 9);
 }
 
 app.listen(1337, (req, res) => console.log("Running on 1337!"));
