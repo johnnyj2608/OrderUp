@@ -1,5 +1,8 @@
 {
 	"ASCC": "American Senior Care Corporation",
+	"language": "Language",
+	"english": "English",
+	"chinese": "Chinese",
 	"click_to_continue": "Click To Continue",
 	"clear": "Clear",
 	"back": "Back",

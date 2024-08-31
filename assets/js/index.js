@@ -1,3 +1,8 @@
 document.addEventListener('click', function() {
-    window.location.href = '/main';
+    const footer = document.querySelector('.footer');
+    const wallpaper = document.querySelector('.wallpaper');
+
+    if (footer.contains(event.target) || wallpaper.contains(event.target)) {
+        window.location.href = '/main';
+    }
 });

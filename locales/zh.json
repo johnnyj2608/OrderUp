@@ -1,5 +1,8 @@
 {
 	"ASCC": "皇冠日间活动中心",
+	"language": "语言",
+    "english": "英语",
+    "chinese": "中文",
 	"click_to_continue": "点击继续",
 	"clear": "清除",
 	"back": "返回",
