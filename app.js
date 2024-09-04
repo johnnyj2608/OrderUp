@@ -239,7 +239,7 @@ app.get("/menu", async (req, res) => {
             return res.status(500).json({ error: 'Internal Server Error' });
         }
     }
-    res.render("menu", { name: member, units, menuData });
+    res.render("menu", { name: member, units: units, menuData });
 });
 
 app.post("/submitOrder", async (req, res) => {
