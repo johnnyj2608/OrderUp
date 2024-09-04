@@ -10,13 +10,16 @@
 	"submit_order": "提交订单",
 	"breakfast": "早餐",
 	"lunch": "午餐",
-	"inactivity": "长时间没有活动！<br><br>将在 <strong>{{seconds}}</strong> 秒后重定向...",
-	"order_message": "你好 {{name}}，你本周还可以再订购 <strong>{{units}}</strong> 次",
-	"submitted": "订单提交成功！<br><br>将在 <strong>{{seconds}}</strong> 秒后重定向... <br><br>点击任意位置以重定向。",
+	"order_message": "你好 {{name}}，你本周还可以再订购 <strong>{{units}}</strong> 次。",
 	
-	"member_not_found": "会员ID未找到。<br><br>点击任意位置以重定向。",
-	"member_found": "会员ID已找到。<br><br>点击任意位置以重定向。",
-	"zero_units": "会员本周剩余0单位。<br><br>点击任意位置以重定向。",
-	"insufficient_units": "保险单位不足，无法下订单。<br><br>点击任意位置以重定向。",
-	"already_ordered": "会员今天已经下过订单。<br><br>点击任意位置以重定向。"
+	"inactivity": "长时间未活动!",
+	"submitted": "订单提交成功!",
+	"click_anywhere": "点击任意位置继续。",
+	"redirect_countdown": "将在 <strong>{{seconds}}</strong> 秒后重定向...",
+
+	"member_not_found": "未找到您的ID。",
+	"member_found": "找到了您的ID。",
+	"zero_units": "您本周剩余0个单位。",
+	"insufficient_units": "您没有足够的单位来下订单。",
+	"already_ordered": "您今天已经下过订单了。"
 }

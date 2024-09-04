@@ -24,8 +24,9 @@
                         <% } %>
     
                         <div class="col-md-6 mb-3 text-center">
-                            <button id="btn-<%= sheetName %>" 
-                                onclick="handleButtonClick('<%= sheetName %>')" 
+                            <button id="btn-<%= sheetName %>"
+                                data-text="<%= sheetName %>" 
+                                onclick="handleButtonClick('<%= sheetName %>'); speakText(this.getAttribute('data-text'))" 
                                 class="panel w-100">
                                 <img src="<%= insuranceImgMap[sheetName.replace(/\s/g,'')] || '/assets/img/crown.png' %>" class="panel-img img-padding w-100" />
                                 <h5 class="panel-title"><%= sheetName %></h5>
@@ -74,12 +75,15 @@
 
     <div id="afkOverlay" class="alert-overlay">
         <div id="afkMessage" class="alert-message"
-            message="<%= __("inactivity", { seconds: '{{seconds}}' }) %>">
+             data-static-msg="<%= __("inactivity") %>"
+             data-click-msg="<%= __("click_anywhere") %>"
+             data-countdown="<%= __("redirect_countdown", { seconds: '{{seconds}}' }) %>">
         </div>
     </div>
 
     <script src="assets/js/main.js"></script>
     <script src="assets/js/afk.js"></script>
+    <script src="assets/js/tts.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

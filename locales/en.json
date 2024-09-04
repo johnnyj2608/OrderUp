@@ -10,13 +10,16 @@
 	"submit_order": "Submit Order",
 	"breakfast": "Breakfast",
 	"lunch": "Lunch",
-	"inactivity": "Prolonged inactivity! <br><br>Redirecting in <strong>{{seconds}}</strong> seconds...",
 	"order_message": "Hello {{name}}, you may order <strong>{{units}}</strong> more times this week",
-	"submitted": "Order submitted successfully! <br><br>Redirecting in <strong>{{seconds}}</strong> seconds... <br><br>Click anywhere to continue",
 
-	"member_not_found": "Member ID not found. <br><br>Click anywhere to continue",
-	"member_found": "Member ID found. <br><br>Click anywhere to continue",
-	"zero_units": "Member has 0 weekly units remaining. <br><br>Click anywhere to continue",
-	"insufficient_units": "Insufficient insurance units to place order. <br><br>Click anywhere to continue",
-	"already_ordered": "Member has already ordered today. <br><br>Click anywhere to continue"
+	"inactivity": "Prolonged inactivity!",
+	"submitted": "Order submitted successfully!",
+	"click_anywhere": "Click anywhere to continue.",
+	"redirect_countdown": "Redirecting in <strong>{{seconds}}</strong> seconds...",
+
+	"member_not_found": "Your ID is not found.",
+	"member_found": "Your ID is found.",
+	"zero_units": "You have 0 weekly units remaining.",
+	"insufficient_units": "You have insufficient units to place an order.",
+	"already_ordered": "You have already ordered today."
 }

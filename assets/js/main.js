@@ -17,17 +17,20 @@ for (let i = 0; i < buttons.length; i++) {
         if (display.innerHTML.length < 3) {
             display.innerHTML += buttons[i].innerHTML;
         }
+        speakText(display.innerHTML);
         updateNextButtonState();
     });
 }
 
 clear.addEventListener('click', () => {
     display.innerHTML = "";
+    speakText(clear.innerHTML);
     updateNextButtonState();
 })
 
 back.addEventListener('click', () => {
     display.innerHTML = display.innerHTML.slice(0, -1);
+    speakText(back.innerHTML);
     updateNextButtonState();
 })
 
@@ -44,6 +47,7 @@ function updateNextButtonState() {
 
 document.getElementById('nextButton').addEventListener('click', async function() {
     if (!this.classList.contains('disabled')) {
+        const clickMessage = document.getElementById('afkMessage').getAttribute('data-click-msg');
 
         const insuranceName = document.querySelector('button.selected')?.innerText || 'none';
         const numberID = document.getElementById('display').innerHTML;
@@ -65,10 +69,12 @@ document.getElementById('nextButton').addEventListener('click', async function()
                 const messageElement = document.getElementById('errorMessage');
 
                 overlay.classList.add('show');
-                messageElement.innerHTML = result.message;
+                messageElement.innerHTML = result.message+'<br>'+clickMessage;
+                speakText(result.message);
 
                 overlay.addEventListener('click', () => {
                     overlay.classList.remove('show');
+                    stopSpeak();
                 });
                 display.innerHTML = "";
                 updateNextButtonState();

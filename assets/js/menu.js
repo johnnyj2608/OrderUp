@@ -53,15 +53,17 @@ function updateSubmitButtonState(scroll) {
     }
 }
 
-function updateMessage(countdown) {
-    const messageElement = document.getElementById('confirmationMessage'); 
-    const localizedMessage = messageElement.getAttribute('message'); 
-    messageElement.innerHTML = localizedMessage.replace('{{seconds}}', countdown);
-}
-
 document.getElementById('submitButton').addEventListener('click', async function() {
     if (!this.classList.contains('disabled')) {
-        
+        const messageElement = document.getElementById('confirmationMessage');
+        const staticMessage = messageElement.getAttribute('data-static-msg');
+        const clickMessage = messageElement.getAttribute('data-click-msg');
+    
+        function updateMessage(countdown) {
+            const countdownMessage = messageElement.getAttribute('data-countdown');
+            messageElement.innerHTML = staticMessage+'<br>'+clickMessage+'<br><br>'+countdownMessage.replace('{{seconds}}', countdown);
+        }    
+
         const selectedBreakfast = (document.querySelector('button.selectedBreakfast')?.getAttribute('data-order')) || 'none';
         const selectedLunch = (document.querySelector('button.selectedLunch')?.getAttribute('data-order')) || 'none';
 
@@ -79,6 +81,8 @@ document.getElementById('submitButton').addEventListener('click', async function
                 const overlay = document.getElementById('confirmationOverlay');
                 overlay.classList.add('show');
 
+                speakText(staticMessage);
+
                 let countdown = 5;
                 updateMessage(countdown);
                 const interval = setInterval(() => {
@@ -94,16 +98,19 @@ document.getElementById('submitButton').addEventListener('click', async function
                 overlay.addEventListener('click', () => {
                     clearInterval(interval);
                     window.location.href = '/';
+                    stopSpeak();
                 });
             } else {
                 const overlay = document.getElementById('errorOverlay');
-                const messageElement = document.getElementById('errorMessage');
+                const errorMessageElement = document.getElementById('errorMessage');
 
                 overlay.classList.add('show');
-                messageElement.innerHTML = result.message;
+                errorMessageElement.innerHTML = result.message+'<br><br>'+clickMessage;
+                speakText(result.message);
 
                 overlay.addEventListener('click', () => {
                     overlay.classList.remove('show');
+                    stopSpeak();
                 });
             }
         } catch (error) {
@@ -111,3 +118,7 @@ document.getElementById('submitButton').addEventListener('click', async function
         }
     }
 });
+
+window.onload = function() {
+    speakText(document.getElementById('nameUnits').innerText);
+};

@@ -4,13 +4,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorOverlay = document.getElementById('errorOverlay');
     const afkOverlay = document.getElementById('afkOverlay');
     const messageElement = document.getElementById('afkMessage');
+    const staticMessage = messageElement.getAttribute('data-static-msg')
+    const clickMessage = messageElement.getAttribute('data-click-msg')
 
     function updateMessage(countdown) {
-        const localizedMessage = messageElement.getAttribute('message');
-        messageElement.innerHTML = localizedMessage.replace('{{seconds}}', countdown);
+        const countdownMessage = messageElement.getAttribute('data-countdown');
+        messageElement.innerHTML = staticMessage+'<br>'+clickMessage+'<br><br>'+countdownMessage.replace('{{seconds}}', countdown);
     }
 
     function inactivityOverlay() {
+        speakText(staticMessage);
         let countdown = 10;
         errorOverlay.classList.remove('show');
         updateMessage(countdown);
