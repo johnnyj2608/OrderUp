@@ -28,7 +28,8 @@
                                 data-text="<%= sheetName %>" 
                                 onclick="handleButtonClick('<%= sheetName %>'); speakText(this.getAttribute('data-text'))" 
                                 class="panel w-100">
-                                <img src="<%= insuranceImgMap[sheetName.replace(/\s/g,'')] || '/assets/img/crown.png' %>" class="panel-img img-padding w-100" />
+                                <img src="<%= insuranceImgMap[sheetName.replace(/\s/g,'').toLowerCase()] || '/assets/img/crown.png' %>" 
+                                class="panel-img img-padding w-100" />
                                 <h5 class="panel-title"><%= sheetName %></h5>
                             </button>
                         </div>

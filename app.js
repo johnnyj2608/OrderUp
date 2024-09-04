@@ -60,10 +60,10 @@ app.get("/main", async (req, res) => {
             spreadsheetId,
         });
 
-        const excludedSheets = ["breakfast", "lunch", "menu", "qr"];
+        const excludedSheets = ["breakfast", "lunch", "menu", "qr", "history"];
         sheetNames = spreadsheet.data.sheets
-            .map(sheet => sheet.properties.title.toLowerCase())
-            .filter(title => !excludedSheets.includes(title));
+            .map(sheet => sheet.properties.title)
+            .filter(title => !excludedSheets.includes(title.toLowerCase()));
 
         cache.set(cacheKey, sheetNames, 900);
     }
@@ -97,8 +97,8 @@ app.post("/confirmMember", async (req, res) => {
         });
 
         const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title.toLowerCase());
-        if (!sheetNames.includes(insuranceName)) {
-            return res.json({ exists: false });
+        if (!sheetNames.includes(insuranceName.toLowerCase())) {
+            return res.json({ exists: false, message: req.__('insurance_not_found') });
         }
 
         const range = `${insuranceName}!A:E`;
@@ -136,7 +136,7 @@ app.post("/confirmMember", async (req, res) => {
                 right = mid - 1;
             }
         };
-        
+
         res.json(result);
     } catch (error) {
         console.error('Error:', error);

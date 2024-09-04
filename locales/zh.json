@@ -1,8 +1,8 @@
 {
 	"ASCC": "皇冠日间活动中心",
 	"language": "语言",
-    "english": "英语",
-    "chinese": "中文",
+	"english": "英语",
+	"chinese": "中文",
 	"click_to_continue": "点击继续",
 	"clear": "清除",
 	"back": "返回",
@@ -11,12 +11,11 @@
 	"breakfast": "早餐",
 	"lunch": "午餐",
 	"order_message": "你好 {{name}}，你本周还可以再订购 <strong>{{units}}</strong> 次。",
-	
 	"inactivity": "长时间未活动!",
 	"submitted": "订单提交成功!",
 	"click_anywhere": "点击任意位置继续。",
 	"redirect_countdown": "将在 <strong>{{seconds}}</strong> 秒后重定向...",
-
+	"insurance_not_found": "保险未找到。",
 	"member_not_found": "未找到您的ID。",
 	"member_found": "找到了您的ID。",
 	"zero_units": "您本周剩余0个单位。",
