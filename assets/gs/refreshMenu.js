@@ -1,4 +1,4 @@
-function updateResponses() {
+function refreshMenu() {
   const today = new Date().getDay() - 1;
   if (today === -1) {
     return;
@@ -18,8 +18,8 @@ function updateResponses() {
 
   const breakfastSheet = sheet.getSheetByName('Breakfast');
   const lunchSheet = sheet.getSheetByName('Lunch');
-  breakfastSheet.clearContents();
-  lunchSheet.clearContents(); 
+  breakfastSheet.getRange(1, 1, 3, breakfastSheet.getMaxColumns()).clearContent();
+  lunchSheet.getRange(1, 1, 3, lunchSheet.getMaxColumns()).clearContent();
 
   let breakfastRow, lunchRow;
 

@@ -1,4 +1,4 @@
-function replenishUnits() {
+function refreshUnits() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet();
   const sheets = sheet.getSheets();
   const excludeSheets = ["Breakfast", "Lunch", "Menu", "QR"];
