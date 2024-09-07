@@ -55,6 +55,7 @@ function updateSubmitButtonState(scroll) {
 
 document.getElementById('submitButton').addEventListener('click', async function() {
     if (!this.classList.contains('disabled')) {
+        this.classList.add('disabled');
         const messageElement = document.getElementById('confirmationMessage');
         const staticMessage = messageElement.getAttribute('data-static-msg');
         const clickMessage = messageElement.getAttribute('data-click-msg');
@@ -114,6 +115,7 @@ document.getElementById('submitButton').addEventListener('click', async function
                 overlay.addEventListener('click', () => {
                     overlay.classList.remove('show');
                     stopSpeak();
+                    this.classList.remove('disabled');
                 });
             }
         } catch (error) {
