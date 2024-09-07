@@ -64,8 +64,11 @@ document.getElementById('submitButton').addEventListener('click', async function
             messageElement.innerHTML = staticMessage+'<br>'+clickMessage+'<br><br>'+countdownMessage.replace('{{seconds}}', countdown);
         }    
 
-        const selectedBreakfast = (document.querySelector('button.selectedBreakfast')?.getAttribute('data-order')) || 'none';
-        const selectedLunch = (document.querySelector('button.selectedLunch')?.getAttribute('data-order')) || 'none';
+        const breakfastID = (document.querySelector('button.selectedBreakfast')?.getAttribute('data-order')) || 'none';
+        const lunchID = (document.querySelector('button.selectedLunch')?.getAttribute('data-order')) || 'none';
+
+        const breakfastName = (document.querySelector('button.selectedBreakfast')?.getAttribute('data-text')) || 'none';
+        const lunchName = (document.querySelector('button.selectedLunch')?.getAttribute('data-text')) || 'none';
 
         try {
             const response = await fetch('/submitOrder', {
@@ -73,7 +76,7 @@ document.getElementById('submitButton').addEventListener('click', async function
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ selectedBreakfast, selectedLunch }),
+                body: JSON.stringify({ breakfastID, breakfastName, lunchID, lunchName }),
             });
 
             const result = await response.json();

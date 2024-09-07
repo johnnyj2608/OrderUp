@@ -243,7 +243,7 @@ app.get("/menu", async (req, res) => {
 });
 
 app.post("/submitOrder", async (req, res) => {
-    const { selectedBreakfast, selectedLunch } = req.body;
+    const { breakfastID, breakfastName, lunchID, lunchName } = req.body;
     const name = sessions['member'];
     const insurance = sessions['insurance'];
     const rowNumber = sessions['rowNumber'];
@@ -270,10 +270,41 @@ app.post("/submitOrder", async (req, res) => {
             if (orderedToday) {
                 return res.json({ success: false, message: req.__('already_ordered') });
             }
-            await writeorder(googleSheets, spreadsheetId, "Breakfast", selectedBreakfast, name);
-            await writeorder(googleSheets, spreadsheetId, "Lunch", selectedLunch, name);
 
-            await googleSheets.spreadsheets.values.update({
+            // Append to sheet Breakfast
+            const breakfastColumn = String.fromCharCode(65 + parseInt(breakfastID));
+            googleSheets.spreadsheets.values.update({
+                spreadsheetId,
+                range: await nextRow(googleSheets, spreadsheetId, "Breakfast", breakfastColumn),
+                valueInputOption: "USER_ENTERED",
+                resource: {
+                    values: [[name]],
+                },
+            });
+
+            // Append to sheet Lunch
+            const lunchColumn = String.fromCharCode(65 + parseInt(lunchID));
+            googleSheets.spreadsheets.values.update({
+                spreadsheetId,
+                range: await nextRow(googleSheets, spreadsheetId, "Lunch", lunchColumn),
+                valueInputOption: "USER_ENTERED",
+                resource: {
+                    values: [[name]],
+                },
+            });
+
+            // Append to sheet History
+            googleSheets.spreadsheets.values.update({
+                spreadsheetId,
+                range: await nextRow(googleSheets, spreadsheetId, 'History', 'A'),
+                valueInputOption: "USER_ENTERED",
+                resource: {
+                    values: [[name, breakfastName, lunchName]],
+                },
+            });
+
+            // Append to sheet Members
+            googleSheets.spreadsheets.values.update({
                 spreadsheetId,
                 range: memberUnitsRange,
                 valueInputOption: "USER_ENTERED",
@@ -293,27 +324,16 @@ app.post("/submitOrder", async (req, res) => {
     }
 });
 
-async function writeorder(sheets, spreadsheetId, sheetName, columnID, name) {
-    const columnLetter = String.fromCharCode(65 + parseInt(columnID));
-    const range = `${sheetName}!${columnLetter}:${columnLetter}`;
+async function nextRow(googleSheets, spreadsheetId, sheetName, column) {
+    const range = `${sheetName}!${column}:${column}`;
 
-    const response = await sheets.spreadsheets.values.get({
+    const response = await googleSheets.spreadsheets.values.get({
         spreadsheetId,
         range,
     });
-
     const values = response.data.values || [];
     const nextRow = values.length + 1;
-    const rangeToAppend = `${sheetName}!${columnLetter}${nextRow}`; 
-
-    await sheets.spreadsheets.values.append({
-        spreadsheetId,
-        range: rangeToAppend,
-        valueInputOption: "USER_ENTERED",
-        resource: {
-            values: [[name]],
-        },
-    });
+    return `${sheetName}!${column}${nextRow}`; 
 }
 
 app.listen(1337, (req, res) => console.log("Running on 1337!"));
