@@ -271,47 +271,45 @@ app.post("/submitOrder", async (req, res) => {
                 return res.json({ success: false, message: req.__('already_ordered') });
             }
 
-            // Append to sheet Breakfast
-            const breakfastColumn = String.fromCharCode(65 + parseInt(breakfastID));
-            googleSheets.spreadsheets.values.update({
-                spreadsheetId,
-                range: await nextRow(googleSheets, spreadsheetId, "Breakfast", breakfastColumn),
-                valueInputOption: "USER_ENTERED",
-                resource: {
-                    values: [[name]],
-                },
-            });
+            const updatePromises = [
+                googleSheets.spreadsheets.values.update({
+                    spreadsheetId,
+                    range: await nextRow(googleSheets, spreadsheetId, "Breakfast", String.fromCharCode(65 + parseInt(breakfastID))),
+                    valueInputOption: "USER_ENTERED",
+                    resource: {
+                        values: [[name]],
+                    },
+                }),
 
-            // Append to sheet Lunch
-            const lunchColumn = String.fromCharCode(65 + parseInt(lunchID));
-            googleSheets.spreadsheets.values.update({
-                spreadsheetId,
-                range: await nextRow(googleSheets, spreadsheetId, "Lunch", lunchColumn),
-                valueInputOption: "USER_ENTERED",
-                resource: {
-                    values: [[name]],
-                },
-            });
+                googleSheets.spreadsheets.values.update({
+                    spreadsheetId,
+                    range: await nextRow(googleSheets, spreadsheetId, "Lunch", String.fromCharCode(65 + parseInt(lunchID))),
+                    valueInputOption: "USER_ENTERED",
+                    resource: {
+                        values: [[name]],
+                    },
+                }),
 
-            // Append to sheet History
-            googleSheets.spreadsheets.values.update({
-                spreadsheetId,
-                range: await nextRow(googleSheets, spreadsheetId, 'History', 'A'),
-                valueInputOption: "USER_ENTERED",
-                resource: {
-                    values: [[name, breakfastName, lunchName]],
-                },
-            });
+                googleSheets.spreadsheets.values.update({
+                    spreadsheetId,
+                    range: await nextRow(googleSheets, spreadsheetId, 'History', 'A'),
+                    valueInputOption: "USER_ENTERED",
+                    resource: {
+                        values: [[name, breakfastName, lunchName]],
+                    },
+                }),
 
-            // Append to sheet Members
-            googleSheets.spreadsheets.values.update({
-                spreadsheetId,
-                range: memberUnitsRange,
-                valueInputOption: "USER_ENTERED",
-                resource: {
-                    values: [[units - 1, 'TRUE']],
-                },
-            });
+                googleSheets.spreadsheets.values.update({
+                    spreadsheetId,
+                    range: memberUnitsRange,
+                    valueInputOption: "USER_ENTERED",
+                    resource: {
+                        values: [[units - 1, 'TRUE']],
+                    },
+                }),
+            ];
+
+            await Promise.all(updatePromises);
 
             res.json({ success: true });
         } else {
