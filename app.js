@@ -8,6 +8,28 @@ const cookieParser = require("cookie-parser");
 const insuranceImgMap = require("./assets/js/imgMap");
 
 const app = express();
+const cache = new NodeCache();
+const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
+let googleSheets;
+
+const sessions = {
+    "member" : "",
+    "units" : 0,
+    "insurance" : "",
+    "row" : 0,
+};
+
+async function initialize() {
+    try {
+        const authToken = await getAuthToken();
+        googleSheets = google.sheets({ version: "v4", auth: authToken });
+
+        console.log("Initialization complete.");
+    } catch (error) {
+        console.error('Error during initialization:', error);
+        process.exit(1);
+    }
+}
 
 i18n.configure({
     locales: ['en', 'zh'],
@@ -40,18 +62,12 @@ app.get("/", async (req, res) => {
     res.render("index");
 });
 
-const cache = new NodeCache();
-const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
-
 // Select insurance and input member ID
 app.get("/main", async (req, res) => {
     const cacheKey = "sheetNames";
     let sheetNames = cache.get(cacheKey);
 
     if (!sheetNames) {
-        const authToken = await getAuthToken();
-        const googleSheets = google.sheets({ version: "v4", auth: authToken });
-
         const spreadsheet = await googleSheets.spreadsheets.get({
             spreadsheetId,
         });
@@ -67,19 +83,9 @@ app.get("/main", async (req, res) => {
     res.render("main", { sheetNames, insuranceImgMap });
 });
 
-const sessions = {
-    "member" : "",
-    "units" : 0,
-    "insurance" : "",
-    "row" : 0,
-};
-
 // Confirm member exists
 app.post("/confirmMember", async (req, res) => {
     const { insuranceName, numberID } = req.body;
-
-    const authToken = await getAuthToken();
-    const googleSheets = google.sheets({version: "v4", auth: authToken });
 
     try {
         let result = { exists: false, units: null, message: req.__('member_not_found') };
@@ -149,9 +155,6 @@ app.get("/menu", async (req, res) => {
     let menuData = cache.get(cacheKey);
 
     if (!menuData) {
-        const authToken = await getAuthToken();
-        const googleSheets = google.sheets({ version: "v4", auth: authToken });
-
         try {
             const today = new Date().getDay() - 1;
             if (today < 0) {
@@ -237,10 +240,6 @@ app.post("/submitOrder", async (req, res) => {
     const name = sessions['member'];
     const insurance = sessions['insurance'];
     const rowNumber = sessions['rowNumber'];
-
-    const authToken = await getAuthToken();
-    const googleSheets = google.sheets({version: "v4", auth: authToken });
-
     try {
         const memberUnitsRange = `${insurance}!E${rowNumber}:F${rowNumber}`;
         const insuranceResponse = await googleSheets.spreadsheets.values.get({
@@ -318,4 +317,7 @@ async function nextRow(googleSheets, spreadsheetId, sheetName, column) {
     return `${sheetName}!${column}${nextRow}`; 
 }
 
-app.listen(1337, (req, res) => console.log("Running on 1337!"));
+app.listen(1337, async () => {
+    await initialize();
+    console.log("Running on 1337!");
+});
