@@ -1,35 +1,16 @@
-const {google} = require("googleapis");
-const { getAuthToken } = require('./services/getAuthToken');
-
 const express = require("express");
-const NodeCache = require("node-cache");
 const i18n = require("i18n");
 const cookieParser = require("cookie-parser");
-const insuranceImgMap = require("./assets/js/imgMap");
+const { initializeGoogleSheets } = require('./config');
+
+const indexRoute = require('./routes/indexRoute');
+const mainRoute = require('./routes/mainRoute');
+const switchRoute = require('./routes/switchRoute');
+const confirmMemberRoute = require('./routes/confirmMemberRoute');
+const menuRoute = require('./routes/menuRoute');
+const submitOrderRoute = require('./routes/submitOrderRoute');
 
 const app = express();
-const cache = new NodeCache();
-const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
-let googleSheets;
-
-const sessions = {
-    "member" : "",
-    "units" : 0,
-    "insurance" : "",
-    "row" : 0,
-};
-
-async function initialize() {
-    try {
-        const authToken = await getAuthToken();
-        googleSheets = google.sheets({ version: "v4", auth: authToken });
-
-        console.log("Initialization complete.");
-    } catch (error) {
-        console.error('Error during initialization:', error);
-        process.exit(1);
-    }
-}
 
 i18n.configure({
     locales: ['en', 'zh'],
@@ -47,277 +28,19 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("./"));
 
-app.get('/switch/:lang', (req, res) => {
-    const lang = req.params.lang;
-    if (i18n.getLocales().includes(lang)) {
-        res.cookie('lang', lang);
-        console.log(`Switching to language: ${lang}`);
-    } else {
-        console.log(`Language ${lang} is not supported.`);
-    }
-    res.redirect('back');
-});
-
-app.get("/", async (req, res) => {
-    res.render("index");
-});
-
-// Select insurance and input member ID
-app.get("/main", async (req, res) => {
-    const cacheKey = "sheetNames";
-    let sheetNames = cache.get(cacheKey);
-
-    if (!sheetNames) {
-        const spreadsheet = await googleSheets.spreadsheets.get({
-            spreadsheetId,
-        });
-
-        const excludedSheets = ["breakfast", "lunch", "menu", "qr", "history"];
-        sheetNames = spreadsheet.data.sheets
-            .map(sheet => sheet.properties.title)
-            .filter(title => !excludedSheets.includes(title.toLowerCase()));
-
-        cache.set(cacheKey, sheetNames, 900);
-    }
-
-    res.render("main", { sheetNames, insuranceImgMap });
-});
-
-// Confirm member exists
-app.post("/confirmMember", async (req, res) => {
-    const { insuranceName, numberID } = req.body;
-
-    try {
-        let result = { exists: false, units: null, message: req.__('member_not_found') };
-        const today = new Date().getDay() - 1;
-        if (today < 0) {
-            result = {
-                message: req.__('invalid_weekday') 
-            };
-        } else {
-            const spreadsheet = await googleSheets.spreadsheets.get({
-                spreadsheetId,
-            });
-    
-            const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title.toLowerCase());
-            if (!sheetNames.includes(insuranceName.toLowerCase())) {
-                return res.json({ exists: false, message: req.__('insurance_not_found') });
-            }
-    
-            const range = `${insuranceName}!A:E`;
-            const getRows = await googleSheets.spreadsheets.values.get({
-                spreadsheetId,
-                range,
-            });
-    
-            const rows = getRows.data.values || [];
-            let left = 1;
-            let right = rows.length - 1;
-    
-            while (left <= right) {
-                const mid = Math.floor((left + right) / 2);
-                const midValue = rows[mid][0]
-    
-                const units = rows[mid][4];
-    
-                if (midValue === numberID) {
-                    result = {
-                        exists: true,
-                        units: units,
-                        message: units > 0 ? req.__('member_found') : req.__('zero_units'),
-                    };
-                    sessions["member"] = rows[mid][2] || rows[mid][1] || null;
-                    sessions["units"] = units;
-                    sessions["insurance"] = insuranceName;
-                    sessions["rowNumber"] = mid + 1;
-                    break
-                } else if (midValue < numberID) {
-                    left = mid + 1;
-                } else {
-                    right = mid - 1;
-                }
-            };
-        }
-        
-        res.json(result);
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-// Fetch daily menu
-app.get("/menu", async (req, res) => {
-    const member = sessions['member'];
-    const units = sessions['units'];
-
-    const cacheKey = "menuItems";
-    let menuData = cache.get(cacheKey);
-
-    if (!menuData) {
-        try {
-            const today = new Date().getDay() - 1;
-            if (today < 0) {
-                return res.status(400).json({ error: 'Invalid day of the week' });
-            }
-
-            const range = "Menu!B1:I15";
-            const getRows = await googleSheets.spreadsheets.values.get({
-                spreadsheetId,
-                range,
-            });
-
-            const menuRows = getRows.data.values || [];
-            const breakfastFlag = menuRows[0][4];
-            const lunchFlag = menuRows[8][4];
-
-            let breakfastRow = [];
-            let lunchRow = [];
-
-            for (let i = 1; i <= 6; i++) {
-                breakfastRow.push(menuRows[i]);
-            }
-            for (let i = 9; i <= 14; i++) {
-                lunchRow.push(menuRows[i]);
-            }
-
-            if (breakfastFlag === 'TRUE') {
-                breakfastRow = breakfastRow.flat();
-            } else {
-                breakfastRow = breakfastRow[today] || []
-            }
-
-            if (lunchFlag === 'TRUE') {
-                lunchRow = lunchRow.flat();
-            } else {
-                lunchRow = lunchRow[today] || []
-            }
-
-            let breakfastImg = [];
-            let breakfastTitle = [];
-            let lunchImg = [];
-            let lunchTitle = [];
-
-            for (let i = 0; i < breakfastRow.length; i += 2) {
-                if (breakfastRow[i+1] === "") {
-                    break;
-                }
-                breakfastImg.push(breakfastRow[i]);
-                breakfastTitle.push(breakfastRow[i + 1]);
-            }
-
-            for (let i = 0; i < lunchRow.length; i += 2) {
-                if (lunchRow[i+1] === "") {
-                    break;
-                }
-                lunchImg.push(lunchRow[i]);
-                lunchTitle.push(lunchRow[i + 1]);
-            }
-
-            menuData = {
-                breakfast: {
-                    images: breakfastImg,
-                    titles: breakfastTitle,
-                },
-                lunch: {
-                    images: lunchImg,
-                    titles: lunchTitle,
-                }
-            };
-
-            cache.set(cacheKey, menuData, 900);
-
-        } catch (error) {
-            console.error('Error fetching data from Google Sheets:', error);
-            return res.status(500).json({ error: 'Internal Server Error' });
-        }
-    }
-    res.render("menu", { name: member, units: units, menuData });
-});
-
-app.post("/submitOrder", async (req, res) => {
-    const { breakfastID, breakfastName, lunchID, lunchName } = req.body;
-    const name = sessions['member'];
-    const insurance = sessions['insurance'];
-    const rowNumber = sessions['rowNumber'];
-    try {
-        const memberUnitsRange = `${insurance}!E${rowNumber}:F${rowNumber}`;
-        const insuranceResponse = await googleSheets.spreadsheets.values.get({
-            spreadsheetId,
-            range: memberUnitsRange,
-        });
-        const values = insuranceResponse.data.values ? insuranceResponse.data.values[0] : [0, 'FALSE'];
-        const units = parseFloat(values[0]) || 0;
-        const orderedToday = values[1] === 'TRUE';
-        if (units > 0) {
-            if (orderedToday) {
-                return res.json({ success: false, message: req.__('already_ordered') });
-            }
-
-            const updatePromises = [
-                googleSheets.spreadsheets.values.update({
-                    spreadsheetId,
-                    range: await nextRow(googleSheets, spreadsheetId, "Breakfast", String.fromCharCode(65 + parseInt(breakfastID))),
-                    valueInputOption: "USER_ENTERED",
-                    resource: {
-                        values: [[name]],
-                    },
-                }),
-
-                googleSheets.spreadsheets.values.update({
-                    spreadsheetId,
-                    range: await nextRow(googleSheets, spreadsheetId, "Lunch", String.fromCharCode(65 + parseInt(lunchID))),
-                    valueInputOption: "USER_ENTERED",
-                    resource: {
-                        values: [[name]],
-                    },
-                }),
-
-                googleSheets.spreadsheets.values.update({
-                    spreadsheetId,
-                    range: await nextRow(googleSheets, spreadsheetId, 'History', 'A'),
-                    valueInputOption: "USER_ENTERED",
-                    resource: {
-                        values: [[name, breakfastName, lunchName]],
-                    },
-                }),
-
-                googleSheets.spreadsheets.values.update({
-                    spreadsheetId,
-                    range: memberUnitsRange,
-                    valueInputOption: "USER_ENTERED",
-                    resource: {
-                        values: [[units - 1, 'TRUE']],
-                    },
-                }),
-            ];
-
-            await Promise.all(updatePromises);
-
-            res.json({ success: true });
-        } else {
-            res.json({ success: false, message: req.__('insufficient_units') });
-        }
-
-    } catch (error) {
-        console.error('Error:', error);
-        res.json({ success: false });
-    }
-});
-
-async function nextRow(googleSheets, spreadsheetId, sheetName, column) {
-    const range = `${sheetName}!${column}:${column}`;
-
-    const response = await googleSheets.spreadsheets.values.get({
-        spreadsheetId,
-        range,
-    });
-    const values = response.data.values || [];
-    const nextRow = values.length + 1;
-    return `${sheetName}!${column}${nextRow}`; 
-}
+app.use('/', indexRoute);
+app.use('/', mainRoute);
+app.use('/', switchRoute);
+app.use('/', confirmMemberRoute);
+app.use('/', menuRoute);
+app.use('/', submitOrderRoute);
 
 app.listen(1337, async () => {
-    await initialize();
-    console.log("Running on 1337!");
+    try {
+        await initializeGoogleSheets();
+        console.log("Running on 1337!");
+    } catch (error) {
+        console.error('Failed to initialize Google Sheets client:', error);
+        process.exit(1);
+    }
 });
