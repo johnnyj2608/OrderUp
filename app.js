@@ -1,7 +1,7 @@
 const express = require("express");
 const i18n = require("i18n");
 const cookieParser = require("cookie-parser");
-const { initializeGoogleSheets } = require('./config');
+const { initializeGoogleSheets } = require('./config/googleAPI');
 
 const indexRoute = require('./routes/indexRoute');
 const mainRoute = require('./routes/mainRoute');

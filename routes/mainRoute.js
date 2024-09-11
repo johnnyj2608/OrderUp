@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const insuranceImgMap = require("../assets/js/imgMap");
-const { getGoogleSheets, spreadsheetId } = require('../config');
+const { getGoogleSheets, spreadsheetId } = require('../config/googleAPI');
 
 router.get("/main", async (req, res) => {
-    // const googleClient = await googleSheets();
     const googleSheets = getGoogleSheets();
     const spreadsheet = await googleSheets.spreadsheets.get({ spreadsheetId });
     const excludedSheets = ["breakfast", "lunch", "menu", "qr", "history"];

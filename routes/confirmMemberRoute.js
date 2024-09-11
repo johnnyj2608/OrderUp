@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { getGoogleSheets, spreadsheetId, userInfo } = require('../config');
+const { getGoogleSheets, spreadsheetId } = require('../config/googleAPI');
+const { userInfo } = require('../config/storage');
 
 router.post("/confirmMember", async (req, res) => {
     const { insuranceName, numberID } = req.body;

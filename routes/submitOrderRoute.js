@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { getGoogleSheets, spreadsheetId, userInfo } = require('../config');
+const { getGoogleSheets, spreadsheetId } = require('../config/googleAPI');
+const { userInfo } = require('../config/storage');
 
 router.post("/submitOrder", async (req, res) => {
     const { breakfastID, breakfastName, lunchID, lunchName } = req.body;

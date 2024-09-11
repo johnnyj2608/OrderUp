@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { cache, getGoogleSheets, spreadsheetId, userInfo } = require('../config');
+const { getGoogleSheets, spreadsheetId } = require('../config/googleAPI');
+const { cache, userInfo } = require('../config/storage');
 
 router.get("/menu", async (req, res) => {
     const member = userInfo['member'];
