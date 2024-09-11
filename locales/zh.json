@@ -20,5 +20,6 @@
 	"member_found": "找到了您的ID。",
 	"zero_units": "您本周剩余0个单位。",
 	"insufficient_units": "您没有足够的单位来下订单。",
-	"already_ordered": "您今天已经下过订单了。"
+	"already_ordered": "您今天已经下过订单了。",
+	"invalid_weekday": "无效的星期几。"
 }

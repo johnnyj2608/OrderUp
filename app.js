@@ -92,51 +92,58 @@ app.post("/confirmMember", async (req, res) => {
     const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
 
     try {
-        const spreadsheet = await googleSheets.spreadsheets.get({
-            spreadsheetId,
-        });
-
-        const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title.toLowerCase());
-        if (!sheetNames.includes(insuranceName.toLowerCase())) {
-            return res.json({ exists: false, message: req.__('insurance_not_found') });
-        }
-
-        const range = `${insuranceName}!A:E`;
-        const getRows = await googleSheets.spreadsheets.values.get({
-            spreadsheetId,
-            range,
-        });
-
-        const rows = getRows.data.values || [];
         let result = { exists: false, units: null, message: req.__('member_not_found') };
-        
-        let left = 1;
-        let right = rows.length - 1;
-
-        while (left <= right) {
-            const mid = Math.floor((left + right) / 2);
-            const midValue = rows[mid][0]
-
-            const units = rows[mid][4];
-
-            if (midValue === numberID) {
-                result = {
-                    exists: true,
-                    units: units,
-                    message: units > 0 ? req.__('member_found') : req.__('zero_units'),
-                };
-                sessions["member"] = rows[mid][2] || rows[mid][1] || null;
-                sessions["units"] = units;
-                sessions["insurance"] = insuranceName;
-                sessions["rowNumber"] = mid + 1;
-                break
-            } else if (midValue < numberID) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
+        const today = new Date().getDay() - 1;
+        console.log(today)
+        if (today < 0) {
+            result = {
+                message: req.__('invalid_weekday') 
+            };
+        } else {
+            const spreadsheet = await googleSheets.spreadsheets.get({
+                spreadsheetId,
+            });
+    
+            const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title.toLowerCase());
+            if (!sheetNames.includes(insuranceName.toLowerCase())) {
+                return res.json({ exists: false, message: req.__('insurance_not_found') });
             }
-        };
-
+    
+            const range = `${insuranceName}!A:E`;
+            const getRows = await googleSheets.spreadsheets.values.get({
+                spreadsheetId,
+                range,
+            });
+    
+            const rows = getRows.data.values || [];
+            let left = 1;
+            let right = rows.length - 1;
+    
+            while (left <= right) {
+                const mid = Math.floor((left + right) / 2);
+                const midValue = rows[mid][0]
+    
+                const units = rows[mid][4];
+    
+                if (midValue === numberID) {
+                    result = {
+                        exists: true,
+                        units: units,
+                        message: units > 0 ? req.__('member_found') : req.__('zero_units'),
+                    };
+                    sessions["member"] = rows[mid][2] || rows[mid][1] || null;
+                    sessions["units"] = units;
+                    sessions["insurance"] = insuranceName;
+                    sessions["rowNumber"] = mid + 1;
+                    break
+                } else if (midValue < numberID) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            };
+        }
+        
         res.json(result);
     } catch (error) {
         console.error('Error:', error);
