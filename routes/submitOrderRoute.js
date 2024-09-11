@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getGoogleSheets, spreadsheetId } = require('../config/googleAPI');
+const { getGoogleSheets, spreadsheetId, nextRow } = require('../config/googleAPI');
 const { userInfo } = require('../config/storage');
 
 router.post("/submitOrder", async (req, res) => {
@@ -28,7 +28,16 @@ router.post("/submitOrder", async (req, res) => {
             const updatePromises = [
                 googleSheets.spreadsheets.values.update({
                     spreadsheetId,
-                    range: await nextRow(googleSheets, spreadsheetId, "Breakfast", String.fromCharCode(65 + parseInt(breakfastID))),
+                    range: nextRow("breakfast", breakfastID),
+                    valueInputOption: "USER_ENTERED",
+                    resource: {
+                        values: [[name]],
+                    },
+                }),
+                
+                googleSheets.spreadsheets.values.update({
+                    spreadsheetId,
+                    range: nextRow("lunch", lunchID),
                     valueInputOption: "USER_ENTERED",
                     resource: {
                         values: [[name]],
@@ -37,16 +46,7 @@ router.post("/submitOrder", async (req, res) => {
 
                 googleSheets.spreadsheets.values.update({
                     spreadsheetId,
-                    range: await nextRow(googleSheets, spreadsheetId, "Lunch", String.fromCharCode(65 + parseInt(lunchID))),
-                    valueInputOption: "USER_ENTERED",
-                    resource: {
-                        values: [[name]],
-                    },
-                }),
-
-                googleSheets.spreadsheets.values.update({
-                    spreadsheetId,
-                    range: await nextRow(googleSheets, spreadsheetId, 'History', 'A'),
+                    range: nextRow("history", 0),
                     valueInputOption: "USER_ENTERED",
                     resource: {
                         values: [[name, breakfastName, lunchName]],
@@ -75,17 +75,5 @@ router.post("/submitOrder", async (req, res) => {
         res.json({ success: false });
     }
 });
-
-async function nextRow(googleSheets, spreadsheetId, sheetName, column) {
-    const range = `${sheetName}!${column}:${column}`;
-
-    const response = await googleSheets.spreadsheets.values.get({
-        spreadsheetId,
-        range,
-    });
-    const values = response.data.values || [];
-    const nextRow = values.length + 1;
-    return `${sheetName}!${column}${nextRow}`; 
-}
 
 module.exports = router;
