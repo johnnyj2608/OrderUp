@@ -10,6 +10,9 @@ router.get("/main", async (req, res) => {
     sheetNames = spreadsheet.data.sheets
         .map(sheet => sheet.properties.title)
         .filter(title => !excludedSheets.includes(title.toLowerCase()));
+    if (sheetNames.length === 0) {
+        return res.status(404).json({ error: "No valid sheet names found." });
+    }
     res.render("main", { sheetNames, insuranceImgMap });
 });
 
