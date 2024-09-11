@@ -1,5 +1,7 @@
-const express = require("express");
 const {google} = require("googleapis");
+const { getAuthToken } = require('./services/getAuthToken');
+
+const express = require("express");
 const NodeCache = require("node-cache");
 const i18n = require("i18n");
 const cookieParser = require("cookie-parser");
@@ -39,6 +41,7 @@ app.get("/", async (req, res) => {
 });
 
 const cache = new NodeCache();
+const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
 
 // Select insurance and input member ID
 app.get("/main", async (req, res) => {
@@ -46,17 +49,10 @@ app.get("/main", async (req, res) => {
     let sheetNames = cache.get(cacheKey);
 
     if (!sheetNames) {
-        const auth = new google.auth.GoogleAuth({
-            keyFile: "credentials.json",
-            scopes: "https://www.googleapis.com/auth/spreadsheets",
-        });
-
-        const client = await auth.getClient();
-        const googleSheets = google.sheets({ version: "v4", auth: client });
-        const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
+        const authToken = await getAuthToken();
+        const googleSheets = google.sheets({ version: "v4", auth: authToken });
 
         const spreadsheet = await googleSheets.spreadsheets.get({
-            auth,
             spreadsheetId,
         });
 
@@ -82,19 +78,12 @@ const sessions = {
 app.post("/confirmMember", async (req, res) => {
     const { insuranceName, numberID } = req.body;
 
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "credentials.json",
-        scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-
-    const client = await auth.getClient();
-    const googleSheets = google.sheets({version: "v4", auth: client });
-    const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
+    const authToken = await getAuthToken();
+    const googleSheets = google.sheets({version: "v4", auth: authToken });
 
     try {
         let result = { exists: false, units: null, message: req.__('member_not_found') };
         const today = new Date().getDay() - 1;
-        console.log(today)
         if (today < 0) {
             result = {
                 message: req.__('invalid_weekday') 
@@ -160,14 +149,8 @@ app.get("/menu", async (req, res) => {
     let menuData = cache.get(cacheKey);
 
     if (!menuData) {
-        const auth = new google.auth.GoogleAuth({
-            keyFile: "credentials.json",
-            scopes: "https://www.googleapis.com/auth/spreadsheets",
-        });
-
-        const client = await auth.getClient();
-        const googleSheets = google.sheets({ version: "v4", auth: client });
-        const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
+        const authToken = await getAuthToken();
+        const googleSheets = google.sheets({ version: "v4", auth: authToken });
 
         try {
             const today = new Date().getDay() - 1;
@@ -255,14 +238,8 @@ app.post("/submitOrder", async (req, res) => {
     const insurance = sessions['insurance'];
     const rowNumber = sessions['rowNumber'];
 
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "credentials.json",
-        scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-
-    const client = await auth.getClient();
-    const googleSheets = google.sheets({version: "v4", auth: client });
-    const spreadsheetId = "1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M";
+    const authToken = await getAuthToken();
+    const googleSheets = google.sheets({version: "v4", auth: authToken });
 
     try {
         const memberUnitsRange = `${insurance}!E${rowNumber}:F${rowNumber}`;
