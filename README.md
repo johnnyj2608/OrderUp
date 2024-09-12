@@ -38,12 +38,12 @@ Dependency Explanation:
    - Add the following lines to your `.env` file:
 
      ```env
-     GOOGLE_PROJECTID=sheets-xxxxxxxxxxxxxx
+     GOOGLE_PROJECT_ID=sheets-xxxxxxxxxxxxxx
+     GOOGLE_PRIVATE_KEY='{"privateKey":"-----BEGIN PRIVATE KEY.........-----END PRIVATE KEY-----\n"}'
      GOOGLE_CLIENT_EMAIL=conta-sheets-de-servi-o@xxxxxxxxxxxxx.iam.gserviceaccount.com
-     GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nprivate_key_content\n-----END PRIVATE KEY-----\n"
      ```
 
-     Make sure to replace `sheets-xxxxxxxxxxxxxx`, `conta-sheets-de-servi-o@xxxxxxxxxxxxx.iam.gserviceaccount.com`, and `private_key_content` with the actual values from the `credentials.json` file.
+     Make sure to replace `GOOGLE_PROJECT_ID`, `GOOGLE_PRIVATE_KEY`, and `GOOGLE_CLIENT_EMAIL` with the actual values from the `credentials.json` file.
 
 ### 3. Google Sheets Template Setup
 1. **Copy this template**: [Google Sheets Template](https://docs.google.com/spreadsheets/d/1TYBGWSbuEPGPbQNL7F2GUxTE3cEPSdoIcndqdVGYZ8Q/edit?usp=sharing).
