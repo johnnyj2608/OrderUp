@@ -1,4 +1,8 @@
 function speakText(text) {
+    const mute = sessionStorage.getItem('mute') === 'true';
+    if (mute) {
+        return;
+    }
     stopSpeak();
     const utterance = new SpeechSynthesisUtterance(text);
     const language = sessionStorage.getItem('language');

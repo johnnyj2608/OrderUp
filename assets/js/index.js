@@ -22,3 +22,29 @@ document.querySelectorAll('.dropdown-item').forEach(item => {
         window.location.href = `/switch/${selectedLang}`;
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const muteButton = document.getElementById('muteButton');
+    let isMuted = sessionStorage.getItem('mute') === 'true';
+    
+    const icon = muteButton.querySelector('i');
+    if (isMuted) {
+        icon.classList.remove('fa-volume-up');
+        icon.classList.add('fa-volume-mute');
+    } else {
+        icon.classList.remove('fa-volume-mute');
+        icon.classList.add('fa-volume-up');
+    }
+
+    muteButton.addEventListener('click', () => {
+        isMuted = !isMuted;
+        if (isMuted) {
+            icon.classList.remove('fa-volume-up');
+            icon.classList.add('fa-volume-mute');
+        } else {
+            icon.classList.remove('fa-volume-mute');
+            icon.classList.add('fa-volume-up');
+        }
+        sessionStorage.setItem('mute', isMuted);
+    });
+});

@@ -34,7 +34,26 @@
 .dropdown-toggle {
       width: 8vw;
 }
-  
+
+.mute-button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 2vw;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      padding: 0;
+      margin: 0;
+      outline: none;
+}
+
+.mute-button:hover {
+      color: rgb(0, 122, 255);
+}
+
+.mute-button i {
+      transition: transform 0.3s ease;
+}
 
 .footer {
       bottom: 0px;
@@ -91,7 +110,7 @@ button.selected, button.selectedLunch, button.selectedBreakfast {
       justify-content: center; 
 }
 
-button:focus, .panel:focus, .btn:focus {
+button:focus, .panel:focus, .btn:focus, .mute-button:focus{
       outline: none;
 }
 
