@@ -1,7 +1,7 @@
 function refreshToday() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet();
   const sheets = sheet.getSheets();
-  const excludeSheets = ["Breakfast", "Lunch", "Menu", "QR", "History"];
+  const excludeSheets = ["Breakfast", "Lunch", "Menu", "QR", "History"]; 
 
   sheets.forEach(sheet => {
     const sheetName = sheet.getName();
