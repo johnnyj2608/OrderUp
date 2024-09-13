@@ -1,7 +1,7 @@
 const { google } = require('googleapis');
 const { getAuthToken } = require('../services/getAuthToken');
 
-const spreadsheetId = '1eNlUPP-Cw50W5PIjTy6HchqL6Yo12KFkAqydLvQsI8M';
+const spreadsheetId = process.env.SPREADSHEET_ID;
 let googleSheets;
 
 async function initializeGoogleSheets() {
