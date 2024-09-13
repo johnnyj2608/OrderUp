@@ -8,6 +8,11 @@
       -ms-user-select: none; 
 }
 
+::-webkit-scrollbar {
+      width: 0px;
+      background: transparent;
+}
+
 .header, .footer {
       height: 7vh;
       background-color: rgb(105, 20, 35, 0.9);
