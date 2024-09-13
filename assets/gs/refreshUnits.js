@@ -1,7 +1,7 @@
 function refreshUnits() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet();
   const sheets = sheet.getSheets();
-  const excludeSheets = ["Breakfast", "Lunch", "Menu", "QR", "History"]; 
+  const excludeSheets = ["Breakfast", "Lunch", "Menu", "QR", "History"];
 
   sheets.forEach(sheet => {
     const sheetName = sheet.getName();
@@ -10,10 +10,17 @@ function refreshUnits() {
       const rows = range.getNumRows();
 
       for (let i = 2; i<= rows; i++) {
-        const schedule = sheet.getRange(i, 4).getValue();
-        const scheduleParsed = schedule.replace(/\./g, '');
-        const units = scheduleParsed.length;
-        sheet.getRange(i, 5).setValue(units)
+        let schedule = sheet.getRange(i, 4).getValue();
+
+        schedule = schedule.toString();
+        let units;
+        if (schedule.includes('.')) {
+          const scheduleParsed = schedule.replace(/\./g, '');
+          units = scheduleParsed.length;
+        } else {
+          units = Number(schedule);
+        }
+        sheet.getRange(i, 5).setValue(units);
       }
     }
   })
