@@ -102,7 +102,7 @@ router.post("/submitOrder", async (req, res) => {
                             {
                                 values: [
                                     { userEnteredValue: { numberValue: units - 1 } },
-                                    { userEnteredValue: { stringValue: 'TRUE' } }
+                                    { userEnteredValue: { boolValue: true } }
                                 ]
                             }
                         ],
