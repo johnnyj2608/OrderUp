@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getGoogleSheets, spreadsheetId, nextRow } = require('../config/googleAPI');
+const { spreadsheetId, getGoogleSheets, getSheetId, nextRow } = require('../config/googleAPI');
 const { userInfo } = require('../config/storage');
 
 router.post("/submitOrder", async (req, res) => {
@@ -25,45 +25,98 @@ router.post("/submitOrder", async (req, res) => {
                 return res.json({ success: false, message: req.__('already_ordered') });
             }
 
-            const updatePromises = [
-                googleSheets.spreadsheets.values.update({
-                    spreadsheetId,
-                    range: nextRow("breakfast", breakfastID),
-                    valueInputOption: "USER_ENTERED",
-                    resource: {
-                        values: [[name]],
-                    },
-                }),
-                
-                googleSheets.spreadsheets.values.update({
-                    spreadsheetId,
-                    range: nextRow("lunch", lunchID),
-                    valueInputOption: "USER_ENTERED",
-                    resource: {
-                        values: [[name]],
-                    },
-                }),
+            const breakfastRow = nextRow('breakfast', breakfastID);
+            const lunchRow = nextRow('lunch', lunchID);
+            const historyRow = nextRow('history', 0);
 
-                googleSheets.spreadsheets.values.update({
-                    spreadsheetId,
-                    range: nextRow("history", 0),
-                    valueInputOption: "USER_ENTERED",
-                    resource: {
-                        values: [[name, breakfastName, lunchName]],
-                    },
-                }),
-
-                googleSheets.spreadsheets.values.update({
-                    spreadsheetId,
-                    range: memberUnitsRange,
-                    valueInputOption: "USER_ENTERED",
-                    resource: {
-                        values: [[units - 1, 'TRUE']],
-                    },
-                }),
+            const requests = [
+                {
+                    updateCells: {
+                        range: {
+                            sheetId: getSheetId('Breakfast'),
+                            startRowIndex: breakfastRow - 1,
+                            endRowIndex: breakfastRow,
+                            startColumnIndex: breakfastID,
+                            endColumnIndex: breakfastID + 1
+                        },
+                        rows: [
+                            {
+                                values: [
+                                    { userEnteredValue: { stringValue: name } }
+                                ]
+                            }
+                        ],
+                        fields: 'userEnteredValue'
+                    }
+                },
+                {
+                    updateCells: {
+                        range: {
+                            sheetId: getSheetId('Lunch'),
+                            startRowIndex: lunchRow - 1,
+                            endRowIndex: lunchRow,
+                            startColumnIndex: lunchID,
+                            endColumnIndex: lunchID + 1
+                        },
+                        rows: [
+                            {
+                                values: [
+                                    { userEnteredValue: { stringValue: name } }
+                                ]
+                            }
+                        ],
+                        fields: 'userEnteredValue'
+                    }
+                },
+                {
+                    updateCells: {
+                        range: {
+                            sheetId: getSheetId('History'),
+                            startRowIndex: historyRow - 1,
+                            endRowIndex: historyRow,
+                            startColumnIndex: 0,
+                            endColumnIndex: 3
+                        },
+                        rows: [
+                            {
+                                values: [
+                                    { userEnteredValue: { stringValue: name } },
+                                    { userEnteredValue: { stringValue: breakfastName } },
+                                    { userEnteredValue: { stringValue: lunchName } }
+                                ]
+                            }
+                        ],
+                        fields: 'userEnteredValue'
+                    }
+                },
+                {
+                    updateCells: {
+                        range: {
+                            sheetId: getSheetId(insurance),
+                            startRowIndex: rowNumber - 1,
+                            endRowIndex: rowNumber,
+                            startColumnIndex: 4,
+                            endColumnIndex: 6
+                        },
+                        rows: [
+                            {
+                                values: [
+                                    { userEnteredValue: { numberValue: units - 1 } },
+                                    { userEnteredValue: { stringValue: 'TRUE' } }
+                                ]
+                            }
+                        ],
+                        fields: 'userEnteredValue'
+                    }
+                }
             ];
 
-            await Promise.all(updatePromises);
+            await googleSheets.spreadsheets.batchUpdate({
+                spreadsheetId,
+                resource: {
+                    requests
+                }
+            });
 
             res.json({ success: true });
         } else {

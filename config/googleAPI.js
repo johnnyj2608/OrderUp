@@ -3,6 +3,12 @@ const { getAuthToken } = require('../services/getAuthToken');
 
 const spreadsheetId = process.env.SPREADSHEET_ID;
 let googleSheets;
+let sheetIds = {}
+const rowStores = {
+    breakfast: {},
+    lunch: {},
+    history: {},
+};
 
 async function initializeGoogleSheets() {
     try {
@@ -10,12 +16,31 @@ async function initializeGoogleSheets() {
         googleSheets = google.sheets({ version: 'v4', auth: authToken });
         console.log('Google Sheets initialization complete.');
 
+        await fetchSheetIds();
+
         await nextRowInitializer('breakfast', rowStores['breakfast']);
         await nextRowInitializer('lunch', rowStores['lunch']);
         await nextRowInitializer('history', rowStores['history'], true);
     } catch (error) {
         console.error('Error during Google Sheets initialization:', error);
         process.exit(1);
+    }
+}
+
+async function fetchSheetIds() {
+    try {
+        const response = await googleSheets.spreadsheets.get({
+            spreadsheetId,
+        });
+        const sheets = response.data.sheets || [];
+        sheets.forEach(sheet => {
+            const sheetName = sheet.properties.title;
+            const sheetId = sheet.properties.sheetId;
+            sheetIds[sheetName] = sheetId;
+        });
+    } catch (error) {
+        console.error('Error retrieving sheet IDs:', error);
+        throw error;
     }
 }
 
@@ -51,18 +76,11 @@ async function nextRowInitializer(sheetName, rowStore, oneCol = false) {
     }
 }
 
-const rowStores = {
-    breakfast: {},
-    lunch: {},
-    history: {},
-};
-
 function nextRow(sheetType, column) {
     const rowStore = rowStores[sheetType];
     const row = rowStore[column];
     rowStore[column] = row + 1;
-    columnLetter = String.fromCharCode(65 + parseInt(column));
-    return `${sheetType}!${columnLetter}${row}`;
+    return row;
 }
 
 function getGoogleSheets() {
@@ -72,9 +90,14 @@ function getGoogleSheets() {
     return googleSheets;
 }
 
+function getSheetId(sheetName) {
+    return sheetIds[sheetName];
+}
+
 module.exports = {
     spreadsheetId,
     getGoogleSheets,
+    getSheetId,
     nextRow,
     initializeGoogleSheets,
 };
