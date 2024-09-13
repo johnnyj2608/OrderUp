@@ -60,14 +60,31 @@ Dependency Explanation:
  - **Insurance Sheet**: Daily update to reset the "ordered today" column to `False`.
  - **Insurance Sheet**: Weekly update to reset units to the appropriate amount from the schedule.
 
-The project includes default images for the following insurance providers / sheet names:
-- Aetna
-- Anthem Blue Cross
-- Center Light
-- Homefirst
-- Riverspring
-- Senior Whole Health
-- Village Care Max
+The project includes default images for the following [insurance providers / sheet names](./assets/js/imgMap.js)
+
+### 4. Project Setup
+1. **Include `SPREADSHEET_ID` in `.env` File**:
+   - Locate the `.env` file in the root directory of your project.
+   - Add your Google Sheets `SPREADSHEET_ID` to the `.env` file using the format:
+     ```env
+     SPREADSHEET_ID=your_spreadsheet_id_here
+     ```
+   - Replace `your_spreadsheet_id_here` with the actual ID of your Google Sheets file. This ID can be found in the URL of your Google Sheets document.
+
+2. **Modify the Locale Title**:
+   - Open the `locale` directory in your project.
+   - For each language settig, find the line where the locale title is defined. For example:
+     ```json
+     {
+       "project_title": "Project Title"
+     }
+     ```
+   - Change `"Project Title"` to the title that suits your project. This title will be used throughout the application.
+
+3. **Modify the Default Images**:
+   - Navigate to the folder where your project stores image assets (e.g., `assets/img/`).
+   - Replace the existing images with your own by updating the file with the name specified in your project configuration.
+   - Ensure the new images has the same file name and format as the old one to avoid any reference issues. For example, if your configuration references `wallpaper.jpg`, ensure your new image file is named `wallpaper.jpg`.
 
 ## How To Use
 ### Desktop Usage (Screenshots)
@@ -86,6 +103,8 @@ The project includes default images for the following insurance providers / shee
 5. Success message (no redirect)
 
 ## Optimizations
+- **API Response Caching:** The application originally sent an API request to retrieve the menu every time a user accessed the web application, leading to slow data loading. I implemented a caching mechanism that stores the daily menu and periodically expires it to reflect changes in the spreadsheet database. This reduces the number of API calls and speeds up data loading.
+- **Binary Search Member IDs:** Searching for member IDs in Google Sheets involved scanning through the entire list sequentially, which was inefficient for large datasets. To address this, I implemented a binary search algorithm. To ensure that users list member IDs sequentially, I implemented conditional formatting in Google Sheets. This formatting highlights any out-of-sequence IDs in red, providing immediate visual feedback to users.
+- **Batch Update Optimization:** Updates to Google Sheets were made through individual API requests for each sheet, which was inefficient and prone to errors. I optimized this by implementing batch updates, consolidating multiple changes into a single API request. This approach not only reduced the number of API calls and improved performance but also included  error handling. If an error occurred with any sheet during the batch update, the system would catch it and halt the entire appendation process. 
 - **Efficient Data Insertion:** To append data to the next available row within a specific column, I needed to call the API to retrieve the column range and identify the open row each time. This approach was inefficient because it required multiple API requests. I optimized this by implementing a solution where the server determines the open rows for each column when it starts up and stores this information locally in a hash map. This hash map is updated with each append request, significantly reducing the need for repeated API calls and improving overall performance.
-- **API Response Caching:** Initially, the application sent an API request to retrieve the menu every time a user accessed the web application, which slowed down data loading. To reduce the number of calls and increase speed, I implemented a cache that stores the daily menu and periodically expires to account for any changes that may occur in the spreadsheet database.
 - **Direct Column Indexing:** Originally, I passed the food name into the API request, searched for the name and its column location, and then appended the name. I realized I could directly pass the column number based on the index of the button on the Express template, allowing for direct appending by column index.
