@@ -16,7 +16,7 @@
                 </button>
             </div>
             <div class="col text-center">
-                <h1><%= __("ASCC") %></h1>
+                <h1><%= __("project_title") %></h1>
             </div>
             <div class="col text-right">
                 <div class="dropdown">
@@ -52,7 +52,7 @@
                                     onclick="handleBreakfastClick('<%= title %>'); speakText(this.getAttribute('data-text'))" 
                                     class="panel w-100" 
                                     data-order="<%= index %>">
-                                    <img src="<%= menuData.breakfast.images[index] || '/assets/img/crown.png' %>" 
+                                    <img src="<%= menuData.breakfast.images[index] || '/assets/img/default.png' %>" 
                                     class="panel-img w-100" />
                                     <h5 class="panel-title"><%= title %></h5>
                                 </button>
@@ -80,7 +80,7 @@
                                     onclick="handleLunchClick('<%= title %>'); speakText(this.getAttribute('data-text'))" 
                                     class="panel w-100" 
                                     data-order="<%= index %>">
-                                    <img src="<%= menuData.lunch.images[index] || '/assets/img/crown.png' %>"  
+                                    <img src="<%= menuData.lunch.images[index] || '/assets/img/default.png' %>"  
                                     class="panel-img w-100" />
                                     <h5 class="panel-title"><%= title %></h5>
                                 </button>

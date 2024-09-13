@@ -16,7 +16,7 @@
                 </button>
             </div>
             <div class="col text-center">
-                <h1><%= __("ASCC") %></h1>
+                <h1><%= __("project_title") %></h1>
             </div>
             <div class="col text-right">
                 <div class="dropdown">
@@ -44,7 +44,7 @@
                                 data-text="<%= sheetName %>" 
                                 onclick="handleButtonClick('<%= sheetName %>'); speakText(this.getAttribute('data-text'))" 
                                 class="panel w-100">
-                                <img src="<%= insuranceImgMap[sheetName.replace(/\s/g,'').toLowerCase()] || '/assets/img/crown.png' %>" 
+                                <img src="<%= insuranceImgMap[sheetName.replace(/\s/g,'').toLowerCase()] || '/assets/img/default.png' %>" 
                                 class="panel-img img-padding w-100" />
                                 <h5 class="panel-title"><%= sheetName %></h5>
                             </button>
