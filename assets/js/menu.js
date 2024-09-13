@@ -1,5 +1,5 @@
 document.getElementById('backButton').addEventListener('click', async () => {
-    window.history.back();
+    window.location.href = '/main';
 });
 
 function handleBreakfastClick(menuItem) {
