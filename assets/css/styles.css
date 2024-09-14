@@ -40,6 +40,10 @@
       width: 8vw;
 }
 
+.dropdown-toggle:hover {
+      background-color: #ffddc1;
+}
+
 .mute-button {
       background: transparent;
       border: none;
@@ -53,7 +57,7 @@
 }
 
 .mute-button:hover {
-      color: rgb(0, 122, 255);
+      color: #ffddc1;
 }
 
 .mute-button i {
