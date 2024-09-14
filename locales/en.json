@@ -21,6 +21,5 @@
 	"zero_units": "You have 0 weekly units remaining.",
 	"insufficient_units": "You have insufficient units to place an order.",
 	"already_ordered": "You have already ordered today.",
-	"invalid_weekday": "Invalid day of the week.",
-	"ASCC": "ASCC"
+	"invalid_weekday": "Invalid day of the week."
 }
