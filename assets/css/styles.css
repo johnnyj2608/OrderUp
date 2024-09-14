@@ -74,6 +74,7 @@
       height: 86vh; 
       background: url('../img/wallpaper.jpg') no-repeat center center;
       background-size: cover;
+      cursor: pointer;
 }
 
 /* Main */
@@ -95,6 +96,7 @@ button.selected, button.selectedLunch, button.selectedBreakfast {
       padding: 0;
       text-align: center;
       box-sizing: border-box; 
+      cursor: pointer;
   }
   
 .panel-img {
@@ -226,6 +228,7 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
       text-align: center;
       font-size: 2vw;
       width: 40vw;
+      cursor: pointer;
 }
   
 .alert-overlay.show {
