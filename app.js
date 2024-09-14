@@ -1,7 +1,9 @@
 const express = require("express");
+const favicon = require('serve-favicon');
+const path = require("path");
 const i18n = require("i18n");
 const cookieParser = require("cookie-parser");
-const path = require("path");
+
 const { initializeGoogleSheets } = require('./config/googleAPI');
 
 const indexRoute = require('./routes/indexRoute');
@@ -28,10 +30,8 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
-//app.use(express.static("./"));
 app.use(express.static(path.join(__dirname, 'assets')));
-
-console.log(path.join(__dirname, 'assets'));
+app.use(favicon(path.join(__dirname,'assets','img','favicon.ico')));
 
 app.use('/', indexRoute);
 app.use('/', mainRoute);
