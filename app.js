@@ -1,6 +1,7 @@
 const express = require("express");
 const i18n = require("i18n");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const { initializeGoogleSheets } = require('./config/googleAPI');
 
 const indexRoute = require('./routes/indexRoute');
@@ -23,6 +24,7 @@ i18n.configure({
 app.use(cookieParser());
 app.use(i18n.init);
 
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
