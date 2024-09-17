@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { getGoogleSheets, spreadsheetId } = require('../config/googleAPI');
-const { userInfo } = require('../config/storage');
 
 router.post("/confirmMember", async (req, res) => {
     const { insuranceName, numberID } = req.body;
@@ -46,10 +45,10 @@ router.post("/confirmMember", async (req, res) => {
                         units: units,
                         message: units > 0 ? req.__('member_found') : req.__('zero_units'),
                     };
-                    userInfo["member"] = rows[mid][2] || rows[mid][1] || null;
-                    userInfo["units"] = units;
-                    userInfo["insurance"] = insuranceName;
-                    userInfo["rowNumber"] = mid + 1;
+                    req.session.name = rows[mid][2] || rows[mid][1] || null;
+                    req.session.units = units;
+                    req.session.insurance = insuranceName;
+                    req.session.rowNumber = mid + 1;
                     break;
                 } else if (midValue < numberID) {
                     left = mid + 1;

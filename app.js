@@ -3,6 +3,8 @@ const favicon = require('serve-favicon');
 const path = require("path");
 const i18n = require("i18n");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const crypto = require('crypto');
 
 const { initializeGoogleSheets } = require('./config/googleAPI');
 
@@ -32,6 +34,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'assets')));
 app.use(favicon(path.join(__dirname,'assets','img','favicon.ico')));
+app.use(session({
+    secret: crypto.randomBytes(64).toString('hex'),
+    resave: false,
+    saveUninitialized: false,
+}));
 
 app.use('/', indexRoute);
 app.use('/', mainRoute);
