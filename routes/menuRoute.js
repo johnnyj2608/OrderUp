@@ -6,6 +6,10 @@ const { cache } = require('../config/cache');
 router.get("/menu", async (req, res) => {
     const { name, units } = req.query;
 
+    if (!name || !units) {
+        return res.redirect('/');
+    }
+
     const cacheKey = "menuItems";
     let menuData = cache.get(cacheKey);
 
