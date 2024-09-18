@@ -71,13 +71,24 @@ document.getElementById('submitButton').addEventListener('click', async function
         const breakfastName = (document.querySelector('button.selectedBreakfast')?.getAttribute('data-text')) || 'none';
         const lunchName = (document.querySelector('button.selectedLunch')?.getAttribute('data-text')) || 'none';
 
+        const name = sessionStorage.getItem('name');
+        const insurance = sessionStorage.getItem('insurance');
+        const rowNumber = sessionStorage.getItem('rowNumber');
+
         try {
             const response = await fetch('/submitOrder', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ breakfastID, breakfastName, lunchID, lunchName }),
+                body: JSON.stringify({ 
+                    name,
+                    insurance,
+                    rowNumber,
+                    breakfastID, 
+                    breakfastName, 
+                    lunchID, 
+                    lunchName, }),
             });
 
             const result = await response.json();

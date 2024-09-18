@@ -44,11 +44,10 @@ router.post("/confirmMember", async (req, res) => {
                         exists: true,
                         units: units,
                         message: units > 0 ? req.__('member_found') : req.__('zero_units'),
+                        name: rows[mid][2] || rows[mid][1] || null,
+                        insurance: insuranceName,
+                        rowNumber: mid + 1
                     };
-                    req.session.name = rows[mid][2] || rows[mid][1] || null;
-                    req.session.units = units;
-                    req.session.insurance = insuranceName;
-                    req.session.rowNumber = mid + 1;
                     break;
                 } else if (midValue < numberID) {
                     left = mid + 1;

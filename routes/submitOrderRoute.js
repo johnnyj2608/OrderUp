@@ -3,10 +3,17 @@ const router = express.Router();
 const { spreadsheetId, getGoogleSheets, getSheetId, nextRow } = require('../config/googleAPI');
 
 router.post("/submitOrder", async (req, res) => {
-    const { breakfastID, breakfastName, lunchID, lunchName } = req.body;
-    
+    const { 
+        name,
+        insurance,
+        rowNumber,
+        breakfastID, 
+        breakfastName, 
+        lunchID, 
+        lunchName } = req.body;
+
     try {
-        const memberUnitsRange = `${req.session.insurance}!E${req.session.rowNumber}:F${req.session.rowNumber}`;
+        const memberUnitsRange = `${insurance}!E${rowNumber}:F${rowNumber}`;
         const googleSheets = getGoogleSheets();
         const insuranceResponse = await googleSheets.spreadsheets.values.get({
             spreadsheetId,
@@ -25,6 +32,8 @@ router.post("/submitOrder", async (req, res) => {
             const lunchRow = nextRow('lunch', lunchID);
             const historyRow = nextRow('history', 0);
 
+            console.log(breakfastRow, lunchRow, historyRow);
+
             const requests = [
                 {
                     updateCells: {
@@ -38,7 +47,7 @@ router.post("/submitOrder", async (req, res) => {
                         rows: [
                             {
                                 values: [
-                                    { userEnteredValue: { stringValue: req.session.name } }
+                                    { userEnteredValue: { stringValue: name } }
                                 ]
                             }
                         ],
@@ -57,7 +66,7 @@ router.post("/submitOrder", async (req, res) => {
                         rows: [
                             {
                                 values: [
-                                    { userEnteredValue: { stringValue: req.session.name } }
+                                    { userEnteredValue: { stringValue: name } }
                                 ]
                             }
                         ],
@@ -76,7 +85,7 @@ router.post("/submitOrder", async (req, res) => {
                         rows: [
                             {
                                 values: [
-                                    { userEnteredValue: { stringValue: req.session.name } },
+                                    { userEnteredValue: { stringValue: name } },
                                     { userEnteredValue: { stringValue: breakfastName } },
                                     { userEnteredValue: { stringValue: lunchName } }
                                 ]
@@ -88,9 +97,9 @@ router.post("/submitOrder", async (req, res) => {
                 {
                     updateCells: {
                         range: {
-                            sheetId: getSheetId(req.session.insurance),
-                            startRowIndex: req.session.rowNumber - 1,
-                            endRowIndex: req.session.rowNumber,
+                            sheetId: getSheetId(insurance),
+                            startRowIndex: rowNumber - 1,
+                            endRowIndex: rowNumber,
                             startColumnIndex: 4,
                             endColumnIndex: 6
                         },

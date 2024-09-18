@@ -63,7 +63,12 @@ document.getElementById('nextButton').addEventListener('click', async function()
 
             const result = await response.json();
             if (result.exists && result.units != '0') {
-                window.location.href = '/menu';
+                sessionStorage.setItem('name', result.name);
+                sessionStorage.setItem('insurance', result.insurance);
+                sessionStorage.setItem('rowNumber', result.rowNumber);
+
+                const url = `/menu?name=${encodeURIComponent(result.name)}&units=${encodeURIComponent(result.units)}`;
+                window.location.href = url;
             } else {
                 const overlay = document.getElementById('errorOverlay');
                 const messageElement = document.getElementById('errorMessage');
