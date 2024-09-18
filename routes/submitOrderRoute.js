@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { spreadsheetId, getGoogleSheets, getSheetId, nextRow } = require('../config/googleAPI');
+const { spreadsheetId, getGoogleSheets, getSheetId, getNextRow } = require('../config/googleAPI');
 
 router.post("/submitOrder", async (req, res) => {
     const { 
@@ -13,12 +13,42 @@ router.post("/submitOrder", async (req, res) => {
         lunchName } = req.body;
 
     try {
+        const breakfastSheetIdPromise = getSheetId('Breakfast');
+        const lunchSheetIdPromise = getSheetId('Lunch');
+        const historySheetIdPromise = getSheetId('History');
+        const insuranceSheetIdPromise = getSheetId(insurance);
+        
+        const breakfastRowPromise = getNextRow('breakfast', breakfastID);
+        const lunchRowPromise = getNextRow('lunch', lunchID);
+        const historyRowPromise = getNextRow('history', 0);
+
         const memberUnitsRange = `${insurance}!E${rowNumber}:F${rowNumber}`;
         const googleSheets = getGoogleSheets();
-        const insuranceResponse = await googleSheets.spreadsheets.values.get({
+        const insurancePromise = googleSheets.spreadsheets.values.get({
             spreadsheetId,
             range: memberUnitsRange,
         });
+
+        const [
+            breakfastSheetId,
+            lunchSheetId,
+            historySheetId,
+            insuranceSheetId,
+            breakfastRow,
+            lunchRow,
+            historyRow,
+            insuranceResponse
+        ] = await Promise.all([
+            breakfastSheetIdPromise,
+            lunchSheetIdPromise,
+            historySheetIdPromise,
+            insuranceSheetIdPromise,
+            breakfastRowPromise,
+            lunchRowPromise,
+            historyRowPromise,
+            insurancePromise
+        ]);
+
         const values = insuranceResponse.data.values ? insuranceResponse.data.values[0] : [0, 'FALSE'];
         const units = parseFloat(values[0]) || 0;
         const orderedToday = values[1] === 'TRUE';
@@ -28,17 +58,11 @@ router.post("/submitOrder", async (req, res) => {
                 return res.json({ success: false, message: req.__('already_ordered') });
             }
 
-            const breakfastRow = nextRow('breakfast', breakfastID);
-            const lunchRow = nextRow('lunch', lunchID);
-            const historyRow = nextRow('history', 0);
-
-            console.log(breakfastRow, lunchRow, historyRow);
-
             const requests = [
                 {
                     updateCells: {
                         range: {
-                            sheetId: getSheetId('Breakfast'),
+                            sheetId: breakfastSheetId,
                             startRowIndex: breakfastRow - 1,
                             endRowIndex: breakfastRow,
                             startColumnIndex: breakfastID,
@@ -57,7 +81,7 @@ router.post("/submitOrder", async (req, res) => {
                 {
                     updateCells: {
                         range: {
-                            sheetId: getSheetId('Lunch'),
+                            sheetId: lunchSheetId,
                             startRowIndex: lunchRow - 1,
                             endRowIndex: lunchRow,
                             startColumnIndex: lunchID,
@@ -76,7 +100,7 @@ router.post("/submitOrder", async (req, res) => {
                 {
                     updateCells: {
                         range: {
-                            sheetId: getSheetId('History'),
+                            sheetId: historySheetId,
                             startRowIndex: historyRow - 1,
                             endRowIndex: historyRow,
                             startColumnIndex: 0,
@@ -97,7 +121,7 @@ router.post("/submitOrder", async (req, res) => {
                 {
                     updateCells: {
                         range: {
-                            sheetId: getSheetId(insurance),
+                            sheetId: insuranceSheetId,
                             startRowIndex: rowNumber - 1,
                             endRowIndex: rowNumber,
                             startColumnIndex: 4,
