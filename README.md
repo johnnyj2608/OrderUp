@@ -1,6 +1,12 @@
 ## About The Project
 This full-stack web application enables remote food ordering for social adult day cares, allowing kitchen staff to set daily menus and track orders effortlessly. It features self-ordering capabilities with schedule-aware menus managed by the staff.
 
+### Application Features
+- **Meal Recording**: Whenever a user submits their order, their name and meal choices are recorded in the breakfast and lunch sheets.
+- **Menu Management**: The menu can be updated and managed dynamically, allowing kitchen staff to adjust breakfast and lunch options as needed.
+- **Unit Management**: Upon ordering, user units are reduced by one based on their schedule, and their order status is updated to reflect that they have already ordered for the day.
+- **Order History**: A history of all meal selections is maintained for up to 30 days.
+
 ## Tools and Technologies
 - **Backend:** Node.js with Express for handling server-side logic and API requests.
 - **Frontend:** Bootstrap, HTML/CSS, and JavaScript for creating a responsive and intuitive user interface.
@@ -121,12 +127,16 @@ If you cloned the project, all configurations and paths should already be set up
 
 ## How To Use
 ### Desktop Usage (Screenshots)
-1. Welcome screen
-2. Main screen
-3. Insurance / ID
-4. Menu screen
-5. Success message
-6. Sheet update
+<table>
+  <tr>
+    <td><img width="735" alt="Screenshot 2024-09-18 at 12 20 52 PM" src="https://github.com/user-attachments/assets/56712ffe-0b02-49bb-bd82-98b928b8af92"></td>
+    <td><img width="735" alt="Screenshot 2024-09-18 at 12 21 39 PM" src="https://github.com/user-attachments/assets/a4aa92e7-d4e2-421e-a2b9-949718c3a90f"></td>
+  </tr>
+  <tr>
+    <td><img width="735" alt="Screenshot 2024-09-18 at 12 36 21 PM" src="https://github.com/user-attachments/assets/e665b097-af69-4e7e-8afb-511c08864491"></td>
+    <td><img width="735" alt="Screenshot 2024-09-18 at 12 36 28 PM" src="https://github.com/user-attachments/assets/9cc333b8-efd3-4284-bb81-fceb0f1a236a"></td>
+  </tr>
+</table>
 
 ### Mobile Usage (Screenshots)
 1. Main screen
