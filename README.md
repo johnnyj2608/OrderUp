@@ -85,6 +85,39 @@ The project includes default images for the following [insurance providers / she
    - Navigate to the folder where your project stores image assets (e.g., `assets/img/`).
    - Replace the existing images with your own by updating the file with the name specified in your project configuration.
    - Ensure the new images has the same file name and format as the old one to avoid any reference issues. For example, if your configuration references `wallpaper.jpg`, ensure your new image file is named `wallpaper.jpg`.
+  
+### 5. Vercel Setup
+1. **Create Vercel Account**
+   - Sign up for a [Vercel account](https://vercel.com/signup) if you don’t already have one.
+
+2. **Link GitHub and Import Project**
+   - Go to your [Vercel Dashboard](https://vercel.com/dashboard).
+   - Click on “New Project” and select “Import Project.”
+   - Choose the GitHub repository where your Node.js project is hosted.
+
+3. **Paste Environment Variables**
+   - Go to the “Environment Variables” section.
+   - Paste the environment variables from your `.env` file into the Vercel environment variable fields. This includes variables like `GOOGLE_PROJECT_ID`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CLIENT_EMAIL`, and `SPREADSHEET_ID`.
+
+If you cloned the project, all configurations and paths should already be set up.
+
+### 6. QR Setup (Optional)
+1. **Copy Vercel Deployment URL**
+   - Obtain the deployment URL from your Vercel project dashboard.
+
+2. **Paste URL into a QR Code Generator**
+   - Use a QR code generator (such as [QR Code Generator](https://www.qr-code-generator.com/)) to create and download a QR code image.
+
+3. **Paste QR Code Image in Google Sheets**
+   - Open your Google Sheets template.
+   - Go to the **QR Sheet**.
+   - Insert the QR code image into each border cell where the QR code should appear (use the "Insert Image in Cell" option).
+
+4. **Print Page and Cut with Scissors**
+   - Print the Google Sheets page containing the QR codes.
+   - Cut out the QR code sections using scissors as needed for distribution or display.
+
+**Note**: If you do not wish to set up QR codes, you may delete the QR sheet from your Google Sheets template.
 
 ## How To Use
 ### Desktop Usage (Screenshots)
