@@ -15,7 +15,8 @@ router.get("/menu", async (req, res) => {
 
     if (!menuData) {
         try {
-            const today = new Date().getDay() - 1;
+            const estDate = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+            const today = new Date(estDate).getDay() - 1;
             if (today < 0) {
                 return res.status(400).json({ error: 'Invalid day of the week' });
             }
