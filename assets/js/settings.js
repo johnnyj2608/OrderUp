@@ -1,6 +1,12 @@
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
-var userLang = navigator.language || navigator.userLanguage; 
+var userLang = getCookie('lang') || navigator.language; 
 const storedLang = sessionStorage.getItem('language');
+console.log(userLang, storedLang, navigator.language);
 if (!storedLang) {
     sessionStorage.setItem('language', userLang);
 }
