@@ -105,6 +105,10 @@ The project includes default images for the following [insurance providers / she
    - Go to the “Environment Variables” section.
    - Paste the environment variables from your `.env` file into the Vercel environment variable fields. This includes variables like `GOOGLE_PROJECT_ID`, `GOOGLE_PRIVATE_KEY`, `GOOGLE_CLIENT_EMAIL`, and `SPREADSHEET_ID`.
 
+4. **Deploy and Testing**
+   - Deploy your project and ensure everything is functioning as expected. 
+   - If the Vercel static files does not update after redeployment on your custom domain, perform a hard refresh (Ctrl + F5).
+
 If you cloned the project, all configurations and paths should already be set up.
 
 ### 6. QR Setup (Optional)
