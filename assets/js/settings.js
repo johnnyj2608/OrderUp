@@ -6,7 +6,6 @@ function getCookie(name) {
 
 var userLang = getCookie('lang') || navigator.language; 
 const storedLang = sessionStorage.getItem('language');
-console.log(userLang, storedLang, navigator.language);
 if (!storedLang) {
     sessionStorage.setItem('language', userLang);
 }
