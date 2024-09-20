@@ -17,6 +17,9 @@ document.querySelectorAll('.dropdown-item').forEach(item => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const muteButton = document.getElementById('muteButton');
+    if (sessionStorage.getItem('mute') === null) {
+        sessionStorage.setItem('mute', true);
+    }
     let isMuted = sessionStorage.getItem('mute') === 'true';
     
     const icon = muteButton.querySelector('i');
