@@ -18,12 +18,16 @@ router.post("/confirmMember", async (req, res) => {
                 spreadsheetId,
             });
 
+            const trimmedInsuranceName = insuranceName.trim()
             const sheetNames = spreadsheet.data.sheets.map(sheet => sheet.properties.title.toLowerCase());
-            if (!sheetNames.includes(insuranceName.toLowerCase())) {
-                return res.json({ exists: false, message: req.__('insurance_not_found') });
+            if (!sheetNames.includes(trimmedInsuranceName.toLowerCase())) {
+                return res.json({ 
+                    exists: false, 
+                    message: req.__('insurance_not_found')
+                });
             }
 
-            const range = `${insuranceName}!A:E`;
+            const range = `${trimmedInsuranceName}!A:E`;
             const getRows = await googleSheets.spreadsheets.values.get({
                 spreadsheetId,
                 range,
@@ -45,7 +49,7 @@ router.post("/confirmMember", async (req, res) => {
                         units: units,
                         message: units > 0 ? req.__('member_found') : req.__('zero_units'),
                         name: rows[mid][2] || rows[mid][1] || null,
-                        insurance: insuranceName,
+                        insurance: trimmedInsuranceName,
                         rowNumber: mid + 1
                     };
                     break;
