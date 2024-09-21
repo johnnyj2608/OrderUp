@@ -2,34 +2,19 @@ document.getElementById('backButton').addEventListener('click', async () => {
     window.location.href = '/main';
 });
 
-function handleBreakfastClick(menuItem) {
-    const button = document.getElementById(`btn-${menuItem}`);
+function handleMealClick(menuType, menuItem) {
+    const panel = document.getElementById(`btn-${menuItem}`);
     let scroll = true;
 
-    if (button.classList.contains('selectedBreakfast')) {
-        button.classList.remove('selectedBreakfast');
+    const selectedMenu = `selected${menuType}`;
+    if (panel.classList.contains(selectedMenu)) {
+        panel.classList.remove(selectedMenu);
         scroll = false;
     } else {
         document.querySelectorAll('.panel').forEach(btn => {
-            btn.classList.remove('selectedBreakfast');
+            btn.classList.remove(selectedMenu);
         });
-        button.classList.add('selectedBreakfast');
-    }
-    updateSubmitButtonState(scroll);
-}
-
-function handleLunchClick(menuItem) {
-    const button = document.getElementById(`btn-${menuItem}`);
-    let scroll = true;
-
-    if (button.classList.contains('selectedLunch')) {
-        button.classList.remove('selectedLunch');
-        scroll = false;
-    } else {
-        document.querySelectorAll('.panel').forEach(btn => {
-            btn.classList.remove('selectedLunch');
-        });
-        button.classList.add('selectedLunch');
+        panel.classList.add(selectedMenu);
     }
     updateSubmitButtonState(scroll);
 }

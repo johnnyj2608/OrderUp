@@ -50,7 +50,7 @@
                             <div class="col-md-3 mb-3">
                                 <div id="btn-<%= title %>" 
                                     data-text="<%= title %>" 
-                                    onclick="handleBreakfastClick('<%= title %>'); speakText(this.getAttribute('data-text'))" 
+                                    onclick="handleMealClick('Breakfast', '<%= title %>'); speakText(this.getAttribute('data-text'))" 
                                     class="panel w-100" 
                                     data-order="<%= index %>">
                                     <img src="<%= menuData.breakfast.images[index] || '/img/default.png' %>" 
@@ -78,7 +78,7 @@
                             <div class="col-md-3 mb-3">
                                 <div id="btn-<%= title %>" 
                                     data-text="<%= title %>" 
-                                    onclick="handleLunchClick('<%= title %>'); speakText(this.getAttribute('data-text'))" 
+                                    onclick="handleMealClick('Lunch', '<%= title %>'); speakText(this.getAttribute('data-text'))" 
                                     class="panel w-100" 
                                     data-order="<%= index %>">
                                     <img src="<%= menuData.lunch.images[index] || '/img/default.png' %>"  
@@ -86,7 +86,7 @@
                                     <h5 class="panel-title"><%= title %></h5>
                                 </div>
                             </div>
-                            
+
                             <% if ((index + 1) % 4 === 0 || index === menuData.lunch.titles.length - 1) { %>
                                 </div>
                             <% } %>
