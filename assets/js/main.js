@@ -1,9 +1,13 @@
 function handleButtonClick(sheetName) {
-    document.querySelectorAll('.panel').forEach(button => {
-        button.classList.remove('selected');
-    });
-
-    document.getElementById(`btn-${sheetName}`).classList.add('selected');
+    const panel = document.getElementById(`btn-${sheetName}`);
+    if (panel.classList.contains('selected')) {
+        panel.classList.remove('selected');
+    } else {
+        document.querySelectorAll('.panel').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        panel.classList.add('selected');
+    }
     updateNextButtonState();
 }
 
