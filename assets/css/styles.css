@@ -31,23 +31,14 @@
       top: 0px;
 }
 
-.header .col {
-      padding: 0px;
-}
-
 .header .dropdown {
       overflow: visible;
-      font-size: 1vw;
       padding-right: 5px;
+      cursor: pointer;
 }
 
 .dropdown-toggle {
-      height: 2.5vw;
       padding: 0 10px;
-}
-
-.dropdown-toggle:hover {
-      background-color: #ffddc1;
 }
 
 .mute-button {
@@ -62,7 +53,7 @@
       padding-left: 10px;
 }
 
-.mute-button:hover {
+.mute-button:hover, .dropdown:hover {
       color: #ffddc1;
 }
 
@@ -72,7 +63,12 @@
 
 .footer {
       bottom: 0px;
-} 
+}
+
+.footer .col {
+      height: 80%;
+      cursor: pointer;
+}
 
 /* Wallpaper */
 .wallpaper {
@@ -254,17 +250,8 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
 }
 
 @media (max-width: 768px) {
-      .header, .footer {
+      .header, .footer, .actionButton {
           font-size: 4vw;
-      }
-
-      .actionButton {
-            font-size: 4vw;
-      }
-
-      .dropdown-toggle {
-            font-size: 2vw;
-            height: 4vw;
       }
 
       /* #numberPad, #numberPadCol {
