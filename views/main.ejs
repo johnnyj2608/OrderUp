@@ -32,50 +32,58 @@
             </div>
         </div>
         <div>
-            <div class="row content">
-                <div class="col text-center">
-                    <br>
-                    <% sheetNames.forEach((sheetName, index) => { %>
-                        <% if (index % 2 === 0) { %>
-                            <div class="row">
-                        <% } %>
-    
-                        <div class="col-md-6 mb-3 text-center">
-                            <div id="btn-<%= sheetName %>"
-                                data-text="<%= sheetName %>" 
-                                onclick="handleButtonClick('<%= sheetName %>'); speakText(this.getAttribute('data-text'))" 
-                                class="panel w-100">
-                                <img src="<%= insuranceImgMap[sheetName.replace(/\s/g,'').toLowerCase()] || '/img/default.png' %>" 
-                                class="panel-img img-padding w-100" />
-                                <h5 class="panel-title"><%= sheetName %></h5>
-                            </div>
-                        </div>
-    
-                        <% if ((index + 1) % 2 === 0 || index === sheetNames.length - 1) { %>
-                            </div>
-                        <% } %>
-                    <% }) %>
-                </div>
-                <div class="col text-center align-items-center" id="numberPadCol">
-                    <br>
-                    <div id="numberPad">
-                        <div id="display"></div>
-                        <div id="numberSpace">
-                            <div class="numBtn">1</div>
-                            <div class="numBtn">2</div>
-                            <div class="numBtn">3</div>
-                            <div class="numBtn">4</div>
-                            <div class="numBtn">5</div>
-                            <div class="numBtn">6</div>
-                            <div class="numBtn">7</div>
-                            <div class="numBtn">8</div>
-                            <div class="numBtn">9</div>
-                            <div id="clearBtn"><%= __("clear") %></div>
-                            <div class="numBtn">0</div>
-                            <div id="backBtn"><%= __("back") %></div>
-                        </div>
+            <div class="content">
+                <div class="row numpadRow">
+                    <div class="col">
+                        <br>
+                        <input type="number" id="mobileNumpad" class="form-control" inputmode="numeric" pattern="[0-9]*">
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <br>
+                        <% sheetNames.forEach((sheetName, index) => { %>
+                            <% if (index % 2 === 0) { %>
+                                <div class="row">
+                            <% } %>
+        
+                            <div class="col-md-6 mb-3 text-center">
+                                <div id="btn-<%= sheetName %>"
+                                    data-text="<%= sheetName %>" 
+                                    onclick="handleButtonClick('<%= sheetName %>'); speakText(this.getAttribute('data-text'))" 
+                                    class="panel w-100">
+                                    <img src="<%= insuranceImgMap[sheetName.replace(/\s/g,'').toLowerCase()] || '/img/default.png' %>" 
+                                    class="panel-img img-padding w-100" />
+                                    <h5 class="panel-title"><%= sheetName %></h5>
+                                </div>
+                            </div>
+        
+                            <% if ((index + 1) % 2 === 0 || index === sheetNames.length - 1) { %>
+                                </div>
+                            <% } %>
+                        <% }) %>
+                    </div>
+                    <div class="col text-center align-items-center" id="numpadCol">
+                        <br>
+                        <div id="numpad">
+                            <div id="display"></div>
+                            <div id="numberSpace">
+                                <div class="numBtn">1</div>
+                                <div class="numBtn">2</div>
+                                <div class="numBtn">3</div>
+                                <div class="numBtn">4</div>
+                                <div class="numBtn">5</div>
+                                <div class="numBtn">6</div>
+                                <div class="numBtn">7</div>
+                                <div class="numBtn">8</div>
+                                <div class="numBtn">9</div>
+                                <div id="clearBtn"><%= __("clear") %></div>
+                                <div class="numBtn">0</div>
+                                <div id="backBtn"><%= __("back") %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
             </div>
             <div class="row footer align-items-center">
                 <div class="col text-center">

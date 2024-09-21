@@ -11,6 +11,26 @@ function handleButtonClick(sheetName) {
     updateNextButtonState();
 }
 
+function resetNumpads() {
+    const mobileNumpad = document.getElementById('mobileNumpad');
+    const display = document.getElementById('display');
+    
+    if (window.innerWidth <= 768) {
+        display.innerHTML = '';
+    } else {
+        mobileNumpad.value = '';
+    }
+    updateNextButtonState();
+}
+window.addEventListener('resize', resetNumpads);
+
+document.getElementById('mobileNumpad').addEventListener('input', function (e) {
+    if (this.value.length > 3) {
+        this.value = this.value.slice(0, 3);
+    }
+    updateNextButtonState();
+});
+
 let display = document.querySelector("#display");
 let buttons = document.querySelectorAll('.numBtn');
 let clear = document.querySelector("#clearBtn");
@@ -40,7 +60,7 @@ back.addEventListener('click', () => {
 
 function updateNextButtonState() {
     const isPanelSelected = document.querySelector('.selected') !== null;
-    const isNumberInDisplay = display.innerHTML.length > 0;
+    const isNumberInDisplay = display.innerHTML || document.getElementById('mobileNumpad').value;
 
     if (isPanelSelected && isNumberInDisplay) {
         nextButton.classList.remove('disabled');
@@ -54,7 +74,7 @@ document.getElementById('nextButton').addEventListener('click', async function()
         const clickMessage = document.getElementById('afkMessage').getAttribute('data-click-msg');
 
         const insuranceName = document.querySelector('.selected')?.innerText || 'none';
-        const numberID = document.getElementById('display').innerHTML;
+        const numberID = document.getElementById('display').innerHTML || document.getElementById('mobileNumpad').value;
         
         try {
             const response = await fetch('/confirmMember', {
