@@ -48,7 +48,7 @@
                             <% } %>
                             
                             <div class="col-md-3 mb-3">
-                                <button id="btn-<%= title %>" 
+                                <div id="btn-<%= title %>" 
                                     data-text="<%= title %>" 
                                     onclick="handleBreakfastClick('<%= title %>'); speakText(this.getAttribute('data-text'))" 
                                     class="panel w-100" 
@@ -56,7 +56,7 @@
                                     <img src="<%= menuData.breakfast.images[index] || '/img/default.png' %>" 
                                     class="panel-img w-100" />
                                     <h5 class="panel-title"><%= title %></h5>
-                                </button>
+                                </div>
                             </div>
             
                             <% if ((index + 1) % 4 === 0 || index === menuData.breakfast.titles.length - 1) { %>
@@ -76,7 +76,7 @@
                             <% } %>
                             
                             <div class="col-md-3 mb-3">
-                                <button id="btn-<%= title %>" 
+                                <div id="btn-<%= title %>" 
                                     data-text="<%= title %>" 
                                     onclick="handleLunchClick('<%= title %>'); speakText(this.getAttribute('data-text'))" 
                                     class="panel w-100" 
@@ -84,9 +84,9 @@
                                     <img src="<%= menuData.lunch.images[index] || '/img/default.png' %>"  
                                     class="panel-img w-100" />
                                     <h5 class="panel-title"><%= title %></h5>
-                                </button>
+                                </div>
                             </div>
-            
+                            
                             <% if ((index + 1) % 4 === 0 || index === menuData.lunch.titles.length - 1) { %>
                                 </div>
                             <% } %>

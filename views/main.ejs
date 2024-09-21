@@ -41,14 +41,14 @@
                         <% } %>
     
                         <div class="col-md-6 mb-3 text-center">
-                            <button id="btn-<%= sheetName %>"
+                            <div id="btn-<%= sheetName %>"
                                 data-text="<%= sheetName %>" 
                                 onclick="handleButtonClick('<%= sheetName %>'); speakText(this.getAttribute('data-text'))" 
                                 class="panel w-100">
                                 <img src="<%= insuranceImgMap[sheetName.replace(/\s/g,'').toLowerCase()] || '/img/default.png' %>" 
                                 class="panel-img img-padding w-100" />
                                 <h5 class="panel-title"><%= sheetName %></h5>
-                            </button>
+                            </div>
                         </div>
     
                         <% if ((index + 1) % 2 === 0 || index === sheetNames.length - 1) { %>

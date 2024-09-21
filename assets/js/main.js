@@ -1,5 +1,5 @@
 function handleButtonClick(sheetName) {
-    document.querySelectorAll('button.panel').forEach(button => {
+    document.querySelectorAll('.panel').forEach(button => {
         button.classList.remove('selected');
     });
 
@@ -35,7 +35,7 @@ back.addEventListener('click', () => {
 })
 
 function updateNextButtonState() {
-    const isPanelSelected = document.querySelector('button.panel.selected') !== null;
+    const isPanelSelected = document.querySelector('.selected') !== null;
     const isNumberInDisplay = display.innerHTML.length > 0;
 
     if (isPanelSelected && isNumberInDisplay) {
@@ -49,7 +49,7 @@ document.getElementById('nextButton').addEventListener('click', async function()
     if (!this.classList.contains('disabled')) {
         const clickMessage = document.getElementById('afkMessage').getAttribute('data-click-msg');
 
-        const insuranceName = document.querySelector('button.selected')?.innerText || 'none';
+        const insuranceName = document.querySelector('.selected')?.innerText || 'none';
         const numberID = document.getElementById('display').innerHTML;
         
         try {

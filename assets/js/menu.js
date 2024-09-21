@@ -10,7 +10,7 @@ function handleBreakfastClick(menuItem) {
         button.classList.remove('selectedBreakfast');
         scroll = false;
     } else {
-        document.querySelectorAll('button.panel').forEach(btn => {
+        document.querySelectorAll('.panel').forEach(btn => {
             btn.classList.remove('selectedBreakfast');
         });
         button.classList.add('selectedBreakfast');
@@ -26,7 +26,7 @@ function handleLunchClick(menuItem) {
         button.classList.remove('selectedLunch');
         scroll = false;
     } else {
-        document.querySelectorAll('button.panel').forEach(btn => {
+        document.querySelectorAll('.panel').forEach(btn => {
             btn.classList.remove('selectedLunch');
         });
         button.classList.add('selectedLunch');
@@ -35,8 +35,8 @@ function handleLunchClick(menuItem) {
 }
 
 function updateSubmitButtonState(scroll) {
-    const isBreakfastSelected = document.querySelector('button.panel.selectedBreakfast') !== null;
-    const isLunchSelected = document.querySelector('button.panel.selectedLunch') !== null;
+    const isBreakfastSelected = document.querySelector('.selectedBreakfast') !== null;
+    const isLunchSelected = document.querySelector('.selectedLunch') !== null;
 
     if (scroll) {
         if (!isBreakfastSelected && isLunchSelected) {
@@ -65,11 +65,11 @@ document.getElementById('submitButton').addEventListener('click', async function
             messageElement.innerHTML = staticMessage+'<br>'+clickMessage+'<br><br>'+countdownMessage.replace('{{seconds}}', countdown);
         }    
 
-        const breakfastID = (document.querySelector('button.selectedBreakfast')?.getAttribute('data-order')) || 'none';
-        const lunchID = (document.querySelector('button.selectedLunch')?.getAttribute('data-order')) || 'none';
+        const breakfastID = (document.querySelector('.selectedBreakfast')?.getAttribute('data-order')) || 'none';
+        const lunchID = (document.querySelector('.selectedLunch')?.getAttribute('data-order')) || 'none';
 
-        const breakfastName = (document.querySelector('button.selectedBreakfast')?.getAttribute('data-text')) || 'none';
-        const lunchName = (document.querySelector('button.selectedLunch')?.getAttribute('data-text')) || 'none';
+        const breakfastName = (document.querySelector('.selectedBreakfast')?.getAttribute('data-text')) || 'none';
+        const lunchName = (document.querySelector('.selectedLunch')?.getAttribute('data-text')) || 'none';
 
         const name = sessionStorage.getItem('name');
         const insurance = sessionStorage.getItem('insurance');

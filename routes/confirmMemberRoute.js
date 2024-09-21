@@ -23,7 +23,7 @@ router.post("/confirmMember", async (req, res) => {
             if (!sheetNames.includes(trimmedInsuranceName.toLowerCase())) {
                 return res.json({ 
                     exists: false, 
-                    message: req.__('insurance_not_found')
+                    message: req.__('insurance_not_found', trimmedInsuranceName)
                 });
             }
 
