@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
 </head>
-<body">
+<body>
     <div class="container-fluid">
-        <div class="row header align-items-center">
-            <div class="col text-left">
+        <div class="row header align-items-center justify-content-between">
+            <div class="col-auto p-0">
                 <button class="mute-button" id="muteButton">
                     <i class="fas fa-volume-mute"></i>
                 </button>
@@ -19,7 +19,7 @@
             <div class="col text-center">
                 <%= __("project_title") %>
             </div>
-            <div class="col text-right">
+            <div class="col-auto p-0">
                 <div class="dropdown">
                     <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
                         <%= __("language") %>
@@ -56,7 +56,7 @@
                         <% } %>
                     <% }) %>
                 </div>
-                <div class="col text-center align-items-center">
+                <div class="col text-center align-items-center" id="numberPadCol">
                     <br>
                     <div id="numberPad">
                         <div id="display"></div>
