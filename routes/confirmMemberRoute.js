@@ -6,8 +6,9 @@ router.post("/confirmMember", async (req, res) => {
     const { insuranceName, numberID } = req.body;
 
     try {
-        let result = { exists: false, units: null, message: req.__('member_not_found') };
+        let result = { exists: false, units: null, message: req.__('member_not_found', numberID) };
         const today = new Date().getDay() - 1;
+        console.log(req.__('member_not_found', numberID) );
         if (today < 0) {
             result = {
                 message: req.__('invalid_weekday')

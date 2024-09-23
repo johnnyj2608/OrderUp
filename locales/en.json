@@ -16,7 +16,7 @@
 	"click_anywhere": "Click anywhere to continue.",
 	"redirect_countdown": "Redirecting in <strong>{{seconds}}</strong> seconds...",
 	"insurance_not_found": "The insurance '%s' is not found.",
-	"member_not_found": "Your ID is not found.",
+	"member_not_found": "Your ID '%s' is not found.",
 	"member_found": "Your ID is found.",
 	"zero_units": "You have 0 weekly units remaining.",
 	"insufficient_units": "You have insufficient units to place an order.",
