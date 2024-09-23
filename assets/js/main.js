@@ -106,6 +106,7 @@ document.getElementById('nextButton').addEventListener('click', async function()
                     stopSpeak();
                 });
                 display.innerHTML = "";
+                document.getElementById('mobileNumpad').value = '';
                 updateNextButtonState();
             }
         } catch (error) {
