@@ -1,3 +1,7 @@
+function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+}
+
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);

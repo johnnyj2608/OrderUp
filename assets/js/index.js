@@ -6,3 +6,8 @@ document.addEventListener('click', function() {
         window.location.href = '/main';
     }
 });
+
+if (isMobileDevice()) {
+    console.log('hi')
+    window.location.href = '/main';
+}

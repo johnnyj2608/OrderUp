@@ -124,7 +124,3 @@ document.getElementById('submitButton').addEventListener('click', async function
 window.onload = function() {
     speakText(document.getElementById('nameUnits').innerText);
 };
-
-function isMobileDevice() {
-    return /Mobi|Android/i.test(navigator.userAgent);
-}
