@@ -2,7 +2,7 @@
 This full-stack web application enables remote food ordering for social adult day cares, allowing kitchen staff to set daily menus and track orders effortlessly. It features self-ordering capabilities with schedule-aware menus managed by the staff.
 
 ### Demo Video
-[![Watch the demo](https://img.youtube.com/vi/jfPqaO7GtPs/0.jpg)](https://www.youtube.com/watch?v=jfPqaO7GtPs)
+[![Watch the demo](https://img.youtube.com/vi/j7rcgPCSdx0/0.jpg)](https://www.youtube.com/watch?v=j7rcgPCSdx0)
 
 ### Application Features
 - **Meal Recording**: Whenever a user submits their order, their name and meal choices are recorded in the breakfast and lunch sheets.
