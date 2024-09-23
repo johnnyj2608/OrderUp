@@ -146,11 +146,22 @@ If you cloned the project, all configurations and paths should already be set up
 </table>
 
 ### Mobile Usage (Screenshots)
-1. Main screen
-2. Insurance
-3. ID (Textbox & Built-In Keypad)
-4. Menu screen
-5. Success message (no redirect)
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/0ad94ce9-5405-4cf4-9412-92f64c90f322" alt="IMG_3162" width="200"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/368899f5-9d2c-457f-a575-566f4c0cc4f4" alt="IMG_3163" width="200"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/42ff4502-785c-45e2-964b-af8797476d50" alt="IMG_3164" width="200"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/2e6db3c8-2d6a-4510-9fa9-178e5ab069b0" alt="IMG_3166" width="200"/>
+    </td>
+  </tr>
+</table>
 
 ## Optimizations
 - **API Response Caching:** The application originally sent an API request to retrieve the menu every time a user accessed the web application, leading to slow data loading. I implemented a caching mechanism that stores the daily menu and periodically expires it to reflect changes in the spreadsheet database. This reduces the number of API calls and speeds up data loading.
