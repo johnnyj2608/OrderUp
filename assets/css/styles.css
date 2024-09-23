@@ -261,7 +261,7 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
       border: 1px solid #333;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
       .header, .footer, .actionButton {
           font-size: 4vw;
       }

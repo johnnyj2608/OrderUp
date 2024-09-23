@@ -15,7 +15,7 @@ function resetNumpads() {
     const mobileNumpad = document.getElementById('mobileNumpad');
     const display = document.getElementById('display');
     
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth < 768) {
         display.innerHTML = '';
     } else {
         mobileNumpad.value = '';
