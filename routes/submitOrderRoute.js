@@ -10,7 +10,9 @@ router.post("/submitOrder", async (req, res) => {
         breakfastID, 
         breakfastName, 
         lunchID, 
-        lunchName } = req.body;
+        lunchName,
+        deviceType
+     } = req.body;
 
     try {
         const breakfastSheetIdPromise = getSheetId('Breakfast');
@@ -104,14 +106,15 @@ router.post("/submitOrder", async (req, res) => {
                             startRowIndex: historyRow - 1,
                             endRowIndex: historyRow,
                             startColumnIndex: 0,
-                            endColumnIndex: 3
+                            endColumnIndex: 4
                         },
                         rows: [
                             {
                                 values: [
                                     { userEnteredValue: { stringValue: name } },
                                     { userEnteredValue: { stringValue: breakfastName } },
-                                    { userEnteredValue: { stringValue: lunchName } }
+                                    { userEnteredValue: { stringValue: lunchName } },
+                                    { userEnteredValue: { stringValue: deviceType } }
                                 ]
                             }
                         ],

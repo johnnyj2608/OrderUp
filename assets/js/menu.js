@@ -73,7 +73,8 @@ document.getElementById('submitButton').addEventListener('click', async function
                     breakfastID, 
                     breakfastName, 
                     lunchID, 
-                    lunchName, }),
+                    lunchName,
+                    deviceType: isMobileDevice() ? 'Mobile' : 'Desktop', }),
             });
 
             const result = await response.json();
@@ -123,3 +124,7 @@ document.getElementById('submitButton').addEventListener('click', async function
 window.onload = function() {
     speakText(document.getElementById('nameUnits').innerText);
 };
+
+function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+}
