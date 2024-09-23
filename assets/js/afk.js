@@ -29,10 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function startTimeout() {
-        timeout = setTimeout(() => {
-            afkOverlay.classList.add('show');
-            inactivityOverlay();
-        }, 15000); // 15 seconds
+        if (!isMobileDevice()) {
+            timeout = setTimeout(() => {
+                afkOverlay.classList.add('show');
+                inactivityOverlay();
+            }, 15000); // 15 seconds
+        }
     }
 
     function resetTimeout() {
