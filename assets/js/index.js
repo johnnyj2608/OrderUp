@@ -7,7 +7,6 @@ document.addEventListener('click', function() {
     }
 });
 
-if (isMobileDevice()) {
-    console.log('hi')
-    window.location.href = '/main';
-}
+// if (isMobileDevice()) {
+//     window.location.href = '/main';
+// }
