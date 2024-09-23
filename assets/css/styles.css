@@ -14,7 +14,7 @@
 }
 
 .header, .footer {
-      height: 7vh;
+      height: 7svh;
       background-color: rgb(105, 20, 35, 0.9);
       color: white;
       width: 100%;
@@ -72,8 +72,8 @@
 
 /* Wallpaper */
 .wallpaper {
-      margin-top: 7vh;
-      height: 86vh; 
+      margin-top: 7svh;
+      height: 86svh; 
       background: url('../img/wallpaper.jpg') no-repeat center center;
       background-size: cover;
       cursor: pointer;
@@ -81,8 +81,8 @@
 
 /* Main */
 .content {
-      margin-top: 7vh;
-      margin-bottom: 7vh;
+      margin-top: 7svh;
+      margin-bottom: 7svh;
 }
 
 .selected, .selectedLunch, .selectedBreakfast {
@@ -131,7 +131,7 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
 
 #numpad {
       width: 45vw; 
-      height: 80vh;
+      height: 80svh;
       position: fixed; 
       right: 2.5%;
       top: 50%; 
@@ -246,7 +246,7 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
 }
   
 #breakfast-section, #lunch-section {
-      scroll-margin-top: 7vh;
+      scroll-margin-top: 7svh;
 }
 
 .numpadRow {
@@ -255,8 +255,8 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
 
 #mobileNumpad {
       display: none;
-      font-size: 10vh;
-      height: 10vh;
+      font-size: 10svh;
+      height: 10svh;
       text-align: center; 
       border: 1px solid #333;
 }
