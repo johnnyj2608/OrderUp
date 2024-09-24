@@ -274,3 +274,9 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
             display: flex;
       }
 }
+
+@media (min-width: 1366px) {
+      .header, .footer, .actionButton {
+          font-size: 1.5vw;
+      }
+}
