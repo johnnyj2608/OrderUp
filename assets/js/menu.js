@@ -59,6 +59,7 @@ document.getElementById('submitButton').addEventListener('click', async function
         const name = sessionStorage.getItem('name');
         const insurance = sessionStorage.getItem('insurance');
         const rowNumber = sessionStorage.getItem('rowNumber');
+        const weekday = sessionStorage.getItem('weekday');
 
         try {
             const response = await fetch('/submitOrder', {
@@ -74,7 +75,8 @@ document.getElementById('submitButton').addEventListener('click', async function
                     breakfastName, 
                     lunchID, 
                     lunchName,
-                    deviceType: isMobileDevice() ? 'Mobile' : 'Desktop', }),
+                    deviceType: isMobileDevice() ? 'Mobile' : 'Desktop', 
+                    weekday,}),
             });
 
             const result = await response.json();

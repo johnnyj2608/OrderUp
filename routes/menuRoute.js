@@ -4,7 +4,7 @@ const { getGoogleSheets, spreadsheetId } = require('../config/googleAPI');
 const { cache } = require('../config/cache');
 
 router.get("/menu", async (req, res) => {
-    const { name, units } = req.query;
+    const { name, units, weekday } = req.query;
 
     if (!name || !units) {
         return res.redirect('/');
@@ -94,7 +94,7 @@ router.get("/menu", async (req, res) => {
         }
     }
 
-    res.render("menu", { name: name, units: units, menuData });
+    res.render("menu", { name: name, units: units, weekday: weekday, menuData });
 });
 
 module.exports = router;

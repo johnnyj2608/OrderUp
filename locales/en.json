@@ -20,7 +20,7 @@
 	"member_found": "Your ID is found.",
 	"zero_units": "You have 0 weekly units remaining.",
 	"insufficient_units": "You have insufficient units to place an order.",
-	"already_ordered": "You have already ordered today.",
+	"already_ordered": "You have already ordered for %s.",
 	"invalid_weekday": "Invalid day of the week.",
 	"language": "language"
 }

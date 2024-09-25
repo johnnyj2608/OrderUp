@@ -1,4 +1,4 @@
-const currentDayElement = document.querySelector('.current-day');
+const currentDay = document.getElementById('currentDay');
 let currentDayIndex = new Date().getDay();
 const todayIndex = currentDayIndex;
 
@@ -6,16 +6,16 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 
 function updateDay() {
     if (currentDayIndex === todayIndex) {
-        currentDayElement.textContent = 'Today';
+        currentDay.textContent = 'Today';
     } else {
-        currentDayElement.textContent = daysOfWeek[currentDayIndex];
+        currentDay.textContent = daysOfWeek[currentDayIndex];
     }
 }
 
-const prevButton = document.getElementById('prev-day');
-const nextButton = document.getElementById('next-day');
+const prevButton = document.getElementById('prevDay');
+const nextButton = document.getElementById('nextDay');
 
-document.getElementById('prev-day').addEventListener('click', () => {
+document.getElementById('prevDay').addEventListener('click', () => {
     if (currentDayIndex > todayIndex) {
         currentDayIndex = (currentDayIndex - 1 + 7) % 7;
         updateDay();
@@ -23,7 +23,7 @@ document.getElementById('prev-day').addEventListener('click', () => {
     updateButtonStates();
 });
 
-document.getElementById('next-day').addEventListener('click', () => {
+document.getElementById('nextDay').addEventListener('click', () => {
     if (currentDayIndex < 6) {
         currentDayIndex = (currentDayIndex + 1) % 7;
         updateDay();
@@ -140,6 +140,7 @@ document.getElementById('menuButton').addEventListener('click', async function()
                 sessionStorage.setItem('name', result.name);
                 sessionStorage.setItem('insurance', result.insurance);
                 sessionStorage.setItem('rowNumber', result.rowNumber);
+                sessionStorage.setItem('weekday', currentDayIndex);
 
                 const url = `/menu?name=${encodeURIComponent(result.name)}&units=${encodeURIComponent(result.units)}`;
                 window.location.href = url;

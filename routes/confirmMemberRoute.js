@@ -8,7 +8,6 @@ router.post("/confirmMember", async (req, res) => {
     try {
         let result = { exists: false, units: null, message: req.__('member_not_found', numberID) };
         const today = new Date().getDay() - 1;
-        console.log(req.__('member_not_found', numberID) );
         if (today < 0) {
             result = {
                 message: req.__('invalid_weekday')
@@ -28,7 +27,7 @@ router.post("/confirmMember", async (req, res) => {
                 });
             }
 
-            const range = `${trimmedInsuranceName}!A:E`;
+            const range = `${trimmedInsuranceName}!A:K`;
             const getRows = await googleSheets.spreadsheets.values.get({
                 spreadsheetId,
                 range,
@@ -51,7 +50,7 @@ router.post("/confirmMember", async (req, res) => {
                         message: units > 0 ? req.__('member_found') : req.__('zero_units'),
                         name: rows[mid][2] || rows[mid][1] || null,
                         insurance: trimmedInsuranceName,
-                        rowNumber: mid + 1
+                        rowNumber: mid + 1,
                     };
                     break;
                 } else if (midValue < numberID) {
