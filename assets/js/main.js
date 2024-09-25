@@ -1,3 +1,53 @@
+const currentDayElement = document.querySelector('.current-day');
+let currentDayIndex = new Date().getDay();
+const todayIndex = currentDayIndex;
+
+const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+function updateDay() {
+    if (currentDayIndex === todayIndex) {
+        currentDayElement.textContent = 'Today';
+    } else {
+        currentDayElement.textContent = daysOfWeek[currentDayIndex];
+    }
+}
+
+const prevButton = document.getElementById('prev-day');
+const nextButton = document.getElementById('next-day');
+
+document.getElementById('prev-day').addEventListener('click', () => {
+    if (currentDayIndex > todayIndex) {
+        currentDayIndex = (currentDayIndex - 1 + 7) % 7;
+        updateDay();
+    }
+    updateButtonStates();
+});
+
+document.getElementById('next-day').addEventListener('click', () => {
+    if (currentDayIndex < 6) {
+        currentDayIndex = (currentDayIndex + 1) % 7;
+        updateDay();
+    }
+    updateButtonStates();
+});
+
+function updateButtonStates() {
+    if (currentDayIndex <= todayIndex) {
+        prevButton.classList.add('disabled');
+    } else {
+        prevButton.classList.remove('disabled');
+    }
+
+    if (currentDayIndex >= 6) {
+        nextButton.classList.add('disabled');
+    } else {
+        nextButton.classList.remove('disabled');
+    }
+}
+
+updateDay();
+updateButtonStates();
+
 function handleButtonClick(sheetName) {
     const panel = document.getElementById(`btn-${sheetName}`);
     if (panel.classList.contains('selected')) {
@@ -63,13 +113,13 @@ function updateNextButtonState() {
     const isNumberInDisplay = display.innerHTML || document.getElementById('mobileNumpad').value;
 
     if (isPanelSelected && isNumberInDisplay) {
-        nextButton.classList.remove('disabled');
+        menuButton.classList.remove('disabled');
     } else {
-        nextButton.classList.add('disabled');
+        menuButton.classList.add('disabled');
     }
 }
 
-document.getElementById('nextButton').addEventListener('click', async function() {
+document.getElementById('menuButton').addEventListener('click', async function() {
     if (!this.classList.contains('disabled')) {
         const clickMessage = document.getElementById('afkMessage').getAttribute('data-click-msg');
 
