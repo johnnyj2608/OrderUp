@@ -132,11 +132,11 @@ document.getElementById('menuButton').addEventListener('click', async function()
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ insuranceName, numberID }),
+                body: JSON.stringify({ insuranceName, numberID, weekday: currentDayIndex }),
             });
 
             const result = await response.json();
-            if (result.exists && result.units != '0') {
+            if (result.exists && result.units != '0' && !result.ordered) {
                 sessionStorage.setItem('name', result.name);
                 sessionStorage.setItem('insurance', result.insurance);
                 sessionStorage.setItem('rowNumber', result.rowNumber);

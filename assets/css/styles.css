@@ -243,11 +243,11 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
   
 .alert-message {
       background-color: white;
-      padding: 15px;
+      padding: 10px;
       border-radius: 10px;
       text-align: center;
       font-size: 2vw;
-      width: 40vw;
+      width: 45vw;
       cursor: pointer;
 }
   

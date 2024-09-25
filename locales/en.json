@@ -22,5 +22,11 @@
 	"insufficient_units": "You have insufficient units to place an order.",
 	"already_ordered": "You have already ordered for %s.",
 	"invalid_weekday": "Invalid day of the week.",
-	"language": "language"
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "today": "Today"
 }

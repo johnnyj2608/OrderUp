@@ -3,7 +3,7 @@ const router = express.Router();
 const { getGoogleSheets, spreadsheetId } = require('../config/googleAPI');
 
 router.post("/confirmMember", async (req, res) => {
-    const { insuranceName, numberID } = req.body;
+    const { insuranceName, numberID, weekday } = req.body;
 
     try {
         let result = { exists: false, units: null, message: req.__('member_not_found', numberID) };
@@ -51,6 +51,7 @@ router.post("/confirmMember", async (req, res) => {
                         name: rows[mid][2] || rows[mid][1] || null,
                         insurance: trimmedInsuranceName,
                         rowNumber: mid + 1,
+                        ordered: rows[mid][4+Number(weekday)] === 'TRUE',  
                     };
                     break;
                 } else if (midValue < numberID) {
@@ -60,7 +61,12 @@ router.post("/confirmMember", async (req, res) => {
                 }
             };
         }
-        
+
+        if (result.ordered) {
+            const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            result.message = req.__('already_ordered', req.__(daysOfWeek[weekday]));
+        }
+
         res.json(result);
     } catch (error) {
         console.error('Error:', error);

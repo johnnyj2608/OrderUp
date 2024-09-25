@@ -58,13 +58,15 @@ router.post("/submitOrder", async (req, res) => {
             insurancePromise
         ]);
 
-        const values = insuranceResponse.data.values;
+        const values = insuranceResponse.data.values[0];
         const units = parseFloat(values[0]) || 0;
-        const orderedToday = values[weekday] === 'TRUE';
+        const orderedToday = values[Number(weekday)] === 'TRUE';
+
+        const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
         if (units > 0) {
             if (orderedToday) {
-                return res.json({ success: false, message: req.__('already_ordered', weekday) });
+                return res.json({ success: false, message: req.__('already_ordered', req.__(daysOfWeek[weekday])) });
             }
 
             let requests = [];
@@ -204,12 +206,12 @@ router.post("/submitOrder", async (req, res) => {
                 }
             );
 
-            await googleSheets.spreadsheets.batchUpdate({
-                spreadsheetId,
-                resource: {
-                    requests
-                }
-            });
+            // await googleSheets.spreadsheets.batchUpdate({
+            //     spreadsheetId,
+            //     resource: {
+            //         requests
+            //     }
+            // });
 
             res.json({ success: true });
         } else {
