@@ -272,7 +272,7 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
 
 #mobileNumpad {
       display: none;
-      font-size: 10svh;
+      font-size: 15vw;
       height: 10svh;
       text-align: center; 
       border: 1px solid #333;
@@ -281,6 +281,11 @@ button:focus, .panel:focus, .btn:focus, .mute-button:focus{
 @media (max-width: 767px) {
       .header, .footer, .actionButton {
           font-size: 4vw;
+      }
+
+      .alert-message {
+            font-size: 4vw;
+            width: 70vw;
       }
 
       #numpad, #numpadCol {
