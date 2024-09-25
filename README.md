@@ -70,11 +70,8 @@ Dependency Explanation:
 |----------------------|----------------------|-----------------------|---------------------|-----------------------------------------------------------|
 | `refreshMenu`        | `From spreadsheet`   | `On edit`             | On every edit       | Refreshes the menu whenever a change is made.             |
 | `refreshMenu`        | `Time-driven`        | `Day timer`           | 5am to 6am          | Updates the menu for the current day.                     |
-| `refreshHistory`     | `Time-driven`        | `Day timer`           | 5am to 6am          | Manages historical data and limits it to 30 days.         |
-| `refreshToday`       | `Time-driven`        | `Day timer`           | 5am to 6am          | Unmarks individuals who have already ordered for the day. |
 | `refreshResponses`   | `Time-driven`        | `Day timer`           | 5am to 6am          | Clears out responses to prepare for new orders.           |
 | `refreshUnits`       | `Time-driven`        | `Week timer`          | 5am to 6am (Sunday) | Resets food units based on the weekly schedule.           |
-
 
 The project includes default images for the following [insurance providers / sheet names](./assets/js/imgMap.js)
 
@@ -117,7 +114,9 @@ The project includes default images for the following [insurance providers / she
 
 4. **Deploy and Testing**
    - Deploy your project and ensure everything is functioning as expected. 
-   - If the Vercel static files does not update after redeployment on your custom domain, perform a hard refresh (Ctrl + F5 for Windows or Command + R for Mac).
+   - If the Vercel static files do not update after redeployment on your custom domain, perform a hard refresh:
+     - **For desktop**: Use `Ctrl + F5` (Windows) or `Command + R` (Mac).
+     - **For mobile**: Turn on **Airplane Mode**, refresh the page (to fail), then turn AirPlane mode back off, then refresh the page to get the updated version.
 
 If you cloned the project, all configurations and paths should already be set up.
 
