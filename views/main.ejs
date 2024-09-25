@@ -37,7 +37,7 @@
                 <div class="row">  
                     <div class="col d-flex justify-content-center align-items-center">
                         <button class="dayButton" id="prevDay"><</button>
-                        <div id="currentDay"></div>
+                        <div id="currentDay"><%= __('today') %></div>
                         <button class="dayButton" id="nextDay">></button>
                     </div>
                     <div class="col" id="numpadCol"></div>
@@ -129,5 +129,16 @@
         crossorigin="anonymous"
     ></script>
     <script src="https://kit.fontawesome.com/a8eb5cb089.js" crossorigin="anonymous"></script>
+    <script>
+        const daysOfWeek = [
+            "<%= __('today') %>",
+            "<%= __('monday') %>",
+            "<%= __('tuesday') %>",
+            "<%= __('wednesday') %>",
+            "<%= __('thursday') %>",
+            "<%= __('friday') %>",
+            "<%= __('saturday') %>",
+        ];
+    </script>
 </body>
 </html>

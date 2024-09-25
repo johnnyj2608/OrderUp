@@ -2,11 +2,9 @@ const currentDay = document.getElementById('currentDay');
 let currentDayIndex = new Date().getDay();
 const todayIndex = currentDayIndex;
 
-const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
 function updateDay() {
     if (currentDayIndex === todayIndex) {
-        currentDay.textContent = 'Today';
+        currentDay.textContent = daysOfWeek[0];
     } else {
         currentDay.textContent = daysOfWeek[currentDayIndex];
     }
