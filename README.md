@@ -61,13 +61,20 @@ Dependency Explanation:
    - In the **Menu** Sheet, insert data for breakfast and lunch, including item names and associated images.
    - In the **Insurance** Sheet, insert member data such as ID, name, and schedule. Rename the sheet to reflect the associated insurance provider.
 4. **Create Additional Sheets**: To support multiple insurance providers, create additional sheets for each insurance provider as needed.
+5. **Add Triggers For Scripts**:
+   1. Go to **Extensions** > **Apps Script**.
+   2. In the left-hand menu, click on the **clock icon** (Triggers).
+   3. Click **+ Add Trigger** for each of the following:
 
-**Triggers**: The following triggers have already been set up via Google Apps Script:
- - **Breakfast Sheet**: Daily update for the correct weekday's menu and clears responses.
- - **Lunch Sheet**: Daily update for the correct weekday's menu.
- - **History Sheet**: Daily update to manage space by holding only the most recent 30 days of orders.
- - **Insurance Sheet**: Daily update to reset the "ordered today" column to `False`.
- - **Insurance Sheet**: Weekly update to reset units to the appropriate amount from the schedule.
+| **Function to Run**  | **Event Source**     | **Trigger Type**      | **Time/Day**        | **Description**                                           |
+|----------------------|----------------------|-----------------------|---------------------|-----------------------------------------------------------|
+| `refreshMenu`        | `From spreadsheet`   | `On edit`             | On every edit       | Refreshes the menu whenever a change is made.             |
+| `refreshMenu`        | `Time-driven`        | `Day timer`           | 5am to 6am          | Updates the menu for the current day.                     |
+| `refreshHistory`     | `Time-driven`        | `Day timer`           | 5am to 6am          | Manages historical data and limits it to 30 days.         |
+| `refreshToday`       | `Time-driven`        | `Day timer`           | 5am to 6am          | Unmarks individuals who have already ordered for the day. |
+| `refreshResponses`   | `Time-driven`        | `Day timer`           | 5am to 6am          | Clears out responses to prepare for new orders.           |
+| `refreshUnits`       | `Time-driven`        | `Week timer`          | 5am to 6am (Sunday) | Resets food units based on the weekly schedule.           |
+
 
 The project includes default images for the following [insurance providers / sheet names](./assets/js/imgMap.js)
 
