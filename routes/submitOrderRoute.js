@@ -151,9 +151,9 @@ router.post("/submitOrder", async (req, res) => {
                                     values: [
                                         { userEnteredValue: { numberValue: getNextDateAsNumber(weekday) } },
                                         { userEnteredValue: { stringValue: name } },
-                                        { userEnteredValue: { numberValue: breakfastID+1 } },
+                                        { userEnteredValue: { numberValue: Number(breakfastID)+1 } },
                                         { userEnteredValue: { stringValue: breakfastName } },
-                                        { userEnteredValue: { numberValue: lunchID+1 } },
+                                        { userEnteredValue: { numberValue: Number(lunchID)+1 } },
                                         { userEnteredValue: { stringValue: lunchName } },
                                         { userEnteredValue: { stringValue: deviceType } }
                                     ]
