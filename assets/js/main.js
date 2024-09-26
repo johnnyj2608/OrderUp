@@ -140,7 +140,7 @@ document.getElementById('menuButton').addEventListener('click', async function()
                 sessionStorage.setItem('rowNumber', result.rowNumber);
                 sessionStorage.setItem('weekday', currentDayIndex);
 
-                const url = `/menu?name=${encodeURIComponent(result.name)}&units=${encodeURIComponent(result.units)}`;
+                const url = `/menu?name=${encodeURIComponent(result.name)}&units=${encodeURIComponent(result.units)}&weekday=${encodeURIComponent(currentDayIndex)}`;
                 window.location.href = url;
             } else {
                 const overlay = document.getElementById('errorOverlay');
