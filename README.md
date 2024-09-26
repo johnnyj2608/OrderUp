@@ -115,7 +115,7 @@ The project includes default images for the following [insurance providers / she
 4. **Deploy and Testing**
    - Deploy your project and ensure everything is functioning as expected. 
    - If the Vercel static files do not update after redeployment on your custom domain, perform a hard refresh:
-     - **For desktop**: Use `Ctrl + F5` (Windows) or `Command + R` (Mac).
+     - **For desktop**: Use `Ctrl + F5` (Windows) or `Command + Shift + R` (Mac).
      - **For mobile**: Turn on **Airplane Mode**, refresh the page (to fail), then turn AirPlane mode back off, then refresh the page to get the updated version.
 
 If you cloned the project, all configurations and paths should already be set up.
