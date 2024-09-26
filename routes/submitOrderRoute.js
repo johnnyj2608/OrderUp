@@ -206,12 +206,12 @@ router.post("/submitOrder", async (req, res) => {
                 }
             );
 
-            // await googleSheets.spreadsheets.batchUpdate({
-            //     spreadsheetId,
-            //     resource: {
-            //         requests
-            //     }
-            // });
+            await googleSheets.spreadsheets.batchUpdate({
+                spreadsheetId,
+                resource: {
+                    requests
+                }
+            });
 
             res.json({ success: true });
         } else {
