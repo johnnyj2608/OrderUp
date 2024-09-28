@@ -55,7 +55,7 @@ Dependency Explanation:
      Make sure to replace `GOOGLE_PROJECT_ID`, `GOOGLE_PRIVATE_KEY`, and `GOOGLE_CLIENT_EMAIL` with the actual values from the `credentials.json` file.
 
 ### 3. Google Sheets Template Setup
-1. **Copy this template**: [Google Sheets Template](https://docs.google.com/spreadsheets/d/1TYBGWSbuEPGPbQNL7F2GUxTE3cEPSdoIcndqdVGYZ8Q/edit?usp=sharing).
+1. **Copy this template**: [Google Sheets Template](https://docs.google.com/spreadsheets/d/14HblEntMIxtcAZuRvUQCpKdHYad3tUtN52rxHmDLrqM/edit?usp=sharing).
 2. **Share the Sheet**: Go to the "Share" button in the top-right corner, and share the sheet with the **service account email** found in your credentials file. Make sure to assign it as an editor.
 3. **Insert Data**:
    - In the **Menu** Sheet, insert data for breakfast and lunch, including item names and associated images.
