@@ -14,12 +14,8 @@ function refreshUnits() {
 
         schedule = schedule.toString();
         let units;
-        if (schedule.includes('.')) {
-          const scheduleParsed = schedule.replace(/\./g, '');
-          units = scheduleParsed.length;
-        } else {
-          units = Number(schedule);
-        }
+        const scheduleParsed = schedule.replace(/\./g, '');
+        units = scheduleParsed.length;
         sheet.getRange(i, 5).setValue(units);
       }
       const maxRows = sheet.getMaxRows();
