@@ -70,9 +70,9 @@ router.post("/submitOrder", async (req, res) => {
             }
 
             let requests = [];
-            const currentDayIndex = new Date().getDay();
-
-            if (Number(weekday) === currentDayIndex) {
+            const estDate = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+            const today = new Date(estDate).getDay();
+            if (Number(weekday) === today) {
                 requests = [
                     {
                         updateCells: {
